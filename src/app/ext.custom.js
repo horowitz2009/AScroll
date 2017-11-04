@@ -47,12 +47,6 @@ jQuery(document).ready(
 				$('.navbar-collapse').collapse('hide');
 			});
 
-			// Activate scrollspy to add active class to navbar items on scroll
-			$('body').scrollspy({
-				target : '#mainNav',
-				offset : 54
-			});
-
 			$(window).scroll(function() {
 
 				console.log("TOP: " + $("#mainNav").offset().top);
@@ -62,6 +56,18 @@ jQuery(document).ready(
 					$("#mainNav").removeClass("app-sticky");
 				}
 
+			});
+
+			console.log("TOP2: " + $("#mainNav").offset().top);
+			if ($("#mainNav").offset().top > 50) {
+				$("#mainNav").addClass("app-sticky");
+			} else {
+				$("#mainNav").removeClass("app-sticky");
+			}
+			// Activate scrollspy to add active class to navbar items on scroll
+			$('body').scrollspy({
+				target : '#mainNav',
+				offset : 56
 			});
 
 			// end
