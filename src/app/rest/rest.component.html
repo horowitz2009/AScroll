@@ -1,0 +1,41 @@
+<p>{{foo}}</p>
+<p><input [(ngModel)]="id" ></p>
+<button (click)="createNew()">create new</button>
+<button (click)="updateExisting(id)">update</button>
+<button (click)="deleteOne(id)">delete</button>
+<button (click)="reload()">reload</button>
+<div *ngIf="products">
+	<div *ngFor="let product of products">
+
+		<h2>{{product.id}} {{product.name}}</h2>
+		<div>
+			additional:
+			<div *ngIf="product.additionalAttributes"
+				[innerHTML]='product.additionalAttributes.a | keepHtml'></div>
+		</div>
+		<p>published: {{product.published}}
+		<div *ngIf="product.published">PUBLISHED!</div>
+		<p>created on: {{product.createdOn | date}}
+		<p>price: {{product.price | currency}}
+	</div>
+</div>
+
+
+<p>SINGLE:</p>
+<div *ngIf="product">
+
+	<h2>{{product.id}} {{product.name}}</h2>
+	<div>
+		additional:
+		<div *ngIf="product.additionalAttributes"
+			[innerHTML]='product.additionalAttributes.a | keepHtml'></div>
+	</div>
+	<p>published: {{product.published}}
+	<div *ngIf="product.published">PUBLISHED!</div>
+	<p>created on: {{product.createdOn | date}}
+	<p>price: {{product.price | currency}}
+</div>
+<div *ngFor="let product of products2 | async">
+  {{ product.name }}
+</div>
+

@@ -1,0 +1,10 @@
+<div [innerHTML]='hmm | keepHtml'></div>
+
+<ul class="products">
+  <li *ngFor="let product of products">
+    <span class="product-element">
+      <span class="badge">{{product.id}}</span> {{product.name}} {{ product.price | currency : undefined : 2}}
+      <img [src]="product.images[0]">
+    </span>
+  </li>
+</ul>
