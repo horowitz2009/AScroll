@@ -24,8 +24,8 @@
 					$("#mainNav").addClass("app-sticky");
 				} else {
 					$("#mainNav").removeClass("app-sticky");
-					//window.location.hash='home';
-					//console.log('sticky');
+					// window.location.hash='home';
+					// console.log('sticky');
 					changeHash('');
 				}
 
@@ -51,7 +51,7 @@
 		        $('html, body').animate({
 		          scrollTop: (target.offset().top - 56)
 		        }, 800, "easeInOutExpo");
-		        //console.log('a click');
+		        // console.log('a click');
 		        changeHash(this.hash);
 		        return false;
 		      }
@@ -62,29 +62,29 @@
 			
 			
 			
-//			  // Add smooth scrolling on all links inside the navbar
-//			  $("#mainNav a").on('click', function(event) {
-//			    // Make sure this.hash has a value before overriding default behavior
-//			    if (this.hash !== "") {
-//			      // Prevent default anchor click behavior
-//			      event.preventDefault();
+// // Add smooth scrolling on all links inside the navbar
+// $("#mainNav a").on('click', function(event) {
+// // Make sure this.hash has a value before overriding default behavior
+// if (this.hash !== "") {
+// // Prevent default anchor click behavior
+// event.preventDefault();
 //
-//			      // Store hash
-//			      var hash = this.hash;
+// // Store hash
+// var hash = this.hash;
 //
-//			      // Using jQuery's animate() method to add smooth page scroll
-//			      // The optional number (800) specifies the number of milliseconds it
-//						// takes to scroll to the specified area
-//			      $('html, body').animate({
-//			        scrollTop: ($(hash).offset().top - 56)
-//			      }, 600, "easeInOutExpo", function(){
+// // Using jQuery's animate() method to add smooth page scroll
+// // The optional number (800) specifies the number of milliseconds it
+// // takes to scroll to the specified area
+// $('html, body').animate({
+// scrollTop: ($(hash).offset().top - 56)
+// }, 600, "easeInOutExpo", function(){
 //			   
-//			        // Add hash (#) to URL when done scrolling (default click
-//							// behavior)
-//			        window.location.hash = hash;
-//			      });
-//			    }  // End if
-//			  });
+// // Add hash (#) to URL when done scrolling (default click
+// // behavior)
+// window.location.hash = hash;
+// });
+// } // End if
+// });
 			
 			// Closes responsive menu when a scroll trigger link is clicked
 			$('.js-scroll-trigger').click(function() {
@@ -102,14 +102,14 @@
 			});
 			
 		  $(window).on('activate.bs.scrollspy', evt => {
-		  	//TODO use observable to reduce the changes
+		  	// TODO use observable to reduce the changes
 		    var l = $("#mainNav a.active");
 		    if(l) {
 		    	if (l.length)
 		    		l = l[0];
 		    	if (l && l.hash) {
-		    		//console.log('scrollspy');
-		    		changeHash(l.hash); //window.location.hash = l.hash;
+		    		// console.log('scrollspy');
+		    		changeHash(l.hash); // window.location.hash = l.hash;
 		    	}
 		    }
 		  });
@@ -196,7 +196,7 @@
 		// Isotope
 		var isotopePortfolio = function() {
 
-			$(window).load(function() {
+			$(window).on('load', function() {
 
 				if ($.fn.isotope) {
 					var portfolio = elements.portfolioList.isotope({
@@ -257,7 +257,8 @@
 		// Reveal Animations When You Scroll
 		function wow() {
 
-			$(window).load(function() {
+			$(window).on('load', function() {
+
 
 				new WOW().init({
 					mobile : false
@@ -330,7 +331,7 @@
 		// Preloader
 		function preloader() {
 
-			$(window).load(function() {
+			$(window).on('load', function() {
 
 				$(".preloader").fadeOut()
 				$("body").removeClass("remove-scroll")
