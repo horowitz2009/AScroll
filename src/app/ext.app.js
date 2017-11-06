@@ -50,7 +50,7 @@
 		      if (target.length) {
 		        $('html, body').animate({
 		          scrollTop: (target.offset().top - 56)
-		        }, 600, "easeInOutExpo");
+		        }, 800, "easeInOutExpo");
 		        //console.log('a click');
 		        changeHash(this.hash);
 		        return false;
