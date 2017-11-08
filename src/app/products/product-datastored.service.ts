@@ -9,6 +9,7 @@ import { Response } from '@angular/http';
 import { environment } from '../../environments/environment';
 
 import 'rxjs/add/operator/toPromise';
+import 'rxjs/add/operator/map';
 
 import { Product } from './product';
 
@@ -48,7 +49,21 @@ export class ProductDatastoredService {
             }, error => console.log( 'Could not load products.' ) );
     }
 
-
+    getProduct(id: number | string) {
+        this.load(id);
+        return this.products
+          // (+) before `id` turns the string into a number
+          .map(products => products.find(pr => pr.id === +id));
+      }
+    
+    getProductById( id: number | string ): Product {
+        const p =  this.dataStore.products.find(x => x.id === +id);
+        
+        //const p =  this.dataStore.products.filter(x => x.id === id)[0];
+        
+        return p;
+    }
+    
     load( id: number | string ) {
         this.http.get<any>( `${this.baseUrl}/products/${id}?transform=true` ).subscribe( data => {
             let notFound = true;

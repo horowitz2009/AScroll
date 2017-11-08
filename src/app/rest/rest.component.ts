@@ -18,8 +18,8 @@ interface ProductsRes {
 export class RestComponent implements OnInit {
     foo = 'bar';
     constructor( private http: HttpClient, private productService: ProductDatastoredService ) { }
-    products: Product[];
-    products2: Observable<Product[]> = undefined;
+    productsOld: Product[];
+    products: Observable<Product[]> = undefined;
     product: Product;
     id: number;
 
@@ -76,7 +76,24 @@ export class RestComponent implements OnInit {
         } );
     }
 
+    getOne( id: number ) {
+        this.product = this.productService.getProductById( id );
+    }
+
     readOne( id: number ) {
+        //get single product by id
+        this.productService.load( id );
+        this.http.get<any>( 'http://localhost/api2.php/products/' + id + '?transform=true' ).subscribe(
+            data => {
+                console.log( 'read one and store it in this.product' );
+                this.product = data;
+                this.product.additionalAttributes = JSON.parse( data.additionalAttributes );
+            }
+        );
+
+    }
+
+    readOneOld( id: number ) {
         //get single product by id
         this.http.get<any>( 'http://localhost/api2.php/products/' + id + '?transform=true' ).subscribe(
             data => {
@@ -90,15 +107,18 @@ export class RestComponent implements OnInit {
 
     ngOnInit() {
         console.log( 'REST on init' );
-
-        this.products2 = this.productService.products; // subscribe to entire collection
+        this.productService.loadAll();
+        
+        this.productService.products.subscribe(() => { console.log( "get 1" ); this.getOne( 1 ); } );
+        
+        this.products = this.productService.products; // subscribe to entire collection
 
 
         //get list of products
         this.http.get<any>( 'http://localhost/api2.php/products?transform=true' ).subscribe(
             data => {
                 console.log( 'good' );
-                this.products = data.products.map( p => {
+                this.productsOld = data.products.map( p => {
                     if ( p.additionalAttributes ) {
                         //console.log('ahaaa');
                         //console.log(p.additionalAttributes);
@@ -111,8 +131,8 @@ export class RestComponent implements OnInit {
                 } );
             }
         );
-
-        this.readOne( 1 );
+        console.log( "get 1" );
+        this.getOne( 1 );
 
     }
 

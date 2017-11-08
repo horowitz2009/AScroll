@@ -1,15 +1,25 @@
 import { Component, OnInit } from '@angular/core';
+import { ProductDatastoredService } from "./product-datastored.service";
+import { Product } from '../products/product';
+import { Observable } from "rxjs/Observable";
 
-@Component({
-  selector: 'app-products',
-  templateUrl: './products.component.html',
-  styles: []
-})
+@Component( {
+    selector: 'app-products',
+    templateUrl: './products.component.html',
+    styles: []
+} )
 export class ProductsComponent implements OnInit {
 
-  constructor() { }
+    constructor( private productService: ProductDatastoredService ) { }
 
-  ngOnInit() {
-  }
+    products: Observable<Product[]> = undefined;
+
+    ngOnInit() {
+
+        this.productService.loadAll();
+
+        this.products = this.productService.products; // subscribe to entire collection
+        
+    }
 
 }

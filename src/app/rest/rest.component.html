@@ -4,8 +4,9 @@
 <button (click)="updateExisting(id)">update</button>
 <button (click)="deleteOne(id)">delete</button>
 <button (click)="reload()">reload</button>
+<p>LIST OF PRODUCTS</p>
 <div *ngIf="products">
-	<div *ngFor="let product of products">
+	<div *ngFor="let product of products | async">
 
 		<h2>{{product.id}} {{product.name}}</h2>
 		<div>
@@ -17,9 +18,10 @@
 		<div *ngIf="product.published">PUBLISHED!</div>
 		<p>created on: {{product.createdOn | date}}
 		<p>price: {{product.price | currency}}
+	
 	</div>
 </div>
-
+<p>END OF LIST</p>
 
 <p>SINGLE:</p>
 <div *ngIf="product">
@@ -35,7 +37,5 @@
 	<p>created on: {{product.createdOn | date}}
 	<p>price: {{product.price | currency}}
 </div>
-<div *ngFor="let product of products2 | async">
-  {{ product.name }}
-</div>
+
 

@@ -39,6 +39,45 @@
 			history.replaceState(null, null, window.location.pathname + anchor);
 		}
 
+		
+		var magnific = function() {
+			
+			// Magnific popup
+			// -----------------------------------------------
+			if (($(".popup-img").length > 0) || ($(".popup-iframe").length > 0) || ($(".popup-img-single").length > 0) || $(".owl-carousel--popup-img").length > 0) {
+				$(".popup-img").magnificPopup({
+					type:"image",
+					gallery: {
+						enabled: true,
+					}
+				});
+				if ($(".owl-carousel--popup-img").length > 0) {
+					$(".owl-carousel").each(function() {
+						$(this).find(".owl-item:not(.cloned) .owl-carousel--popup-img").magnificPopup({
+							type:"image",
+							gallery: {
+								enabled: true,
+							}
+						});
+					});
+				}
+				$(".popup-img-single").magnificPopup({
+					type:"image",
+					gallery: {
+						enabled: false,
+					}
+				});
+				$('.popup-iframe').magnificPopup({
+					disableOn: 700,
+					type: 'iframe',
+					preloader: false,
+					fixedContentPos: false
+				});
+			};
+
+		}
+
+		
 		var initMisc = function() {
 			
 		  // Smooth scrolling using jQuery easing
@@ -57,7 +96,6 @@
 		      }
 		    }
 		  });
-			
 			
 			
 			
@@ -349,6 +387,7 @@
 				// isotopePortfolio()
 				// navigation()
 				wow();
+				magnific();
 				// countdown()
 				// placeholderIE()
 				// validateAndSend()

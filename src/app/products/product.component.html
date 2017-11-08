@@ -1,0 +1,13 @@
+<h2>KUTIA</h2>
+  <div *ngIf="product$ | async as product">
+    <h3>{{ product.name }}</h3>
+    <div>
+      <label>Id: </label>{{ product.id }}</div>
+    <div>
+      <label>Name: </label>
+      <input [(ngModel)]="product.name" placeholder="name"/>
+    </div>
+    <p>
+      <button (click)="gotoProducts(product)">Back</button>
+    </p>
+  </div>

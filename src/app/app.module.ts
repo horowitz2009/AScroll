@@ -12,10 +12,11 @@ import { ProductsComponent } from './products/products.component';
 
 import { ProductService } from './products/product.service';
 import { ProductDatastoredService } from './products/product-datastored.service';
-import { ProductListComponent } from './products/product-list.component';
 
 import { KeepHtmlPipe } from './keephtml/keep-html.pipe';
 import { RestComponent } from './rest/rest.component';
+import { AppRoutingModule } from "./app-routing.module";
+import { ProductComponent } from './products/product.component';
 
 @NgModule({
   declarations: [
@@ -30,13 +31,15 @@ import { RestComponent } from './rest/rest.component';
 
     RestComponent,
     
-    ProductListComponent
+    ProductComponent
     
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    
+    AppRoutingModule
   ],
   providers: [ProductService, ProductDatastoredService],
   bootstrap: [AppComponent]

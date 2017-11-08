@@ -1,0 +1,58 @@
+/*Listing Items
+---------------------------------- */
+.listing-item .overlay-container .badge {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.95);
+  font-weight: 400;
+  padding: 4px;
+  top: 10px;
+  right: 10px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+}
+
+.listing-item .body {
+  padding: 15px;
+}
+
+.listing-item .body h3 {
+  margin-top: 0;
+  font-size: 18px;
+  line-height: 1.4;
+}
+
+.listing-item .elements-list {
+  font-size: 12px;
+}
+
+.listing-item .price {
+  font-size: 18px;
+  margin-top: 1px;
+  display: inline-block;
+  font-weight: 400;
+}
+
+.listing-item .price del {
+  font-size: 12px;
+  color: #999999;
+}
+
+.listing-item .overlay-to-top {
+  padding: 10px 0 !important;
+}
+
+.listing-item .overlay-to-top .btn-sm-link {
+  padding: 5px;
+}
+
+.bordered {
+  border: 1px solid #f1f1f1;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+
+.dark-bg .bordered {
+  border: 1px solid #555555;
+}

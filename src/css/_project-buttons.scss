@@ -1,0 +1,435 @@
+/* Buttons
+---------------------------------- */
+/*Buttons Color Variations*/
+.btn:focus {
+  color: inherit;
+}
+
+.btn {
+  -webkit-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+/*Default Button*/
+.btn-default {
+  color: #ffffff;
+}
+
+.btn-default:hover,
+.btn-default:focus,
+.btn-default.focus,
+.btn-default:active,
+.btn-default.active,
+.show > .dropdown-toggle.btn-default {
+  color: #ffffff;
+}
+
+.btn-default-transparent {
+  color: #777777;
+  background-color: transparent;
+}
+
+.btn-default-transparent:hover,
+.btn-default-transparent:focus,
+.btn-default-transparent.focus,
+.btn-default-transparent:active,
+.btn-default-transparent.active,
+.show > .dropdown-toggle.btn-default-transparent {
+  color: #ffffff;
+}
+
+.dark-bg .btn-default-transparent {
+  color: #ffffff;
+}
+
+.default-bg .btn-default,
+.default-translucent-bg .btn-default,
+.default-bg .btn-default-transparent,
+.default-translucent-bg .btn-default-transparent {
+  background-color: #ffffff;
+  border-color: #ffffff;
+}
+
+.default-bg .btn-default:hover,
+.default-translucent-bg .btn-default:hover,
+.default-bg .btn-default:focus,
+.default-translucent-bg .btn-default:focus,
+.default-bg .btn-default.focus,
+.default-translucent-bg .btn-default.focus,
+.default-bg .btn-default:active,
+.default-translucent-bg .btn-default:active,
+.default-bg .btn-default.active,
+.default-translucent-bg .btn-default.active,
+.default-bg .show > .dropdown-toggle.btn-default,
+.default-translucent-bg .show > .dropdown-toggle.btn-default,
+.default-bg .btn-default-transparent:hover,
+.default-translucent-bg .btn-default-transparent:hover,
+.default-bg .btn-default-transparent:focus,
+.default-translucent-bg .btn-default-transparent:focus,
+.default-bg .btn-default-transparent.focus,
+.default-translucent-bg .btn-default-transparent.focus,
+.default-bg .btn-default-transparent:active,
+.default-translucent-bg .btn-default-transparent:active,
+.default-bg .btn-default-transparent.active,
+.default-translucent-bg .btn-default-transparent.active,
+.default-bg .show > .dropdown-toggle.btn-default-transparent,
+.default-translucent-bg .show > .dropdown-toggle.btn-default-transparent {
+  color: #ffffff;
+  background-color: transparent;
+  border-color: #ffffff;
+}
+
+.dark .btn-default {
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+.dark .btn-default .badge {
+  color: rgba(0, 0, 0, 0.2);
+  background-color: #ffffff;
+}
+
+.dark .btn-default:hover,
+.dark .btn-default:focus,
+.dark .btn-default.focus,
+.dark .btn-default:active,
+.dark .btn-default.active,
+.dark .show > .dropdown-toggle.btn-default {
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.35);
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.colored .btn-default {
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-color: rgba(0, 0, 0, 0.01);
+}
+
+.colored .btn-default .badge {
+  color: rgba(0, 0, 0, 0.2);
+  background-color: #ffffff;
+}
+
+.colored .btn-default:hover,
+.colored .btn-default:focus,
+.colored .btn-default.focus,
+.colored .btn-default:active,
+.colored .btn-default.active,
+.colored .show > .dropdown-toggle.btn-default {
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-color: rgba(0, 0, 0, 0.02);
+}
+
+.default-hovered:hover .btn-default-transparent {
+  border-color: #ffffff;
+}
+
+/*White Button*/
+.btn-white {
+  color: #777777;
+  background-color: #ffffff;
+  border-color: #ffffff;
+}
+
+/*Gray Button*/
+.btn-gray {
+  color: #333333;
+  background-color: #e1e1e1;
+  border-color: #d3d3d3;
+}
+
+.btn-gray:hover,
+.btn-gray:focus,
+.btn-gray.focus,
+.btn-gray:active,
+.btn-gray.active,
+.show > .dropdown-toggle.btn-gray {
+  color: #333333;
+  background-color: #cdcdcd;
+  border-color: #cdcdcd;
+}
+
+.btn-gray-transparent {
+  color: #333333;
+  background-color: transparent;
+  border-color: #777777;
+}
+
+.btn-gray-transparent:hover,
+.btn-gray-transparent:focus,
+.btn-gray-transparent.focus,
+.btn-gray-transparent:active,
+.btn-gray-transparent.active,
+.show > .dropdown-toggle.btn-gray-transparent {
+  color: #ffffff;
+  background-color: #333333;
+  border-color: #333333;
+}
+
+.dark-bg .btn-gray-transparent {
+  color: #ffffff;
+}
+
+.dark-bg .btn-gray-transparent:hover {
+  border-color: #ffffff;
+  color: #777777;
+  background-color: #ffffff;
+}
+
+.dark-translucent-bg .btn-gray-transparent,
+.default-translucent-bg .btn-gray-transparent,
+.default-bg .btn-gray-transparent {
+  border-color: #ffffff;
+  color: #ffffff;
+}
+
+.dark-translucent-bg .btn-gray-transparent:hover,
+.default-translucent-bg .btn-gray-transparent:hover,
+.default-bg .btn-gray-transparent:hover,
+.dark-translucent-bg .btn-gray-transparent:focus,
+.default-translucent-bg .btn-gray-transparent:focus,
+.default-bg .btn-gray-transparent:focus {
+  border-color: #ffffff;
+  color: #777777;
+  background-color: #ffffff;
+}
+
+.default-hovered:hover .btn-gray-transparent {
+  border-color: #ffffff;
+}
+
+.light-gray-bg.default-hovered:hover .btn-gray-transparent:hover {
+  border-color: #333333;
+}
+
+/* Medium devices (desktops, tablets, 992px and up) */
+@media (min-width: 992px) {
+  .two-col-translucent-bg .container > .row > div + div .btn-gray-transparent {
+    border-color: #ffffff;
+    color: #ffffff;
+  }
+
+  .two-col-translucent-bg .container > .row > div + div .btn-gray-transparent:hover,
+  .two-col-translucent-bg .container > .row > div + div .btn-gray-transparent:focus {
+    border-color: #ffffff;
+    color: #777777;
+    background-color: #ffffff;
+  }
+}
+
+/*Dark Button*/
+.btn-dark {
+  color: #ffffff;
+  background-color: #373737;
+  border-color: #333333;
+}
+
+.btn-dark:hover,
+.btn-dark:focus,
+.btn-dark.focus,
+.btn-dark:active,
+.btn-dark.active,
+.show > .dropdown-toggle.btn-dark {
+  color: #ffffff;
+  background-color: #111111;
+  border-color: #111111;
+}
+
+.dark-bg .btn-dark {
+  color: #ffffff;
+  background-color: #222222;
+  border-color: #171717;
+}
+
+.dark-bg .btn-dark:hover,
+.dark-bg .btn-dark:focus,
+.dark-bg .btn-dark.focus,
+.dark-bg .btn-dark:active,
+.dark-bg .btn-dark.active,
+.dark-bg .show > .dropdown-toggle.btn-dark {
+  color: #ffffff;
+  background-color: #000000;
+  border-color: #000000;
+}
+
+/*Buttons Sizes*/
+.btn {
+  padding: 7px 20px;
+  font-size: 14px;
+  line-height: 1.4666666667;
+  border-radius: 3px;
+  margin: 10px 0;
+}
+
+.btn-sm {
+  padding: 5px 15px;
+  font-size: 12px;
+  line-height: 1.4666666667;
+  border-radius: 3px;
+  margin: 5px 0;
+}
+
+.btn-lg {
+  padding: 10px 25px;
+  font-size: 18px;
+  line-height: 1.4666666667;
+  border-radius: 4px;
+  margin: 10px 0;
+}
+
+.btn-xl {
+  padding: 15px 50px;
+  font-size: 22px;
+  line-height: 1.4666666667;
+  border-radius: 6px;
+  margin: 10px 0;
+}
+
+.btn-md-link {
+  padding: 7px 15px;
+  font-size: 14px;
+  line-height: 1.4666666667;
+  border-radius: 0px;
+  margin: 10px 0;
+}
+
+.btn-sm-link {
+  padding: 5px 15px;
+  font-size: 12px;
+  line-height: 1.4666666667;
+  border-radius: 0px;
+  margin: 5px 0;
+}
+
+.btn-lg-link {
+  padding: 10px 15px;
+  font-size: 18px;
+  line-height: 1.4666666667;
+  border-radius: 0px;
+  margin: 10px 0;
+}
+
+.btn-remove {
+  font-size: 10px;
+  padding: 3px 15px;
+  min-width: 0;
+  margin: -5px 0 0 0;
+}
+
+/*Buttons with radius*/
+.radius-50 {
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  border-radius: 50px;
+}
+
+/*Animated Buttons*/
+.btn-animated {
+  position: relative;
+  min-width: 0 !important;
+  padding-right: 45px !important;
+}
+
+.btn-animated i {
+  -webkit-transition: right 0.2s ease-in-out;
+  -o-transition: right 0.2s ease-in-out;
+  transition: right 0.2s ease-in-out;
+  z-index: 3;
+  right: 17px;
+  position: absolute;
+  line-height: 34px;
+  top: 0;
+  min-width: 12px;
+}
+
+.btn-animated:after {
+  width: 35px;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.1);
+  position: absolute;
+  content: "";
+  top: 0;
+  opacity: 0;
+  filter: alpha(opacity=0);
+  right: 0px;
+  z-index: 2;
+  -webkit-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-animated.radius-50:after {
+  border-radius: 0 50px 50px 0;
+}
+
+.btn-animated.btn-gray-transparent:after {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.btn-animated:hover:after {
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+
+.btn-animated:hover i {
+  right: 11px;
+}
+
+.btn-animated.btn-sm {
+  padding-right: 35px !important;
+}
+
+.btn-animated.btn-sm:after {
+  width: 25px;
+}
+
+.btn-animated.btn-sm i {
+  right: 14px;
+  line-height: 28px;
+  min-width: 11px;
+}
+
+.btn-animated.btn-sm:hover i {
+  right: 7px;
+}
+
+.btn-animated.btn-lg {
+  padding-right: 60px !important;
+}
+
+.btn-animated.btn-lg:after {
+  width: 45px;
+}
+
+.btn-animated.btn-lg i {
+  right: 25px;
+  line-height: 48px;
+  min-width: 15px;
+}
+
+.btn-animated.btn-lg:hover i {
+  right: 15px;
+}
+
+.btn-animated.btn-xl {
+  padding-right: 60px !important;
+}
+
+.btn-animated.btn-xl:after {
+  width: 45px;
+}
+
+.btn-animated.btn-xl i {
+  right: 25px;
+  line-height: 64px;
+  min-width: 15px;
+  text-align: center;
+}
+
+.btn-animated.btn-xl:hover i {
+  right: 13px;
+}

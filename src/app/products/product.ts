@@ -6,8 +6,9 @@ export class Product {
     categoryId: number;
 
 
-    shortDescription: string;
-    longDescription: string;
+    shortDesc: string;
+    longDesc: string;
+    image: string;
 
     images: string[];
 

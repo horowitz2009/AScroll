@@ -28,6 +28,7 @@
         "../node_modules/popper.js/dist/umd/popper.js",
         "../node_modules/bootstrap/dist/js/bootstrap.bundle.js",
         "../node_modules/wow.js/dist/wow.js",
+        "../node_modules/magnific-popup/dist/jquery.magnific-popup.js",
         
         "app/ext.app.js"
         

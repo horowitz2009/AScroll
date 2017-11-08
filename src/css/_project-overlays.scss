@@ -1,0 +1,218 @@
+/*Images and Overlays
+---------------------------------- */
+.overlay-container {
+  position: relative;
+  display: block;
+  text-align: center;
+  overflow: hidden;
+}
+
+.overlay-bottom,
+.overlay-top {
+  position: absolute;
+  top: auto;
+  padding: 15px;
+  bottom: 0px;
+  left: 0;
+  right: 0px;
+  background-color: rgba(30, 30, 30, 0.5);
+  overflow: hidden;
+  opacity: 0;
+  filter: alpha(opacity=0);
+  -webkit-transition: all ease-in-out 0.25s;
+  -o-transition: all ease-in-out 0.25s;
+  transition: all ease-in-out 0.25s;
+  height: 0;
+  color: #ffffff;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translateZ(0) scale(1, 1);
+}
+
+.overlay-bottom.links,
+.overlay-to-top.links {
+  z-index: 11;
+}
+
+.overlay-to-top {
+  position: absolute;
+  top: auto;
+  padding: 10px;
+  bottom: -30px;
+  left: 0;
+  right: 0px;
+  background-color: rgba(30, 30, 30, 0.5);
+  opacity: 0;
+  filter: alpha(opacity=0);
+  -webkit-transition: all ease-in-out 0.25s;
+  -o-transition: all ease-in-out 0.25s;
+  transition: all ease-in-out 0.25s;
+  color: #ffffff;
+}
+
+.overlay-top {
+  top: 0;
+}
+
+.overlay-visible .overlay-bottom,
+.overlay-visible .overlay-top {
+  opacity: 1;
+  filter: alpha(opacity=100);
+  height: auto !important;
+  padding-bottom: 20px;
+}
+
+.overlay-visible.overlay-container:hover .overlay-bottom:not(.links),
+.overlay-visible.overlay-container:hover .overlay-top {
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+}
+
+.overlay-top a,
+.overlay-bottom a,
+.overlay-to-top a,
+.overlay-top a:hover,
+.overlay-bottom a:hover,
+.overlay-to-top a:hover {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.overlay-container .text {
+  padding: 0 20px;
+  position: relative;
+}
+
+.overlay-container .text h3,
+.overlay-container .text h3 .small {
+  margin-top: 0;
+  color: #ffffff;
+}
+
+.overlay-container .text a:hover {
+  color: #ffffff;
+}
+
+.overlay-bottom .btn,
+.overlay-top .btn {
+  color: #ffffff;
+  border-color: #ffffff;
+  margin: 0;
+}
+
+.overlay-bottom .btn:hover,
+.overlay-top .btn:hover {
+  color: #777777;
+  background-color: #ffffff;
+}
+
+.overlay-container:hover .overlay-top,
+.overlay-container:hover .overlay-bottom,
+.image-box.style-2:hover .overlay-top,
+.image-box.style-2:hover .overlay-bottom {
+  height: 50%;
+  opacity: 1;
+  filter: alpha(opacity=100);
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translateZ(0) scale(1, 1);
+}
+
+.overlay-container:hover .overlay-to-top,
+.image-box:hover .overlay-to-top {
+  opacity: 1;
+  filter: alpha(opacity=100);
+  bottom: 0;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translateZ(0) scale(1, 1);
+}
+
+.overlay-link {
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  padding: 15px;
+  bottom: 0px;
+  left: 0;
+  right: 0px;
+  background-color: rgba(30, 30, 30, 0.5);
+  overflow: hidden;
+  opacity: 0;
+  filter: alpha(opacity=0);
+  -webkit-transition: all ease-in-out 0.25s;
+  -o-transition: all ease-in-out 0.25s;
+  transition: all ease-in-out 0.25s;
+  color: #ffffff;
+}
+
+.overlay-link i {
+  -webkit-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  width: 80px;
+  height: 80px;
+  border: 1px solid #ffffff;
+  -webkit-border-radius: 100%;
+  -moz-border-radius: 100%;
+  border-radius: 100%;
+  color: #ffffff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -40px 0 0 -40px;
+  font-size: 32px;
+  line-height: 80px;
+}
+
+.overlay-link i:hover {
+  background-color: #ffffff;
+  color: #777777;
+}
+
+.overlay-link.small i {
+  width: 25px;
+  height: 25px;
+  margin: -12.5px 0 0 -12.5px;
+  font-size: 14px;
+  line-height: 25px;
+}
+
+.overlay-container:hover .overlay-link {
+  height: 100%;
+  opacity: 1;
+  filter: alpha(opacity=100);
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translateZ(0) scale(1, 1);
+}
+
+/* Large devices (Large desktops 1200px and up) */
+@media (min-width: 1200px) {
+  .overlay-container .text {
+    top: 30%;
+  }
+}
+
+/* Extra small devices (phones, less than 575px) */
+@media (max-width: 575px) {
+  .overlay-container .text {
+    top: 30%;
+  }
+
+  .overlay-container .text p:not(.mobile-visible) {
+    display: none;
+  }
+}
+
+/* Large and Medium devices (desktops, tablets less than 1199px) */
+@media (min-width: 575px) and (max-width: 1199px) {
+  .overlay-container:not(.overlay-visible) .overlay-top ~ .overlay-bottom {
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+
+  .owl-item .overlay-container:hover .overlay-top {
+    height: 71%;
+  }
+
+  .owl-item .overlay-container:hover .overlay-bottom {
+    height: 29%;
+  }
+}
