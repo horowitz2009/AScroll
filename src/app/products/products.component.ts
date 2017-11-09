@@ -12,14 +12,27 @@ export class ProductsComponent implements OnInit {
 
     constructor( private productService: ProductDatastoredService ) { }
 
+
+
+
+
     products: Observable<Product[]> = undefined;
 
     ngOnInit() {
 
-        this.productService.loadAll();
+        //this.productService.loadAll();
 
         this.products = this.productService.products; // subscribe to entire collection
         
+        console.log("init prodicts...");
+
+        const myevent = new CustomEvent( 'mycustomevent', { detail: 'fuck you' } );
+
+        document.getElementById( 'home' ).dispatchEvent( myevent );
+        //myElement.dispatchEvent(myEvent);
+
+
+
     }
 
 }

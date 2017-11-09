@@ -34,10 +34,13 @@ export class ProductDatastoredService {
     }
 
 
-    loadAll() {
-        console.log('loadAll begin... ' +  `${this.baseUrl}/products?transform=true` );
-        this.http.get<any>( `${this.baseUrl}/products?transform=true` ).subscribe(
+    loadAll(): Promise<Product> {
+        console.log( 'loadAll begin... ' + `${this.baseUrl}/products?transform=true` );
+        const req = this.http.get<any>( `${this.baseUrl}/products?transform=true` );
+
+        req.subscribe(
             data => {
+                console.log( data );
                 this.dataStore.products = data.products.map( p => {
                     if ( p.additionalAttributes ) {
                         p.additionalAttributes = JSON.parse( p.additionalAttributes );
@@ -47,23 +50,25 @@ export class ProductDatastoredService {
                 } );
                 this._products.next( Object.assign( {}, this.dataStore ).products );
             }, error => console.log( 'Could not load products.' ) );
+        
+        return req.toPromise();
     }
 
-    getProduct(id: number | string) {
-        this.load(id);
+    getProduct( id: number | string ) {
+        this.load( id );
         return this.products
-          // (+) before `id` turns the string into a number
-          .map(products => products.find(pr => pr.id === +id));
-      }
-    
+            // (+) before `id` turns the string into a number
+            .map( products => products.find( pr => pr.id === +id ) );
+    }
+
     getProductById( id: number | string ): Product {
-        const p =  this.dataStore.products.find(x => x.id === +id);
-        
+        const p = this.dataStore.products.find( x => x.id === +id );
+
         //const p =  this.dataStore.products.filter(x => x.id === id)[0];
-        
+
         return p;
     }
-    
+
     load( id: number | string ) {
         this.http.get<any>( `${this.baseUrl}/products/${id}?transform=true` ).subscribe( data => {
             let notFound = true;
@@ -85,7 +90,7 @@ export class ProductDatastoredService {
         }, error => console.log( 'Could not load product.' ) );
     }
 
-    
+
     create( product: Product ) {
         product.id = null;
         if ( product.additionalAttributes && ( typeof product.additionalAttributes === 'object' ) ) {

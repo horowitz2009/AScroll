@@ -399,7 +399,10 @@
 
 		// Launch functions
 		console.log("AppExt: INIT...");
-		ExtApp.init();
+		document.getElementById('home').addEventListener("mycustomevent", () => {
+			console.log("FUCK YOU TOO");
+			ExtApp.init();
+		}, false);
 		console.log("AppExt: DONE...");
 	})
 }(window.jQuery);

@@ -1,9 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {Component, NgModule, VERSION, APP_INITIALIZER } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
-import { AppComponent } from './app.component';
+import { AppComponent, startupServiceFactory } from './app.component';
 import { NavComponent } from './nav.component';
 import { AboutComponent } from './about.component';
 import { ContactComponent } from './contact.component';
@@ -41,7 +41,17 @@ import { ProductComponent } from './products/product.component';
     
     AppRoutingModule
   ],
-  providers: [ProductService, ProductDatastoredService],
+  providers: [
+              ProductService, 
+              ProductDatastoredService
+              ,
+              {
+                  provide: APP_INITIALIZER,
+                  useFactory: startupServiceFactory,
+                  deps: [ProductDatastoredService],
+                  multi: true
+                }
+              ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
