@@ -35,6 +35,7 @@
     "ngx-bootstrap": "^1.9.3",
     "popper.js": "^1.12.6",
     "rxjs": "^5.4.2",
+    "uglify-es": "^3.1.8",
     "wow.js": "^1.2.2",
     "zone.js": "^0.8.14"
   },
