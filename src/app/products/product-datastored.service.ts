@@ -33,6 +33,9 @@ export class ProductDatastoredService {
         this.products = this._products.asObservable();
     }
 
+    getProductsDS(): Product[] {
+        return this.dataStore.products;    
+    }
 
     loadAll(): Promise<Product> {
         console.log( 'loadAll begin... ' + `${this.baseUrl}/products?transform=true` );
