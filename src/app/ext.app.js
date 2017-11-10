@@ -14,7 +14,7 @@
 			contAlert : $("#contactUsAlert")
 		};
 
-		var spy = undefined;
+		var spy = false;
 		
 		// Sticky header
 		var stickHeader = function() {
@@ -28,7 +28,8 @@
 					$("#mainNav").removeClass("app-sticky");
 					// window.location.hash='home';
 					// console.log('sticky');
-					// changeHash('');
+					if (window.location.hash && window.location.hash !== '#home') 
+					  changeHash('');
 				}
 
 			}
@@ -38,17 +39,16 @@
 		
 		var changeHash = function(hash) {
 			console.log('changing hash to ' + hash);
-			history.replaceState(null, null, window.location.pathname + hash);
+			if (spy) {
+			  history.replaceState(null, null, window.location.pathname + hash);
+			} else {
+				console.log ("SPY IS OFF");
+			}
 		}
 		
 		var scrollTo = function(hash) {
 			console.log('scroll to [' + hash + "]");
-			if (spy) {
-				console.log('disposing spy');
-				//spy.dispose();
-				$('body').scrollspy('dispose')
-				spy = undefined;
-			}
+			spy = false;
 			var target = $('home');
 			if (hash || hash !== '') {
     	  target = $(hash);
@@ -57,18 +57,14 @@
           $('html, body').animate({
             scrollTop: (target.offset().top - 56)
           }, 800, "easeInOutExpo", ()=>{ 
+        		spy = true;
           	changeHash(hash);
-          	if (!spy) {
-          		console.log('init spy again');
-          		spy = $('body').scrollspy({
-        				target : '#mainNav',
-        				offset : 56
-        			});
-          	}
           	});
           
           return false;
         }
+			} else {
+				spy = true;
 			}
       return true;
 		}
@@ -93,12 +89,11 @@
 		var initScrollSpy = function() {
 
 			// Activate scrollspy to add active class to navbar items on scroll
-			spy = $('body').scrollspy({
+			$('body').scrollspy({
 				target : '#mainNav',
-				offset : 56
+				offset : 175
 			});
 			
-			console.log("spy", spy);
 		  $(window).on('activate.bs.scrollspy', evt => {
 		  	// TODO use observable to reduce the changes
 		    var l = $("#mainNav a.active");
@@ -106,7 +101,7 @@
 		    	if (l.length)
 		    		l = l[0];
 		    	if (l && l.hash) {
-		    		console.log('scrollspy ', evt);
+		    		console.log('scrollspy ');
 		    		changeHash(l.hash); // window.location.hash = l.hash;
 		    	}
 		    }
@@ -116,6 +111,7 @@
 		
 		var scrollNow = function() {
 			console.log(document.location);
+			console.log("I want to scroll to " + document.location.hash);
 			scrollTo(document.location.hash);
 		}
 
@@ -252,6 +248,7 @@
 				initMisc();
 				initScrollSpy();
 				scrollNow();
+				spy = true;
 			},
 			initMagnific : function() {
 
