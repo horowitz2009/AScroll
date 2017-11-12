@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-about',
+  selector: 'app-front-about',
   templateUrl: './about.component.html',
   styles: []
 })

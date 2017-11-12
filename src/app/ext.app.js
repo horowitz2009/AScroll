@@ -58,12 +58,13 @@
             scrollTop: (target.offset().top - 56)
           }, 800, "easeInOutExpo", ()=>{ 
         		spy = true;
-          	changeHash(hash);
+          	//changeHash(hash);
           	});
           
           return false;
         }
 			} else {
+				window.scrollTo(0, 0);
 				spy = true;
 			}
       return true;
@@ -243,11 +244,16 @@
 		
 
 		return {
+		  scrollTo: function(anchor) {
+		  	setTimeout(() => {
+		  		scrollTo(anchor ? '#' + anchor : '');	
+				}, 30);
+		  },
 			initScroll: function() {
-				stickHeader();
-				initMisc();
-				initScrollSpy();
-				scrollNow();
+				// /////////////stickHeader();
+				// ///////////initMisc();
+				// ///////////initScrollSpy();
+				// ////////////scrollNow();
 				spy = true;
 			},
 			initMagnific : function() {
@@ -260,11 +266,14 @@
 				// isotopePortfolio()
 				// navigation()
 				// wow();
-				magnific();
-				scrollNow();
+				// /////////////////////////////////////////magnific();
+				// scrollNow();
 				// countdown()
 				// placeholderIE()
 				// validateAndSend()
+			},
+			scrollNow : function() {
+				// scrollNow();
 			}
 		}
 	}();
@@ -282,10 +291,16 @@
 		window.addEventListener("mycustomevent", () => {
 			console.log("init magnific");
 			ExtApp.initMagnific();
+			setTimeout(function(){ 
+				// alert("Hello");
+				console.log('INIT AGAIN.............................');
+				ExtApp.scrollNow();
+			}, 1500);
 		}, false);
-		window.addEventListener("smoothscroll", () => {
-			console.log("init scroll");
-			ExtApp.initScroll();
+		console.log("add listeners...");
+		window.addEventListener("my-navigation-end", (evt) => {
+			console.log("init scroll", evt);
+			ExtApp.scrollTo(evt.detail);
 			
 		}, false);
 		console.log("AppExt: DONE...");

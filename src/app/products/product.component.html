@@ -1,3 +1,7 @@
+<!-- <h2>KUTIA</h2>
+<h2>KUTIA</h2>
+<h2>KUTIA</h2>
+<h2>KUTIA</h2>
 <h2>KUTIA</h2>
   <div *ngIf="product$ | async as product">
     <h3>{{ product.name }}</h3>
@@ -11,3 +15,51 @@
       <button (click)="gotoProducts(product)">Back</button>
     </p>
   </div>
+  
+  -->
+<div class="container text-center">
+    <h1>Welcome to Scrolling Nav</h1>
+    <p class="lead">A landing page template freshly redesigned for Bootstrap 4</p>
+  </div>
+
+<div class="container wow fadeInUp pv-30 mt-10" *ngIf="product$ | async as product">
+	<div class="row">
+		<div class="col-lg-12">
+
+			<div class="container">
+				<div class="row">
+					<div class="col-md-7">
+
+						<div class="listing-item white-bg bordered mb-20">
+							<div class="overlay-container">
+								<img [src]="product.image" alt=""> <a class="overlay-link popup-img-single" href="{{product.image}}"><i
+									class="fa fa-search-plus"></i></a> <span class="badge">30% OFF</span>
+								<div class="overlay-to-top links">
+									<span class="small"> <a href="#" class="btn-sm-link"><i class="fa fa-heart-o pr-10"></i>Add to
+											Wishlist</a> <a href="#" class="btn-sm-link"><i class="icon-link pr-1"></i>View Details</a>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-5">
+						<div class="body">
+							<h3>
+								<a [routerLink]="['/product', product.id]">{{product.name}}</a> <a href="javascript:void(0)"
+									(click)="transform(product)">{{product.name}}</a>
+							</h3>
+							<p class="small">{{product.shortDesc}}</p>
+							<div class="elements-list clearfix">
+								<span class="price"><del>{{product.price * 1.3 | currency}}</del> {{product.price | currency}}</span> <a
+									href="#" class="pull-right margin-clear btn btn-sm btn-default-transparent btn-animated">Add To Cart<i
+									class="fa fa-shopping-cart"></i></a>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>

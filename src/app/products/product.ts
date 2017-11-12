@@ -21,4 +21,5 @@ export class Product {
     
     additionalAttributes: any;
     createdOn: string;
+    detailed: boolean;
 }

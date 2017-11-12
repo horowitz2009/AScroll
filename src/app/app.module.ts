@@ -1,12 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
-import {Component, NgModule, VERSION, APP_INITIALIZER } from '@angular/core';
+import { Component, NgModule, VERSION, APP_INITIALIZER } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 import { AppComponent, startupServiceFactory } from './app.component';
 import { NavComponent } from './nav.component';
-import { AboutComponent } from './about.component';
-import { ContactComponent } from './contact.component';
+import { AboutComponent } from './front/about.component';
+import { ContactComponent } from './front/contact.component';
 import { FooterComponent } from './footer.component';
 import { ProductsComponent } from './products/products.component';
 
@@ -17,6 +17,8 @@ import { KeepHtmlPipe } from './keephtml/keep-html.pipe';
 import { RestComponent } from './rest/rest.component';
 import { AppRoutingModule } from "./app-routing.module";
 import { ProductComponent } from './products/product.component';
+import { FrontComponent } from './front/front.component';
+import { BannerComponent } from './front/banner.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,11 @@ import { ProductComponent } from './products/product.component';
 
     RestComponent,
     
-    ProductComponent
+    ProductComponent,
+    
+    FrontComponent,
+    
+    BannerComponent
     
   ],
   imports: [
@@ -43,8 +49,7 @@ import { ProductComponent } from './products/product.component';
   ],
   providers: [
               ProductService, 
-              ProductDatastoredService
-              ,
+              ProductDatastoredService,
               {
                   provide: APP_INITIALIZER,
                   useFactory: startupServiceFactory,
