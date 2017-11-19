@@ -19,21 +19,24 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.scss"
+            "styles.scss"
       ],
+      "offstyles":["../node_modules/owl.carousel/dist/assets/owl.carousel.css",
+        "../node_modules/owl.carousel/dist/assets/owl.theme.default.css"],
+        
       "scripts": [
         
         "../node_modules/jquery/dist/jquery.js",
         "../node_modules/jquery.easing/jquery.easing.js",
         "../node_modules/popper.js/dist/umd/popper.js",
         "../node_modules/bootstrap/dist/js/bootstrap.bundle.js",
-        "../node_modules/wow.js/dist/wow.js",
         "../node_modules/magnific-popup/dist/jquery.magnific-popup.js",
+        
         
         "app/ext.app.js"
         
         ],
-        "notused": [],
+        "notused": ["../node_modules/owl.carousel/dist/owl.carousel.js","../node_modules/wow.js/dist/wow.js"],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",

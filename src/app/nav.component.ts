@@ -1,20 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewChecked } from '@angular/core';
 
 import * as $ from 'jquery';
 import { ActivatedRoute, Router, ParamMap, Params, NavigationEnd } from "@angular/router";
+import { Cart } from "./cart/cart";
+import { CartService } from "./cart/cart.service";
 
 @Component( {
     selector: 'app-nav',
     templateUrl: './nav.component.html',
     styles: []
 } )
-export class NavComponent implements OnInit {
+export class NavComponent implements OnInit, AfterViewChecked {
+
+    // this.router.navigate( [ '/my-app-route' ], { fragment: prodID } );
+    cart: Cart;
 
     //anchor: any;
 
     constructor(
         private route: ActivatedRoute,
-        private router: Router
+        private router: Router,
+        private cartService: CartService
     ) {
 
         //
@@ -46,19 +52,46 @@ export class NavComponent implements OnInit {
 
     }
 
+    ngAfterViewChecked() {
+        console.log( 'afterViewChecked', this.route );
+        console.log("boo", $("#products"));
+        console.log("w " + window.pageYOffset);
+        //console.log("boo", $("#products").scrollTop);
+        console.log("boo", $("#products").offset().top);
+        const w = window.pageYOffset;
+        const ps = $("#products").offset().top;
+        if (Math.abs(w + 56 - ps) > 1) {
+            const tree = this.router.parseUrl( this.router.url );
+            const anchor = tree.fragment;
+            console.log( tree );
+
+            //SCROLL STUFF
+            const myevent = new CustomEvent( 'my-navigation-end', { detail: anchor } );
+
+            //document.getElementById( 'home' ).dispatchEvent( myevent );
+            window.dispatchEvent( myevent );
+        }
+    }
+
     ngOnInit() {
+        this.cart = this.cartService.getCart();
         //
         //
         this.router.events.subscribe( s => {
+            console.log( 'Router event ', s );
             if ( s instanceof NavigationEnd ) {
                 const tree = this.router.parseUrl( this.router.url );
                 const anchor = tree.fragment;
                 console.log( tree );
 
+                //SCROLL STUFF
                 const myevent = new CustomEvent( 'my-navigation-end', { detail: anchor } );
 
                 //document.getElementById( 'home' ).dispatchEvent( myevent );
                 window.dispatchEvent( myevent );
+
+                //magnific to be updated here
+                window.dispatchEvent( new CustomEvent( 'products-loaded' ) );
 
                 //OLD not working
                 //console.log( 'url', this.router.url );
@@ -83,20 +116,20 @@ export class NavComponent implements OnInit {
                 //                    //}
                 //
 
-//                // OLD working - no smooth
-//                const element = document.querySelector( "#" + tree.fragment );
-//                if ( element ) {
-//
-//                    setTimeout( function() {
-//                        //alert("Hello"); 
-//                        console.log( 'scroll in 1 s.............................' );
-//                        element.scrollIntoView( { behavior: "smooth", block: "start", inline: "nearest" } );
-//                    }, 50 );
-//
-//
-//                } else {
-//                    window.scrollTo( 0, 0 );
-//                }
+                //                // OLD working - no smooth
+                //                const element = document.querySelector( "#" + tree.fragment );
+                //                if ( element ) {
+                //
+                //                    setTimeout( function() {
+                //                        //alert("Hello"); 
+                //                        console.log( 'scroll in 1 s.............................' );
+                //                        element.scrollIntoView( { behavior: "smooth", block: "start", inline: "nearest" } );
+                //                    }, 50 );
+                //
+                //
+                //                } else {
+                //                    window.scrollTo( 0, 0 );
+                //                }
 
 
 

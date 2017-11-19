@@ -5,6 +5,15 @@
   color: inherit;
 }
 
+.btn:active,
+.btn:focus,
+.btn.active {
+  background-image: none;
+  outline: 0;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
 .btn {
   -webkit-transition: all 0.2s ease-in-out;
   -o-transition: all 0.2s ease-in-out;
@@ -22,7 +31,7 @@
 .btn-default:active,
 .btn-default.active,
 .show > .dropdown-toggle.btn-default {
-  color: #ffffff;
+  //color: #ffffff;
 }
 
 .btn-default-transparent {

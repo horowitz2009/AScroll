@@ -25,11 +25,13 @@
 				if ($("#mainNav").offset().top > 50) {
 					$("#mainNav").addClass("app-sticky");
 				} else {
-					$("#mainNav").removeClass("app-sticky");
-					// window.location.hash='home';
-					// console.log('sticky');
-					if (window.location.hash && window.location.hash !== '#home') 
-					  changeHash('');
+					if ($("#header").length) {
+  					$("#mainNav").removeClass("app-sticky");
+  					// window.location.hash='home';
+  					// console.log('sticky');
+  					if (window.location.hash && window.location.hash !== '#home') 
+  					  changeHash('');
+ 					}
 				}
 
 			}
@@ -58,7 +60,7 @@
             scrollTop: (target.offset().top - 56)
           }, 800, "easeInOutExpo", ()=>{ 
         		spy = true;
-          	//changeHash(hash);
+          	// changeHash(hash);
           	});
           
           return false;
@@ -237,6 +239,10 @@
 					fixedContentPos: false
 				});
 			};
+			
+			
+			// OWL CAROUSEL
+			// $('.owl-carousel').owlCarousel();
 
 		}		
 		
@@ -250,9 +256,9 @@
 				}, 30);
 		  },
 			initScroll: function() {
-				// /////////////stickHeader();
+				stickHeader();
 				// ///////////initMisc();
-				// ///////////initScrollSpy();
+				initScrollSpy();
 				// ////////////scrollNow();
 				spy = true;
 			},
@@ -266,7 +272,7 @@
 				// isotopePortfolio()
 				// navigation()
 				// wow();
-				// /////////////////////////////////////////magnific();
+				magnific();// TODO DEPRECATE IT!!!
 				// scrollNow();
 				// countdown()
 				// placeholderIE()
@@ -280,29 +286,42 @@
 
 	$(function() {
 
-		$(window).on('load', function () {
-		  console.log("AppExt: INIT2...");
-		  // ExtApp.init();
-		});
+//		$(window).on('load', function () {
+//		  console.log("AppExt: INIT2...");
+//		  // ExtApp.init();
+//		});
 		
 		
-		// Launch functions
-		console.log("AppExt: INIT...");
-		window.addEventListener("mycustomevent", () => {
-			console.log("init magnific");
-			ExtApp.initMagnific();
-			setTimeout(function(){ 
-				// alert("Hello");
-				console.log('INIT AGAIN.............................');
-				ExtApp.scrollNow();
-			}, 1500);
-		}, false);
+//		// Launch functions
+//		console.log("AppExt: INIT...");
+//		window.addEventListener("mycustomevent", () => {
+//			console.log("init magnific");
+//			ExtApp.initMagnific();
+//			setTimeout(function(){ 
+//				// alert("Hello");
+//				console.log('INIT AGAIN.............................');
+//				ExtApp.scrollNow();
+//			}, 1500);
+//		}, false);
+		
 		console.log("add listeners...");
+		
 		window.addEventListener("my-navigation-end", (evt) => {
 			console.log("init scroll", evt);
 			ExtApp.scrollTo(evt.detail);
 			
 		}, false);
+		
+		window.addEventListener("products-loaded", (evt) => {
+			console.log("products loaded -> load magnific");
+			setTimeout(() => {
+				ExtApp.initScroll();
+				ExtApp.initMagnific();
+			}, 20);
+		}, false);
+		
+		
+		
 		console.log("AppExt: DONE...");
 	})
 }(window.jQuery);

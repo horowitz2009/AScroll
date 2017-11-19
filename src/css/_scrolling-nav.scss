@@ -11,7 +11,8 @@ header {
 	header {
 		padding: 156px 0 100px;
 	}
-	.app-fixed-30 {
+	
+.header.app-fixed-30 {
 		background: transparent;
 		top: 30px;
 		transition: all 0.5s ease-in;
@@ -19,7 +20,7 @@ header {
 }
 
 @media ( max-width : 992px) {
-	.app-fixed-30 {
+	.header.app-fixed-30 {
 		background: rgba(0, 0, 0, 0.85);
 		transition: all 0.5s ease-in;
 		top: 0
@@ -30,7 +31,7 @@ section {
 	padding: 150px 0;
 }
 
-.app-sticky {
+.header.app-sticky {
 	background: rgba(0, 0, 0, 0.85);
 	top: 0;
 	transition: all 0.5s ease-in;

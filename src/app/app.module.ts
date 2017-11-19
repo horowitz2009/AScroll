@@ -10,7 +10,6 @@ import { ContactComponent } from './front/contact.component';
 import { FooterComponent } from './footer.component';
 import { ProductsComponent } from './products/products.component';
 
-import { ProductService } from './products/product.service';
 import { ProductDatastoredService } from './products/product-datastored.service';
 
 import { KeepHtmlPipe } from './keephtml/keep-html.pipe';
@@ -20,43 +19,61 @@ import { ProductComponent } from './products/product.component';
 import { FrontComponent } from './front/front.component';
 import { BannerComponent } from './front/banner.component';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    KeepHtmlPipe,
-    
-    NavComponent,
-    ProductsComponent,
-    AboutComponent,
-    ContactComponent,
-    FooterComponent,
+import { NgxGalleryModule } from 'ngx-gallery';
+import { HAMMER_GESTURE_CONFIG, HammerGestureConfig } from '@angular/platform-browser';
+import { ProductDetailComponent } from './products/product-detail.component';
+import { MagnificPopupDirective } from './directives/magnific-popup.directive';
+import { CartViewComponent } from './cart/cart-view.component';
+import { CartService } from "./cart/cart.service";
 
-    RestComponent,
-    
-    ProductComponent,
-    
-    FrontComponent,
-    
-    BannerComponent
-    
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    HttpClientModule,
-    
-    AppRoutingModule
-  ],
-  providers: [
-              ProductService, 
-              ProductDatastoredService,
-              {
-                  provide: APP_INITIALIZER,
-                  useFactory: startupServiceFactory,
-                  deps: [ProductDatastoredService],
-                  multi: true
-                }
-              ],
-  bootstrap: [AppComponent]
-})
+export class MyHammerConfig extends HammerGestureConfig {
+    overrides = <any>{
+        'pinch': { enable: false },
+        'rotate': { enable: false }
+    };
+}
+
+@NgModule( {
+    declarations: [
+        AppComponent,
+        KeepHtmlPipe,
+
+        NavComponent,
+        ProductsComponent,
+        AboutComponent,
+        ContactComponent,
+        FooterComponent,
+
+        RestComponent,
+        ProductComponent,
+        FrontComponent,
+        BannerComponent,
+        ProductDetailComponent,
+        MagnificPopupDirective,
+        CartViewComponent
+
+    ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        HttpClientModule,
+        NgxGalleryModule,
+        AppRoutingModule
+    ],
+    providers: [
+        ProductDatastoredService,
+        CartService,
+        {
+            provide: APP_INITIALIZER,
+            useFactory: startupServiceFactory,
+            deps: [ProductDatastoredService],
+            multi: true
+        },
+        {
+            provide: HAMMER_GESTURE_CONFIG,
+            useClass: MyHammerConfig
+        }
+    ],
+    bootstrap: [AppComponent]
+} )
 export class AppModule { }

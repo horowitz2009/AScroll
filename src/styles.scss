@@ -2,6 +2,10 @@
 
 @import 'css/variables';
 
+.ngx-gallery-icon {
+  font-size: 84px;
+}
+
 @import '../node_modules/bootstrap/scss/bootstrap.scss';
 @import '../node_modules/font-awesome/css/font-awesome.css';
 @import '../node_modules/magnific-popup/dist/magnific-popup.css';
@@ -15,6 +19,17 @@
 @import 'css/project-overlays';
 @import 'css/project-buttons';
 @import 'css/listing-items';
+
+@import 'css/dropdowns';
+@import 'css/shopping-cart';
 @import 'css/skins/_light-blue';
 
 @import 'css/scrolling-nav';
+
+.light-gray-bg {
+  background-color: #fafafa;
+  border-top: 1px solid #f3f3f3;
+  border-bottom: 1px solid #f3f3f3;
+}
+
+      
