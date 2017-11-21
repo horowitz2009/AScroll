@@ -18,6 +18,7 @@
   -webkit-transition: all 0.2s ease-in-out;
   -o-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
+  cursor: pointer;
 }
 
 /*Default Button*/
@@ -31,7 +32,7 @@
 .btn-default:active,
 .btn-default.active,
 .show > .dropdown-toggle.btn-default {
-  //color: #ffffff;
+  color: #ffffff;
 }
 
 .btn-default-transparent {
@@ -358,7 +359,7 @@
 .btn-animated:after {
   width: 35px;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.1);
+  //background-color: rgba(0, 0, 0, 0.1);
   position: absolute;
   content: "";
   top: 0;

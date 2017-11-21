@@ -18,7 +18,7 @@
 /*Dropdown Cart*/
 .header-dropdown-buttons .btn-group .dropdown-menu.cart {
   padding: 0;
-  min-width: 350px;
+  min-width: 380px;
   font-size: 13px;
 }
 
@@ -71,15 +71,25 @@
 .cart .table > tbody > tr > td,
 .cart.table > tbody > tr > td {
   vertical-align: inherit;
+  padding: 11px 11px;
 }
 
 .cart .quantity {
-  width: 50px;
+  width: 10%;
   font-size: 11px;
+  white-space: nowrap;
+  text-align: right;
 }
 
 .cart .product {
-  width: 220px;
+  width: 80%;
+  font-size: 13px;
+}
+
+.cart .amount {
+  width: 10%;
+  text-align: right;
+  white-space: nowrap;
   font-size: 13px;
 }
 

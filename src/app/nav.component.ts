@@ -15,149 +15,57 @@ export class NavComponent implements OnInit, AfterViewChecked {
     // this.router.navigate( [ '/my-app-route' ], { fragment: prodID } );
     cart: Cart;
 
-    //anchor: any;
-
     constructor(
         private route: ActivatedRoute,
         private router: Router,
         private cartService: CartService
     ) {
-
-        //
-        //        router.events.subscribe(( val ) => {
-        //            console.log( 'route event', val );
-        //
-        //            //console.log( route.params.getValue() );
-        //            //console.log( 'boohoo ', val instanceof NavigationEnd );
-        //            console.log( 'activated route', route );
-        //
-        //            route.queryParamMap.subscribe(
-        //                ( hmm ) => { console.log( hmm ); }
-        //            );
-        //            this.route.params.forEach(( params: Params ) => {
-        //                console.log( 'aaaaaaaaaaaaaaaaaaaaaaaaaaaa', params );
-        //                if ( params['section'] ) {
-        //                    console.log( "SECTION: " + params['section'] );
-        //                }
-        //            } );
-        //
-        //            /*this.anchor = this.route.paramMap
-        //    .switchMap(( params: ParamMap ) => {
-        //        console.log( 'params', params );
-        //        console.log( 'keys', params.keys );
-        //        return params.get( 'section' );
-        //    } );*/
-        //        } );
+    }
 
 
+    //<a routerLink="/my-link" [class.active]="isLinkActive('/my-link')"></a>
+    public isLinkActive( fragment: string ): boolean {
+        return this.route.snapshot.fragment === fragment;
+    }
+
+    scrollTo( anchor: string ) {
+        const myevent = new CustomEvent( 'my-navigation-end', { detail: anchor } );
+        window.dispatchEvent( myevent );
     }
 
     ngAfterViewChecked() {
-        console.log( 'afterViewChecked', this.route );
-        console.log("boo", $("#products"));
-        console.log("w " + window.pageYOffset);
-        //console.log("boo", $("#products").scrollTop);
-        console.log("boo", $("#products").offset().top);
-        const w = window.pageYOffset;
-        const ps = $("#products").offset().top;
-        if (Math.abs(w + 56 - ps) > 1) {
-            const tree = this.router.parseUrl( this.router.url );
-            const anchor = tree.fragment;
-            console.log( tree );
 
-            //SCROLL STUFF
-            const myevent = new CustomEvent( 'my-navigation-end', { detail: anchor } );
-
-            //document.getElementById( 'home' ).dispatchEvent( myevent );
-            window.dispatchEvent( myevent );
-        }
     }
 
     ngOnInit() {
         this.cart = this.cartService.getCart();
-        //
-        //
-        this.router.events.subscribe( s => {
-            console.log( 'Router event ', s );
-            if ( s instanceof NavigationEnd ) {
-                const tree = this.router.parseUrl( this.router.url );
-                const anchor = tree.fragment;
-                console.log( tree );
 
+        this.router.events.subscribe( s => {
+            if ( s instanceof NavigationEnd ) {
+            console.log( 'Router event ', s );
+                //const anchor = this.route.snapshot.fragment;
+                if ( !this.route.snapshot.fragment ) {
+                    window.scrollTo( 0, 0 );
+                    $("#mainNav").addClass("app-sticky");
+                } else {
+                    console.log('scroll1');
+                    this.scrollTo(this.route.snapshot.fragment);
+                }
+
+                
                 //SCROLL STUFF
-                const myevent = new CustomEvent( 'my-navigation-end', { detail: anchor } );
+                //const myevent = new CustomEvent( 'my-navigation-end', { detail: anchor } );
 
                 //document.getElementById( 'home' ).dispatchEvent( myevent );
-                window.dispatchEvent( myevent );
+                /////////////////////////////window.dispatchEvent( myevent );
 
                 //magnific to be updated here
                 window.dispatchEvent( new CustomEvent( 'products-loaded' ) );
 
-                //OLD not working
-                //console.log( 'url', this.router.url );
-                //
-                //                if ( tree.fragment ) {
-                //                    let target = $( tree.fragment );
-                //                    console.log('target:', target);
-                //                    target = target.length ? target : $('[name=' + tree.fragment + ']');
-                //                    console.log('target   :' + tree.fragment);
-                //                    console.log('target:', target);
-                //                    const element = document.querySelector( "#" + tree.fragment );
-                //                    //if ( target.length ) {
-                //                        console.log('damnnnnnnnnnnnnnnnnnnnnnnnnnnnn');
-                //                        $( 'html, body' ).animate( {
-                //                            scrollTop: ( element.scrollTo(0 - 56 )
-                //                        }, 800, "easeInOutExpo", () => {
-                //                            //spy = true;
-                //                            //changeHash(hash);
-                //                        } );
-                //
-                //                        return false;
-                //                    //}
-                //
 
-                //                // OLD working - no smooth
-                //                const element = document.querySelector( "#" + tree.fragment );
-                //                if ( element ) {
-                //
-                //                    setTimeout( function() {
-                //                        //alert("Hello"); 
-                //                        console.log( 'scroll in 1 s.............................' );
-                //                        element.scrollIntoView( { behavior: "smooth", block: "start", inline: "nearest" } );
-                //                    }, 50 );
-                //
-                //
-                //                } else {
-                //                    window.scrollTo( 0, 0 );
-                //                }
-
-
-
-                // }
             }
         } );
-        //
-        //
-        //
-        //        this.route.paramMap.map(( params: ParamMap ) => {
-        //            console.log( 'params', params );
-        //            console.log( 'selected: ', params.get( 'id' ) );
-        //            // (+) before `params.get()` turns the string into a number
-        //
-        //            //return true;
-        //        } );
-        //
-        //        this.route.url.subscribe(
-        //            ( hmm ) => {
-        //                console.log( "hmmmmm:", hmm );
-        //            }
-        //        );
-        //
-        //        this.route.params.forEach(( params: Params ) => {
-        //            if ( params['section'] ) {
-        //                console.log( "SECTION: " + params['section'] );
-        //            }
-        //        } );
+
     }
 
 }

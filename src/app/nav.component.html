@@ -1,6 +1,6 @@
 <nav class="navbar header dark app-fixed-30 navbar-expand-lg navbar-dark fixed-top " id="mainNav"><!-- app-sticky -->
 	<div class="container">
-		<a [routerLink]="['/front']" fragment="home" class="navbar-brand js-scroll-trigger" >CRAFTS BOX</a>
+		<a (click)="scrollTo('home')" [routerLink]="['/front']" fragment="home" class="navbar-brand js-scroll-trigger" >CRAFTS BOX</a>
           
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
 			aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -9,15 +9,15 @@
 		<div class="collapse navbar-collapse" id="navbarResponsive">
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item">
-				  <a [routerLink]="['/front']" fragment="products" class="nav-link js-scroll-trigger" >Избери кутия</a>
+				  <a (click)="scrollTo('products')" [routerLink]="['/front']" fragment="products" class="nav-link js-scroll-trigger"  [class.active]="isLinkActive('products')">Избери кутия</a>
 				  <!-- <a [routerLink]="['/user/bob']" [queryParams]="{debug: true}" fragment="education"> -->
 				</li>
 				
 				<li class="nav-item">
-          <a [routerLink]="['/front']" fragment="about" class="nav-link js-scroll-trigger" >За нас</a>
+          <a (click)="scrollTo('about')"  [routerLink]="['/front']" fragment="about" class="nav-link js-scroll-trigger" [class.active]="isLinkActive('about')">За нас</a>
         </li>
 				<li class="nav-item">
-          <a [routerLink]="['/front']" fragment="contact"  class="nav-link js-scroll-trigger" >Контакт</a>
+          <a (click)="scrollTo('contact')"  [routerLink]="['/front']" fragment="contact"  class="nav-link js-scroll-trigger" [class.active]="isLinkActive('contact')">Контакт</a>
         </li>
         
         <!-- START -->
@@ -47,42 +47,34 @@
                   <div class="btn-group">
                     <button type="button" class="btn dropdown-toggle dropdown-toggle--no-caret" id="header-drop-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <i class="fa fa-shopping-cart"></i>
-                    <span class="cart-count default-bg">8</span></button>
+                    <span class="cart-count default-bg">{{cart.getCount()}}</span></button>
                     <ul class="dropdown-menu dropdown-menu-right cart dropdown-animation" aria-labelledby="header-drop-2">
                       <li>
                         <table class="table table-hover">
-                          <thead>
+                          <!-- <thead>
                             <tr>
-                              <th class="quantity">QTY</th>
-                              <th class="product">Product</th>
-                              <th class="amount">Subtotal</th>
+                              <th class="quantity">Количество</th>
+                              <th class="product">Артикул</th>
+                              <th class="amount">Сума</th>
                             </tr>
                           </thead>
+                           -->
                           <tbody>
-                            <tr>
-                              <td class="quantity">2 x</td>
-                              <td class="product"><a href="shop-product.html">Android 4.4 Smartphone</a><span class="small">4.7" Dual Core 1GB</span></td>
-                              <td class="amount">$199.00</td>
+                            <tr *ngFor="let item of cart.getItems()">
+                              <td class="quantity">{{item.quantity}} x</td>
+                              <td class="product"><a [routerLink]="['/product', item.product.id]">{{item.product.name}}</a><span class="small">{{item.product.shortDesc}}</span></td>
+                              <td class="amount">{{item.getSubTotal()|number:'1.2-2'}}</td>
                             </tr>
+                            
                             <tr>
-                              <td class="quantity">3 x</td>
-                              <td class="product"><a href="shop-product.html">Android 4.2 Tablet</a><span class="small">7.3" Quad Core 2GB</span></td>
-                              <td class="amount">$299.00</td>
-                            </tr>
-                            <tr>
-                              <td class="quantity">3 x</td>
-                              <td class="product"><a href="shop-product.html">Desktop PC</a><span class="small">Quad Core 3.2MHz, 8GB RAM, 1TB Hard Disk</span></td>
-                              <td class="amount">$1499.00</td>
-                            </tr>
-                            <tr>
-                              <td class="total-quantity" colspan="2">Total 8 Items</td>
-                              <td class="total-amount">$1997.00</td>
+                              <td class="total-quantity" colspan="2">Общо {{cart.getCount()}} артикула</td>
+                              <td class="total-amount">{{cart.getTotal()|number:'1.2-2'}}</td>
                             </tr>
                           </tbody>
                         </table>
                         <div class="panel-body text-right">
-                          <a href="shop-cart.html" class="btn btn-group btn-gray btn-sm">View Cart</a>
-                          <a href="shop-checkout.html" class="btn btn-group btn-gray btn-sm">Checkout</a>
+                          <a (click)="scrollTo('')"  [routerLink]="['/cart']" class="btn btn-group btn-gray btn-sm">Покажи количка</a>
+                          <a href="shop-checkout.html" class="btn btn-group btn-gray btn-sm">Поръчай</a>
                         </div>
                       </li>
                     </ul>

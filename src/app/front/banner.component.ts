@@ -10,6 +10,11 @@ export class BannerComponent implements OnInit {
 
   constructor() { }
 
+  scrollTo(anchor: string) {
+      const myevent = new CustomEvent( 'my-navigation-end', { detail: anchor } );
+      window.dispatchEvent( myevent );
+  }
+  
   ngOnInit() {
   }
 

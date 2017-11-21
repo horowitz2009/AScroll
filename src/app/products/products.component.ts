@@ -11,16 +11,7 @@ import { Router, NavigationEnd } from "@angular/router";
 } )
 export class ProductsComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
-
-
-
-
-
     constructor( private productService: ProductDatastoredService, private router: Router ) {
-//        router.events.subscribe(( val ) => {
-//            console.log( val );
-//            console.log( 'boohoo ', val instanceof NavigationEnd );
-//        } );
     }
 
 
@@ -39,15 +30,12 @@ export class ProductsComponent implements OnInit, AfterViewInit, AfterViewChecke
     ngAfterViewInit() {
         console.log( "after view products..." );
 
-        const myevent = new CustomEvent( 'mycustomevent', { detail: 'fuck you' } );
-
-        //document.getElementById( 'home' ).dispatchEvent( myevent );
-        window.dispatchEvent( myevent );
+        window.dispatchEvent( new CustomEvent( 'magnific-popup', { detail: 'products' } ) );
 
     }
-    
+
     ngAfterViewChecked() {
-        console.log('Products afterViewChecked');
+        console.log( 'Products afterViewChecked' );
         //magnific to be updated here
         //window.dispatchEvent( new CustomEvent( 'products-loaded' ) );
     }

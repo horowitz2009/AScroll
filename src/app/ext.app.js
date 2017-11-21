@@ -308,6 +308,10 @@
 		
 		window.addEventListener("my-navigation-end", (evt) => {
 			console.log("init scroll", evt);
+			if (evt.detail===null) {
+				console.log('NULLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL');
+				$("#mainNav").addClass("app-sticky");
+			}
 			ExtApp.scrollTo(evt.detail);
 			
 		}, false);
@@ -316,10 +320,15 @@
 			console.log("products loaded -> load magnific");
 			setTimeout(() => {
 				ExtApp.initScroll();
+				//ExtApp.initMagnific();
+			}, 20);
+		}, false);
+		window.addEventListener("magnific-popup", (evt) => {
+			console.log("products loaded -> load magnific");
+			setTimeout(() => {
 				ExtApp.initMagnific();
 			}, 20);
 		}, false);
-		
 		
 		
 		console.log("AppExt: DONE...");

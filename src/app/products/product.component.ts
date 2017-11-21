@@ -7,6 +7,8 @@ import { Product } from "./product";
 import { ProductDatastoredService } from "./product-datastored.service";
 
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
+import { BsModalService } from "ngx-bootstrap";
+import { CartViewService } from "../cart/cart-view.service";
 
 @Component( {
     selector: 'app-product',
@@ -22,8 +24,8 @@ import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gal
 } )
 export class ProductComponent implements OnInit {
 
-    product$: Observable<Product>;
-    //product$: Product;
+    //product$: Observable<Product>;
+    product: Product;
 
     galleryOptions: NgxGalleryOptions[];
     galleryImages: NgxGalleryImage[];
@@ -31,13 +33,21 @@ export class ProductComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private service: ProductDatastoredService
+        private service: ProductDatastoredService,
+        private modalService: BsModalService, private cartService: CartViewService
     ) { }
 
+
+    public addToCart() {
+        this.cartService.addToCartAndOpenModal( this.product );
+    }
+
     ngOnInit() {
-        this.product$ = this.route.paramMap
-            .switchMap(( params: ParamMap ) =>
-                this.service.getProduct( params.get( 'id' ) ) );
+        this.route.paramMap.subscribe(
+            ( params: ParamMap ) => {
+                this.product = this.service.getProductById( params.get( 'id' ) );
+            }
+        );
 
         const x = 1000;
         const y = 750;
@@ -46,9 +56,9 @@ export class ProductComponent implements OnInit {
         const m = 5;
         const tw = ( x - ( n - 1 ) * m ) / n;
         const th = tw / ar;
-        console.log("tw = " + tw);
-        console.log("th = " + th);
-        
+        console.log( "tw = " + tw );
+        console.log( "th = " + th );
+
         this.galleryOptions = [
             {
                 width: '600px',
@@ -62,18 +72,18 @@ export class ProductComponent implements OnInit {
                 imageSwipe: true,
                 previewSwipe: true,
                 previewCloseOnClick: true,
-                previewCloseOnEsc: true, 
-                previewKeyboardNavigation: true, 
-                
+                previewCloseOnEsc: true,
+                previewKeyboardNavigation: true,
+
                 previewZoom: true,
                 previewZoomStep: 0.1,
                 previewZoomMax: 3.0,
                 arrowPrevIcon: 'fa fa-angle-left',
                 arrowNextIcon: 'fa fa-angle-right',
-                
-                
-                
-                
+
+
+
+
                 imageArrowsAutoHide: true
             }
         ];

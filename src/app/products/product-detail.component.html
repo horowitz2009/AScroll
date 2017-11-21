@@ -2,7 +2,7 @@
           <div class="overlay-container">
           
             <img [src]="product.image" alt=""> 
-            <a class="overlay-link popup-img-single" href="{{product.image}}" appMagnificPopup>
+            <a class="overlay-link popup-img-single" href="{{product.image}}">
               <i class="fa fa-search-plus"></i>
             </a> 
              
@@ -22,9 +22,10 @@
             </h3>
             <p class="small">{{product.shortDesc}}</p>
             <div class="elements-list clearfix">
-              <span class="price"><del>{{product.price * 1.3 | currency}}</del> {{product.price | currency}}</span> <a href="#"
-                class="pull-right margin-clear btn btn-sm btn-default-transparent btn-animated">Add To Cart<i
-                class="fa fa-shopping-cart"></i></a>
+              <span class="price"><del>{{product.price * 1.3 | currency}}</del> {{product.price | currency}}</span> 
+              <a (click)="openAddToCartModal()" class="pull-right margin-clear btn btn-sm btn-default-transparent btn-animated">
+                Поръчай<i class="fa fa-shopping-cart"></i>
+              </a>
             </div>
           </div>
         </div>

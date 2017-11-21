@@ -13,8 +13,8 @@
         We create <span class="rotating">beautiful graphics, functional websites, working mobile apps</span>
       </h2>
       <div class="actions">
-        <a [routerLink]="['/front']" fragment="products" class="btn-get-started js-scroll-trigger" >Избери кутия</a>
-        <a [routerLink]="['/front']" fragment="about" class="btn-services js-scroll-trigger" >За нас</a>
+        <a (click)="scrollTo('products')" [routerLink]="['/front']" fragment="products" class="btn-get-started js-scroll-trigger" >Избери кутия</a>
+        <a (click)="scrollTo('about')" [routerLink]="['/front']" fragment="about" class="btn-services js-scroll-trigger" >За нас</a>
       </div>
     </div>
   </div>

@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { Component, NgModule, VERSION, APP_INITIALIZER } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { ModalModule } from 'ngx-bootstrap';
 
 import { AppComponent, startupServiceFactory } from './app.component';
 import { NavComponent } from './nav.component';
@@ -25,6 +26,8 @@ import { ProductDetailComponent } from './products/product-detail.component';
 import { MagnificPopupDirective } from './directives/magnific-popup.directive';
 import { CartViewComponent } from './cart/cart-view.component';
 import { CartService } from "./cart/cart.service";
+import { AddToCartModalComponent } from './cart/add-to-cart-modal.component';
+import { CartViewService } from "./cart/cart-view.service";
 
 export class MyHammerConfig extends HammerGestureConfig {
     overrides = <any>{
@@ -38,6 +41,7 @@ export class MyHammerConfig extends HammerGestureConfig {
         AppComponent,
         KeepHtmlPipe,
 
+        AddToCartModalComponent,
         NavComponent,
         ProductsComponent,
         AboutComponent,
@@ -53,16 +57,19 @@ export class MyHammerConfig extends HammerGestureConfig {
         CartViewComponent
 
     ],
+    entryComponents: [AddToCartModalComponent],
     imports: [
         BrowserModule,
         FormsModule,
         HttpClientModule,
         NgxGalleryModule,
+        ModalModule.forRoot(),
         AppRoutingModule
     ],
     providers: [
         ProductDatastoredService,
         CartService,
+        CartViewService,
         {
             provide: APP_INITIALIZER,
             useFactory: startupServiceFactory,

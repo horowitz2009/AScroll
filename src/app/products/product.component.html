@@ -4,7 +4,7 @@
           </div>  
         </div>
 
-<div class="container wow fadeInUp mt-10" *ngIf="product$ | async as product">
+<div class="container wow fadeInUp mt-10" *ngIf="product">
     <div class="row">
         <div class="col">
 
@@ -62,7 +62,7 @@
 
                         <!-- <span class="price"><del>{{product.price * 1.3  | currency }}</del> {{product.price | currency}}</span> -->
 
-                        <a href="#" class="pull-right margin-clear btn btn-sm btn-default-transparent btn-animated">Поръчай<i
+                        <a (click)="addToCart()" class="pull-right margin-clear btn btn-sm btn-default-transparent btn-animated">Поръчай<i
                             class="fa fa-shopping-cart"></i></a>
                     </div>
 

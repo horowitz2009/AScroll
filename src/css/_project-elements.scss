@@ -133,4 +133,36 @@ tbody {
   border-top: none;
 }
 
+.app-modal > thead > tr > th {
+  font-weight: bold;
+  color:gray;
+}
 
+.app-modal > thead > tr > th.heading {
+  font-weight: bold;
+}
+
+.app-modal > thead > tr > th.right {
+  text-align: right;
+  font-weight: bold;
+}
+
+.app-modal > tbody > tr > td.right {
+  text-align: right;
+}
+
+.app-modal > tbody > tr > td {
+  font-size: 14px;
+  color:gray;
+}
+
+.app-modal > tbody > tr > td.sub-total-label {
+  font-size: 14px;
+}
+
+.app-modal > tbody > tr > td.total-label, 
+.app-modal > tbody > tr > td.total-amount {
+  font-size: 16px;
+  font-weight: bold;
+  color: #525252;
+}
