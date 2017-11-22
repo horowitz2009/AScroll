@@ -18,7 +18,7 @@
 							<th>Артикул</th>
 							<th>Цена</th>
 							<th>Количество</th>
-							<th>Премахни</th>
+							<!-- <th>Премахни</th>  -->
 							<th class="amount">Сума</th>
 						</tr>
 					</thead>
@@ -26,11 +26,19 @@
 						<tr *ngFor="let item of cart.getItems()" class="remove-data">
 							<td class="product"><a [routerLink]="['/product', item.product.id]">{{item.product.name}}</a><span
 								class="small">{{item.product.shortDesc}}</span></td>
-							<td class="price">{{item.price|number:'1.2-2'}}</td>
+							<td class="price">{{item.product.price|number:'1.2-2'}}</td>
 							<td class="quantity">
-									<input [(ngModel)]="item.quantity" class="form-control form-control-sm" type="number">
+								<div class="input-group input-group-sm">
+									<button type="button" class="input-group-addon" (click)="dec(item)">-</button>
+									<input appOnlyNumber="true" [quantityHolder]="item" [(ngModel)]="item.quantity" 
+									class="form-control form-control-sm qtyInput" type="text" 
+									data-bts-min="1" data-bts-max="999"
+									style="width:30px; text-align: center;">
+									<button type="button" class="input-group-addon" (click)="inc(item)">+</button>
+								</div>
+
 							</td>
-							<td class="remove"><a href="#" class="btn btn-remove btn-sm btn-default">Remove</a></td>
+							<!-- <td class="remove"><a href="#" class="btn btn-remove btn-sm btn-default">Remove</a></td> -->
 							<td class="amount">{{item.getSubTotal()|number:'1.2-2'}}</td>
 
 						</tr>
@@ -45,7 +53,7 @@
 						</tr>
             -->
 						<tr>
-							<td class="total-quantity" colspan="4">Общо {{cart.getCount()}} артикула</td>
+							<td class="total-quantity" colspan="3">Общо {{cart.getCount()}} артикула</td>
 							<td class="total-amount">{{cart.getSubTotal()|number:'1.2-2'}}</td>
 						</tr>
 					</tbody>
