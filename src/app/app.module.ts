@@ -29,6 +29,8 @@ import { CartService } from "./cart/cart.service";
 import { AddToCartModalComponent } from './cart/add-to-cart-modal.component';
 import { CartViewService } from "./cart/cart-view.service";
 import { OnlyNumberDirective } from './directives/only-number.directive';
+import { EmailOptionalValidatorDirective } from "./directives/email-optional-validator.directive";
+import { CheckoutComponent } from "./cart/checkout/checkout.component";
 
 export class MyHammerConfig extends HammerGestureConfig {
     overrides = <any>{
@@ -55,8 +57,10 @@ export class MyHammerConfig extends HammerGestureConfig {
         BannerComponent,
         ProductDetailComponent,
         MagnificPopupDirective,
+        EmailOptionalValidatorDirective,
         CartViewComponent,
-        OnlyNumberDirective
+        OnlyNumberDirective,
+        CheckoutComponent
 
     ],
     entryComponents: [AddToCartModalComponent],

@@ -1,0 +1,75 @@
+<div class="container" style="margin-top: 70px"></div>
+<div class="container">
+	<div class="row">
+		<div class="col-lg-6 ml-auto mr-auto col-md-6 col-sm-12"><!-- col-lg-6 ml-lg-auto mr-lg-auto col-lg-8 col-sm-12 -->
+			<h1>Данни за доставка</h1>
+			<form #checkoutForm="ngForm" (ngSubmit)="onSubmit()">
+
+
+				<!-- NAME -->
+				<div class="form-group">
+					<label for="name">Име</label> <input type="text" class="form-control required" id="name" required
+						[(ngModel)]="model.name" name="name" #name="ngModel" #spy placeholder="Име и фамилия">
+					<!-- TODO: remove this: {{model.name}}
+        <br>TODO: remove this: {{spy.className}}-->
+					<div [hidden]="name.valid || name.pristine" class="alert alert-danger">Моля, въведете име и фамилия</div>
+				</div>
+
+				<!-- PHONE -->
+				<div class="form-group">
+					<label for="phone">Телефон</label> <input type="text" class="form-control required" id="phone" required
+						[(ngModel)]="model.phone" name="phone" #phone="ngModel" placeholder="телефонен номер">
+					<div [hidden]="phone.valid || phone.pristine" class="alert alert-danger">Въведете телефонен номер</div>
+				</div>
+
+
+
+				<!-- ADDRESS -->
+				<div class="form-group">
+					<label for="address">Адрес</label> <input type="text" class="form-control" id="address"
+						[(ngModel)]="model.address" name="address" placeholder="град, улица, номер или офис на Еконт">
+				</div>
+
+				<!-- INVOICE CHECKBOX -->
+				<div class="form-group">
+
+					<div>
+						<input type="checkbox" id="wantInvoice" name="wantInvoice" [(ngModel)]="model.wantInvoice"> <label
+							for="wantInvoice">Искам фактура</label>
+					</div>
+
+				</div>
+
+				<!-- INVOICE TEXT -->
+				<div class="form-group" *ngIf="model.wantInvoice">
+
+					<label for="invoiceInfo">Данни за фактурата</label>
+
+					<textarea rows="3" cols="50" class="form-control" id="invoiceInfo" name="invoiceInfo"
+						[(ngModel)]="model.invoiceInfo"></textarea>
+
+
+
+					<!-- <input type="text"
+				class="form-control" id="invoiceInfo" [(ngModel)]="model.invoiceInfo"
+				name="invoiceInfo">-->
+				</div>
+
+				<!-- EMAIL -->
+				<div class="form-group">
+					<label for="email">Имейл</label> <input type="email" class="form-control" id="email" [(ngModel)]="model.email"
+						appEmailOptional name="email" #email="ngModel"
+						[ngClass]="{
+        'has-danger': email.value != '' && email.invalid && (email.dirty || email.touched),
+        'has-success': email.valid && (email.dirty || email.touched)
+      }">
+
+				</div>
+
+				<button type="submit" class="btn">Назад</button>
+				<button type="submit" class="btn btn-success pull-right" [disabled]="!checkoutForm.form.valid">Напред</button>
+
+			</form>
+		</div>
+	</div>
+</div>
