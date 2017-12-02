@@ -1,7 +1,7 @@
 
 <div class="modal-header">
 	<h6 class="modal-title">Добавихте следния артикул</h6>
-	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	<button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="bsModalRef.hide()">
 		<span aria-hidden="true">&times;</span>
 	</button>
 </div>
@@ -60,5 +60,5 @@
         <button type="button" class="btn btn-secondary" (click)="bsModalRef.hide()">Close</button>
         -->
 	<a (click)="bsModalRef.hide()" [routerLink]="['/cart']" class="btn btn-group btn-gray btn-sm">Покажи количка</a> <a
-		(click)="bsModalRef.hide()" [routerLink]="['/checkout']" class="btn btn-group btn-gray btn-sm">Поръчай</a>
+		(click)="bsModalRef.hide()" [routerLink]="['/checkout/shipping']" class="btn btn-group btn-gray btn-sm">Поръчай</a>
 </div>

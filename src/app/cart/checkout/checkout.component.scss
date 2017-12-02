@@ -9,16 +9,183 @@
 
 .alert {
     position: relative;
-    top: -0.25rem;
-    z-index: -1;
-    padding: 0.5rem 1.25rem 0.25rem 1.25rem;
+    //top: -0.25rem;
+    //z-index: -1;
+    padding: 0.25rem 1.25rem 0.25rem 1.25rem;
     margin-bottom: 1rem;
     border: 1px solid transparent;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0.25rem;
     border-bottom-left-radius: 0.25rem;
+    color: #a94442;
+    background: transparent;
 }
+
+.mandatory {
+  color: red;
+  vertical-align: super;
+  //font-size: 80%;
+}
+
+
+
+// Some variables
+$color-grey-darker: #444;
+$color-grey-light: #ccc;
+$color-grey-lighter: #e2e2e2;
+
+.radio-button {
+    display: none;
+}
+
+.radio-button-click-target {
+    cursor: pointer;
+    display: inline-block;
+    font-size: 16px;
+    line-height: 1.5;
+    padding: 14px 14px 14px 32px;
+    margin: 0;
+    position: relative;
+
+    &:hover,
+    &:focus {
+        .radio-button-circle:before {
+            border-color: $color-grey-darker;
+        }
+    }
+
+    &:active .radio-button-circle:before {
+        transform: scale(1.1);
+    }
+}
+
+.radio-button-circle {
+    border-radius: 50%;
+    cursor: pointer;
+    display: block;
+    height: 8px;
+    left: 4px;
+    position: absolute;
+    top: 20px;
+    transition: background-color .1s ease-out;
+    vertical-align: middle;
+    width: 8px;
+
+    &:before {
+        border: 3px solid $color-grey-light;
+        border-radius: 50%;
+        content: '';
+        display: inline-block;
+        height: 20px;
+        position: absolute;
+        top: -6px;
+        transition: border-color .1s ease-out,
+                    transform .1s ease-out;
+        left: -6px;
+        width: 20px;
+    }
+}
+
+.radio-button:checked + .radio-button-click-target .radio-button-circle {
+    background-color: $color-grey-darker;
+}
+
+.radio-button:disabled + .radio-button-click-target {
+    cursor: not-allowed;
+
+    .radio-button-circle:before {
+        border-color: $color-grey-lighter;
+    }
+
+    &:active .radio-button-circle:before {
+        transform: none;
+    }
+}
+
+
+
+.checkbox {
+    display: none;
+}
+
+.checkbox-click-target {
+    cursor: pointer;
+    display: inline-block;
+    font-size: 16px;
+    line-height: 1.0;
+    padding: 0px 0px 0px 25px;
+    position: relative;
+
+    &:hover .checkbox-box,
+    &:focus .checkbox-box {
+        border-color: $color-grey-darker;
+
+        &:before {
+            border-color: $color-grey-darker;
+        }
+    }
+
+    &:active .checkbox-box {
+        transform: scale(1.1);
+    }
+}
+
+.checkbox-box {
+    border: 3px solid $color-grey-light;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-block;
+    height: 20px;
+    position: absolute;
+    top: -3px;
+    left: 0;
+    transition: background-color .1s ease-out;
+    vertical-align: middle;
+    width: 20px;
+}
+
+.checkbox-box:after {
+    border: 3px solid $color-grey-darker;
+    border-top: none;
+    border-right: none;
+    content: '';
+    height: 5px;
+    left: 3px;
+    opacity: 0;
+    position: absolute;
+    top: 4px;
+    transform: rotate(-45deg);
+    transition: opacity .1s ease-out;
+    width: 9px;
+}
+
+.checkbox:checked + .checkbox-click-target .checkbox-box:after {
+    opacity: 1;
+}
+
+.checkbox:disabled + .checkbox-click-target {
+    cursor: not-allowed;
+
+    .checkbox-box {
+        border-color: $color-grey-lighter;
+    }
+
+    &:hover .checkbox-box,
+    &:focus .checkbox-box {
+        border-color: $color-grey-lighter;
+    }
+
+    &:active .checkbox-box {
+        transform: none;
+    }
+}
+
+// Some resets:
+//html, body { font-family: sans-serif; box-sizing: border-box; }
+//*, *:before, *:after { box-sizing: inherit; }
+
+
 
 /*
 .has-success  {
@@ -32,3 +199,40 @@
 
 
 */
+li.list-group-item.selected {
+  background-color: #ececec;
+  }
+
+li.list-group-item.selected .radio-button-click-target {
+  font-weight: 600;
+}
+
+li.list-group-item:hover {
+  //background-color: #ececec;
+  //background: rgba(0, 0, 0, 0.09);
+  background: linear-gradient(
+      rgba(0, 0, 0, 0.07), 
+      rgba(0, 0, 0, 0.17)
+    );
+  }
+
+  
+  pre {
+    //font-size: inherit;
+    color: inherit;
+    font-family: inherit;
+   
+  }
+a.terms:not([href]) {
+  color: #138496;
+  transition: 0.2s;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+a.terms:hover:not([href]), a:active:not([href]), a:focus:not([href]) {
+  color: lighten(#138496, 0.5%);
+  outline: none;
+  text-decoration: none;
+}
+  

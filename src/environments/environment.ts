@@ -5,5 +5,6 @@
 
 export const environment = {
   production: false,
-  apiUrl: "http://localhost/api2.php"
+  apiUrl: "http://localhost/api2.php",
+  methodsOfPayment: ['cash', 'paypal', 'bank']
 };

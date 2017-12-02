@@ -34,7 +34,7 @@ export class ProductDatastoredService {
     }
 
     getProductsDS(): Product[] {
-        return this.dataStore.products;    
+        return this.dataStore.products;
     }
 
     loadAll(): Promise<Product> {
@@ -53,7 +53,7 @@ export class ProductDatastoredService {
                 } );
                 this._products.next( Object.assign( {}, this.dataStore ).products );
             }, error => console.log( 'Could not load products.' ) );
-        
+
         return req.toPromise();
     }
 

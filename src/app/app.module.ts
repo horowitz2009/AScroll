@@ -3,6 +3,7 @@ import { Component, NgModule, VERSION, APP_INITIALIZER } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { ModalModule } from 'ngx-bootstrap';
+import { CookieService } from 'ngx-cookie-service';
 
 import { AppComponent, startupServiceFactory } from './app.component';
 import { NavComponent } from './nav.component';
@@ -31,6 +32,8 @@ import { CartViewService } from "./cart/cart-view.service";
 import { OnlyNumberDirective } from './directives/only-number.directive';
 import { EmailOptionalValidatorDirective } from "./directives/email-optional-validator.directive";
 import { CheckoutComponent } from "./cart/checkout/checkout.component";
+import { TermsAndConditionsComponent } from './terms-and-conditions.component';
+import { CheckoutFinalComponent } from './cart/checkout/checkout-final.component';
 
 export class MyHammerConfig extends HammerGestureConfig {
     overrides = <any>{
@@ -60,10 +63,12 @@ export class MyHammerConfig extends HammerGestureConfig {
         EmailOptionalValidatorDirective,
         CartViewComponent,
         OnlyNumberDirective,
-        CheckoutComponent
+        CheckoutComponent,
+        TermsAndConditionsComponent,
+        CheckoutFinalComponent
 
     ],
-    entryComponents: [AddToCartModalComponent],
+    entryComponents: [AddToCartModalComponent, TermsAndConditionsComponent],
     imports: [
         BrowserModule,
         FormsModule,
@@ -74,6 +79,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     ],
     providers: [
         ProductDatastoredService,
+        CookieService,
         CartService,
         CartViewService,
         {
