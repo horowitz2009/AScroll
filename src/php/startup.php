@@ -15,6 +15,9 @@ set_error_handler ( "exception_error_handler" );
 
 $useremail = false;
 
+//void session_set_cookie_params ( int $lifetime [, string $path [, string $domain [, bool $secure = false [, bool $httponly = false ]]]] )
+//session_set_cookie_param (30 * 60);
+
 // First, we initialize the session, to see if we are already logged in
 session_start();
 

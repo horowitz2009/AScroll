@@ -1,5 +1,6 @@
 import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { ProductDatastoredService } from "./products/product-datastored.service";
+import { CartService } from "./cart/cart.service";
 import { CookieService } from 'ngx-cookie-service';
 
 @Component( {
@@ -40,10 +41,12 @@ export class AppComponent implements AfterViewInit, OnInit {
 }
 
 
-export function startupServiceFactory( productService: ProductDatastoredService ): Function {
+export function startupServiceFactory( productService: ProductDatastoredService, cartService: CartService ): Function {
     console.log( 'productService', productService );
+    console.log( 'cartService', cartService );
     return () => {
         console.log( "startup is working..." );
+        cartService.loadCartIfAny();
         return productService.loadAll();
     }; // => required, otherwise `this` won't work inside StartupService::load
 }

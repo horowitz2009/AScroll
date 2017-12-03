@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ProductDatastoredService } from "./product-datastored.service";
 import { Product } from '../products/product';
 import { Observable } from "rxjs/Observable";
@@ -9,7 +9,7 @@ import { Router, NavigationEnd } from "@angular/router";
     templateUrl: './products.component.html',
     styles: []
 } )
-export class ProductsComponent implements OnInit, AfterViewInit, AfterViewChecked {
+export class ProductsComponent implements OnInit, AfterViewInit {
 
     constructor( private productService: ProductDatastoredService, private router: Router ) {
     }
@@ -28,25 +28,18 @@ export class ProductsComponent implements OnInit, AfterViewInit, AfterViewChecke
     }
 
     ngAfterViewInit() {
-        console.log( "after view products..." );
-
-        window.dispatchEvent( new CustomEvent( 'magnific-popup', { detail: 'products' } ) );
-
-    }
-
-    ngAfterViewChecked() {
-        console.log( 'Products afterViewChecked' );
-        //magnific to be updated here
-        //window.dispatchEvent( new CustomEvent( 'products-loaded' ) );
+        this.productService.products.subscribe(() => {
+            window.dispatchEvent( new CustomEvent( 'magnific-popup', { detail: 'products' } ) );
+        } );
     }
 
     ngOnInit() {
 
-        //this.productService.loadAll();
-
         //this.products$ = this.productService.products; // subscribe to entire collection
-        this.products = this.productService.getProductsDS();
-        console.log( "init products..." );
+        this.productService.products.subscribe(( products ) => {
+            this.products = products;
+        } );
+
     }
 
 }

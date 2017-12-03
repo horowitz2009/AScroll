@@ -85,7 +85,7 @@ export class MyHammerConfig extends HammerGestureConfig {
         {
             provide: APP_INITIALIZER,
             useFactory: startupServiceFactory,
-            deps: [ProductDatastoredService],
+            deps: [ProductDatastoredService, CartService],
             multi: true
         },
         {

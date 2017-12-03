@@ -6,12 +6,13 @@
   "apps": [
     {
       "root": "src",
-      "outDir": "dist",
+      "outDir": "C:/wamp/www",
       "assets": [
         "assets",
+        "php",
         "favicon.ico"
       ],
-      "index": "index.html",
+      "index": "index.php",
       "main": "main.ts",
       "polyfills": "polyfills.ts",
       "test": "test.ts",

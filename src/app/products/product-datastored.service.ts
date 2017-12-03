@@ -51,6 +51,7 @@ export class ProductDatastoredService {
                     }
                     return p;
                 } );
+                console.log('map done');
                 this._products.next( Object.assign( {}, this.dataStore ).products );
             }, error => console.log( 'Could not load products.' ) );
 

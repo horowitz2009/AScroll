@@ -5,6 +5,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: "http://localhost/api2.php",
+  apiUrl: "http://craftsbox.eu/api2.php",
+  cartUrl: "http://craftsbox.eu/cart.php",
   methodsOfPayment: ['cash', 'paypal', 'bank']
 };
