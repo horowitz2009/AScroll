@@ -60,9 +60,10 @@ class CartService {
 		$stmt->execute( array ($cartId ) );
 		// todo insert
 		$items = $p ['items'];
+		$pos = 1;
 		foreach ( $items as $i => $item ) {
-			$stmt = $dbh->prepare( "insert into cart_items (cart_id, product_id, quantity) values (?, ?, ?)" );
-			$stmt->execute( array ($cartId,$item ['product'],$item ['quantity'] ) );
+			$stmt = $dbh->prepare( "insert into cart_items (cart_id, product_id, quantity, pos) values (?, ?, ?, ?)" );
+			$stmt->execute( array ($cartId,$item ['product'],$item ['quantity'], $pos++ ) );
 		}
 	}
 
@@ -101,16 +102,31 @@ class CartService {
 	}
 
 	public function readCart(){
-		$dbh = $this->db->createPDOConnection();
-		$q = $dbh->query( 'select * from cart_items' );
-		$row = $q->fetch( PDO::FETCH_OBJ );
-		$rows = array ();
-		while ( $row ) {
-			$rows [] = $row;
-			$row = $q->fetch( PDO::FETCH_OBJ );
-		}
 		$cart = new stdClass();
-		$cart->items = $rows;
+		$cart->items = array ();
+		$token = null;
+		foreach ( $_COOKIE as $name => $value ) {
+			if ($name === 'c_' . $this->g) {
+				$token = $value;
+				break;
+			}
+		}
+		if ($token !== null && $token !== '') {
+			// we have already cookie
+			$cartId = $this->findCart( $token );
+			// do we have a record in db?
+			if ($cartId != null) {
+				$dbh = $this->db->createPDOConnection();
+				$q = $dbh->query( 'select * from cart_items where cart_id = ' . $cartId . ' order by pos' );
+				$row = $q->fetch( PDO::FETCH_OBJ );
+				$rows = array ();
+				while ( $row ) {
+					$rows [] = $row;
+					$row = $q->fetch( PDO::FETCH_OBJ );
+				}
+				$cart->items = $rows;
+			}
+		}
 		print json_encode( $cart );
 	}
 

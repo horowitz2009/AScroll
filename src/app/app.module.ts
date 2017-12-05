@@ -5,7 +5,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { ModalModule } from 'ngx-bootstrap';
 import { CookieService } from 'ngx-cookie-service';
 
-import { AppComponent, startupServiceFactory2 } from './app.component';
+import { AppComponent, startupServiceFactory2, startupServiceFactory } from './app.component';
 import { NavComponent } from './nav.component';
 import { AboutComponent } from './front/about.component';
 import { ContactComponent } from './front/contact.component';
@@ -82,18 +82,18 @@ export class MyHammerConfig extends HammerGestureConfig {
         CookieService,
         CartService,
         CartViewService,
-//        {
-//            provide: APP_INITIALIZER,
-//            useFactory: startupServiceFactory,
-//            deps: [ProductDatastoredService],
-//            multi: true
-//        },
         {
             provide: APP_INITIALIZER,
-            useFactory: startupServiceFactory2,
-            deps: [CartService],
+            useFactory: startupServiceFactory,
+            deps: [ProductDatastoredService],
             multi: true
         },
+//        {
+//            provide: APP_INITIALIZER,
+//            useFactory: startupServiceFactory2,
+//            deps: [CartService],
+//            multi: true
+//        },
         {
             provide: HAMMER_GESTURE_CONFIG,
             useClass: MyHammerConfig

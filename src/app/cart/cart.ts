@@ -44,7 +44,7 @@ export class Cart {
         const found = this.items.find( it => it.product.id === item.product.id );
         console.log( "FOUND", found );
         if ( found ) {
-            found.quantity += item.quantity;
+            found.quantity = parseInt( '' + found.quantity, 10 ) + item.quantity;
         } else {
             this.items.push( item );
         }

@@ -13,7 +13,7 @@ export class AppComponent implements AfterViewInit, OnInit {
 
     cookieValue = 'UNKNOWN';
 
-    constructor( private cookieService: CookieService ) { }
+    constructor( private cookieService: CookieService, private cartService: CartService ) { }
 
 
     ngAfterViewInit() {
@@ -37,6 +37,8 @@ export class AppComponent implements AfterViewInit, OnInit {
             this.cookieService.set( 'Test', '1', 14 );
             this.cookieValue = this.cookieService.get( 'Test' );
         }
+        
+        this.cartService.loadSimple();
     }
 }
 
