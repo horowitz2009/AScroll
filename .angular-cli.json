@@ -10,6 +10,9 @@
       "assets": [
         "assets",
         "php",
+        ".htaccess",
+        "api2.php",
+        "cart.php",
         "favicon.ico"
       ],
       "index": "index.php",

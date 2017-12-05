@@ -34,19 +34,25 @@ export class AppComponent implements AfterViewInit, OnInit {
             this.cookieValue = '' + ( parseInt( '' + this.cookieValue, 10 ) + 1 );
             this.cookieService.set( 'Test', this.cookieValue, 14 );
         } else {
-            this.cookieService.set( 'Test', '1' , 14);
+            this.cookieService.set( 'Test', '1', 14 );
             this.cookieValue = this.cookieService.get( 'Test' );
         }
     }
 }
 
 
-export function startupServiceFactory( productService: ProductDatastoredService, cartService: CartService ): Function {
+export function startupServiceFactory( productService: ProductDatastoredService ): Function {
     console.log( 'productService', productService );
-    console.log( 'cartService', cartService );
     return () => {
         console.log( "startup is working..." );
-        cartService.loadCartIfAny();
         return productService.loadAll();
+    }; // => required, otherwise `this` won't work inside StartupService::load
+}
+
+export function startupServiceFactory2( cartService: CartService ): Function {
+    console.log( 'cartService', cartService );
+    return () => {
+        console.log( "startup is working...2" );
+        return cartService.loadCartIfAny();
     }; // => required, otherwise `this` won't work inside StartupService::load
 }

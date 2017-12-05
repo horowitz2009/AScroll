@@ -15,6 +15,7 @@ import { Cart } from "./cart";
 import { Product } from "../products/product";
 import { Item } from "./item";
 import { CookieService } from "ngx-cookie-service";
+import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class CartService {
@@ -26,7 +27,7 @@ export class CartService {
         cart: Cart
     };
 
-    private baseUrl = environment.cartUrl;  // URL to web api
+    private baseUrl = 'cart.php';  // URL to web api
     private headers = new HttpHeaders( { 'Content-Type': 'application/json' } );
 
 
@@ -43,34 +44,76 @@ export class CartService {
     addToCart( product: Product, quantity: number = 1 ) {
         const item = new Item( product, quantity );
         this._cart.addItem( item );
+        console.log( this._cart );
         this.saveCart();
     }
 
+    private serialize( cart: Cart ): string {
+        return JSON.stringify( cart, ( key, value ) => {
+            if ( key === 'product' ) {
+                return value.id;
+            } else {
+                return value;
+            }
+        } );
+    }
+
     saveCart(): void {
-        this.http.post( `${this.baseUrl}/create`, { "product_id": 1 } )
+        console.log( "CART TO BE SAVED", JSON.stringify( this._cart ) );
+        this.http.post<any>( `${this.baseUrl}/create`, this.serialize( this._cart ) )
+            .subscribe( res => {
+                console.log( "cart saved", res );
+                //this._products.next( Object.assign( {}, this.dataStore ).products );
+                const cn = res.cn;
+                const cv = res.cv;
+                this.cookieService.set( cn, cv, 30, '/' );
+
+            }, error => console.log( 'Could not save cart.', error ) );
+    }
+
+    createCart(): void {
+        this.http.post( `${this.baseUrl}/create`, { "product_id": 1, "quantity": 1 } )
             .subscribe( res => {
                 console.log( "cart saved", res );
                 //this._products.next( Object.assign( {}, this.dataStore ).products );
             }, error => console.log( 'Could not save cart.', error ) );
     }
+    
+    loadCartIfAny(): Promise<any>  {
+        
+        
+        const req = this.http.get<any>( `${this.baseUrl}/read` );
+        
+        req.subscribe( data => {
+            const c: Cart = this.deserialize( data );
+            this.dataStore.cart = c;
 
-    loadCartIfAny(): void {
-        //todo make it server-side php loadCart()...
-        //this.load();
+            this._cart2.next( Object.assign( {}, this.dataStore ).cart );
+        }, error => {
+            console.log( 'Could not load cart.' );
+            this.dataStore.cart = new Cart();
+            this._cart2.next( Object.assign( {}, this.dataStore ).cart );
+        } );
+        
+        req.subscribe(
+            data => {
+                console.log( data );
+            }, error => console.log( 'Could not load cart.' ) );
 
-        //        console.log( 'Loading cart if any...' );
-        //        if ( this.cookieService.check( 'cart_token' ) ) {
-        //            console.log( "Found cart token. Loading from db..." );
-        //        } else {
-        //            console.log( "no cart token..." );
-        //
-        //        }
+        return req.toPromise();
+        
+    }
+
+    private deserialize( data: any ): Cart {
+        const c = new Cart();
+        console.log( data.items );
+        return c;
     }
 
     load() {
-        this.http.get<any>( `${this.baseUrl}/load` ).subscribe( data => {
+        this.http.get<any>( `${this.baseUrl}/read` ).subscribe( data => {
 
-            const c: Cart = data;
+            const c: Cart = this.deserialize( data );
             this.dataStore.cart = c;
 
             this._cart2.next( Object.assign( {}, this.dataStore ).cart );

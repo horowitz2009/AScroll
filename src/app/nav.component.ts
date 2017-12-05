@@ -60,7 +60,7 @@ export class NavComponent implements OnInit, AfterViewChecked {
                 /////////////////////////////window.dispatchEvent( myevent );
 
                 //magnific to be updated here
-               // window.dispatchEvent( new CustomEvent( 'products-loaded' ) );
+               window.dispatchEvent( new CustomEvent( 'products-loaded' ) );
 
 
             }
