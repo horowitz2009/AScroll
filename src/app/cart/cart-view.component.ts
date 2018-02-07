@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { CartService } from "./cart.service";
 import { Cart } from "./cart";
 import { Item } from "./item";
+import { Router } from "@angular/router";
 
 @Component( {
     selector: 'app-cart-view',
@@ -12,13 +13,13 @@ import { Item } from "./item";
 export class CartViewComponent implements OnInit {
 
     cart: Cart;
-    constructor( private cartService: CartService ) { }
+    constructor( private router: Router, private cartService: CartService ) { }
 
 
     dec( item: Item ) {
         //console.log("dec", item.quantity );
         let v = parseInt( '' + item.quantity, 10 );
-        if (isNaN(v)) {
+        if ( isNaN( v ) ) {
             v = 1;
         }
         if ( v > 1 ) {
@@ -29,13 +30,32 @@ export class CartViewComponent implements OnInit {
     inc( item: Item ) {
         //console.log("inc", item.quantity );
         let v = parseInt( '' + item.quantity, 10 );
-        if (isNaN(v)) {
+        if ( isNaN( v ) ) {
             v = 1;
             return;
         }
         if ( v < 99 ) {
             item.quantity = v + 1;
         }
+    }
+    
+    remove( item: Item ) {
+
+        this.cartService.removeItem( item );
+        //console.log("inc", item.quantity );
+        let v = parseInt( '' + item.quantity, 10 );
+        if ( isNaN( v ) ) {
+            v = 1;
+            return;
+        }
+        if ( v < 99 ) {
+            item.quantity = v + 1;
+        }
+    }
+    
+    checkout() {
+        this.cartService.saveCart();
+        this.router.navigate( [ '/checkout/shipping' ]);
     }
 
 

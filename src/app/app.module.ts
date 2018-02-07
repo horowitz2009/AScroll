@@ -27,6 +27,7 @@ import { ProductDetailComponent } from './products/product-detail.component';
 import { MagnificPopupDirective } from './directives/magnific-popup.directive';
 import { CartViewComponent } from './cart/cart-view.component';
 import { CartService } from "./cart/cart.service";
+import { OrderService } from "./cart/checkout/order.service";
 import { AddToCartModalComponent } from './cart/add-to-cart-modal.component';
 import { CartViewService } from "./cart/cart-view.service";
 import { OnlyNumberDirective } from './directives/only-number.directive';
@@ -82,6 +83,7 @@ export class MyHammerConfig extends HammerGestureConfig {
         CookieService,
         CartService,
         CartViewService,
+        OrderService,
         {
             provide: APP_INITIALIZER,
             useFactory: startupServiceFactory,

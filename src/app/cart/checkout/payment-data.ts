@@ -5,14 +5,21 @@ export class PaymentData {
     public touched: boolean;
 
     constructor() {
-        this.methodOfPayment = 'cash';
-        
-        this.editPayment = true;
-        this.touched = false;
+        this.clear();
     }
 
     public isDataOK(): boolean {
         return this.methodOfPayment ? true : false;
+    }
+    
+    public clear(): void {
+        this.methodOfPayment = 'cash';
+        this.editPayment = true;
+        this.touched = false;
+    }
+    
+    public load(o: PaymentData) {
+        this.methodOfPayment = o.methodOfPayment;
     }
 
 }

@@ -17,6 +17,8 @@ import { Item } from "./item";
 import { CookieService } from "ngx-cookie-service";
 import 'rxjs/add/operator/toPromise';
 import { ProductDatastoredService } from "../products/product-datastored.service";
+import { ShippingData } from "./checkout/shipping-data";
+import { PaymentData } from "./checkout/payment-data";
 
 @Injectable()
 export class CartService {
@@ -46,6 +48,12 @@ export class CartService {
 
     getCart2(): BehaviorSubject<Cart> {
         return this._cart2;
+    }
+
+    removeItem( item: Item ) {
+        this._cart.removeItem( item );
+        this.saveCart();
+        this._cart2.next( this._cart );
     }
 
     addToCart( product: Product, quantity: number = 1 ) {
@@ -79,6 +87,52 @@ export class CartService {
             }, error => console.log( 'Could not save cart.', error ) );
     }
 
+    resetCart(): void {
+        this._cart.clear();
+        this._cart2.next( this._cart );
+    }
+    
+    finalize(): void {
+        console.log( "FINALIZE THIS", JSON.stringify( this._cart ) );
+        this.http.post<any>( `${this.baseUrl}/finalize`, this.serialize( this._cart ) )
+            .subscribe( res => {
+                console.log( "cart finalized", res );
+                //this._products.next( Object.assign( {}, this.dataStore ).products );
+                this.resetCart();
+                const cn = res.cn;
+                this.cookieService.delete( cn, '/' );
+
+            }, error => console.log( 'Could not save cart.', error ) );
+        
+    }
+
+    saveShippingData(): void {
+        console.log( "shipping data to be SAVED", JSON.stringify( this._cart ) );
+        this.http.post<any>( `${this.baseUrl}/create`, this.serialize( this._cart ) )
+            .subscribe( res => {
+                console.log( "cart saved", res );
+                //this._products.next( Object.assign( {}, this.dataStore ).products );
+                const cn = res.cn;
+                const cv = res.cv;
+                this.cookieService.set( cn, cv, 30, '/' );
+
+            }, error => console.log( 'Could not save cart.', error ) );
+    }
+
+    savePaymentData(): void {
+        console.log( "payment data TO BE SAVED", JSON.stringify( this._cart ) );
+        this.http.post<any>( `${this.baseUrl}/create`, this.serialize( this._cart ) )
+            .subscribe( res => {
+                console.log( "cart saved", res );
+                //this._products.next( Object.assign( {}, this.dataStore ).products );
+                const cn = res.cn;
+                const cv = res.cv;
+                this.cookieService.set( cn, cv, 30, '/' );
+
+            }, error => console.log( 'Could not save cart.', error ) );
+    }
+
+
     createCart(): void {
         this.http.post( `${this.baseUrl}/create`, { "product_id": 1, "quantity": 1 } )
             .subscribe( res => {
@@ -94,13 +148,20 @@ export class CartService {
             console.log( 'CART READ', data );
             const c: Cart = this.deserialize( data );
             this._cart.items = []; //.splice( 0, this._cart.items.length );
-            //this._cart.items = c.items;
-            c.items.forEach(( item, i ) => {
-                this._cart.items.push( item );
-            } );
+            this._cart.items = c.items;
+            
+//            c.items.forEach(( item, i ) => {
+//                this._cart.items.push( item );
+//            } );
+            
+            this._cart.shippingData.load(c.shippingData);
+            this._cart.paymentData.load(c.paymentData);
+            
             //this.dataStore.cart = c;
             //this._cart = c;
             //this._cart2.next( Object.assign( {}, this.dataStore ).cart );
+            
+            this._cart2.next( this._cart );
         } );
     }
 
@@ -131,11 +192,24 @@ export class CartService {
 
     private deserialize( data: any ): Cart {
         const c = new Cart();
-        console.log( data.items );
+        //console.log( data.items );
+        console.log( 'QWERTY', data );
         data.items.forEach(( itemDTO, index ) => {
             const item = new Item( this.productService.getProductById( itemDTO.product_id ), itemDTO.quantity );
             c.addItem( item );
         } );
+
+        if ( data.cartData ) {
+            const s = data.cartData;
+            c.shippingData = new ShippingData( s.name, s.phone );
+            c.shippingData.address = s.address;
+            c.shippingData.email = s.email;
+            c.shippingData.wantInvoice = s.wantInvoice === "1";
+            c.shippingData.invoiceInfo = s.invoiceInfo;
+
+            c.paymentData = new PaymentData();
+            c.paymentData.methodOfPayment = s.methodOfPayment;
+        }
         return c;
     }
 

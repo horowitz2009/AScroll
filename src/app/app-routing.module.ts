@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'front', component: FrontComponent },
   { path: 'products', component: ProductsComponent },
   { path: 'product/:id', component: ProductComponent },
-  { path: 'cart', component: CartViewComponent },
+  { path: 'mycart', component: CartViewComponent },
   { path: 'checkout/shipping', component: CheckoutComponent },
   { path: 'checkout/finalize', component: CheckoutFinalComponent },
   

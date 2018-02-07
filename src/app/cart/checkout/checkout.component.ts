@@ -8,6 +8,7 @@ import { PaymentData } from "./payment-data";
 import { TermsAndConditionsComponent } from "../../terms-and-conditions.component";
 import { BsModalService } from "ngx-bootstrap";
 import { Router } from "@angular/router";
+import { OrderService } from "./order.service";
 
 declare let paypal: any;
 
@@ -27,9 +28,11 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     agreeCB = false;
 
     paymentResult = '';
+
     cart: Cart;
+
     amountMF: string;
-    constructor( private router: Router, private cartService: CartService, private modalService: BsModalService ) { }
+    constructor( private router: Router, private cartService: CartService, private orderService: OrderService, private modalService: BsModalService ) { }
 
     private loadExternalScript( scriptUrl: string ) {
         return new Promise(( resolve, reject ) => {
@@ -52,11 +55,13 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     onSubmit() {
         this.model.editShipping = false;
         this.model.touched = true;
+        this.cartService.saveShippingData();
     }
 
     onSubmit2() {
         this.pModel.editPayment = false;
         this.pModel.touched = true;
+        this.cartService.savePaymentData();
     }
 
     canFinalize(): boolean {
@@ -64,8 +69,10 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     }
 
     finalize(): void {
-        console.log( "FINALIZE THE FUCKING ORDER!" );
-        this.router.navigate( [ '/checkout/finalize' ]);
+        console.log( "FINALIZE THE FUCKING ORDER!", this.cart );
+        this.cartService.finalize();
+
+        this.router.navigate( ['/checkout/finalize'] );
     }
 
     openTermsAndConditions() {
@@ -81,47 +88,47 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     ngAfterViewInit(): void {
         console.log( "AFTERVIEW", this.amountMF );
 
-        this.loadExternalScript( "https://www.paypalobjects.com/api/checkout.js" ).then(() => {
-            console.log( "AFTERVIEW2", this.amountMF );
-
-            const tr = {
-                payment: {
-                    transactions: [
-                        {
-                            amount: { total: '' + this.amountMF, currency: 'EUR' }
-                        }
-                    ]
-                }
-            };
-            const hmm = {
-                env: 'sandbox',
-                client: {
-                    sandbox: 'AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R',
-                    production: '<insert production client id>'
-                },
-
-                commit: true,
-
-                payment: function( data, actions ) {
-
-                    return actions.payment.create( tr );
-                },
-
-                onAuthorize: function( data, actions ) {
-
-                    return actions.payment.execute().then( function() {
-                        //window.alert( 'Payment Complete!' );
-                        this.paymentOK();
-                        console.log( 'BOOOOO' );
-                    } );
-                }
-
-            };
-
-            paypal.Button.render( hmm, '#paypal-button-container' );
-
-            //END  
-        } );
+        //        this.loadExternalScript( "https://www.paypalobjects.com/api/checkout.js" ).then(() => {
+        //            console.log( "AFTERVIEW2", this.amountMF );
+        //
+        //            const tr = {
+        //                payment: {
+        //                    transactions: [
+        //                        {
+        //                            amount: { total: '' + this.amountMF, currency: 'EUR' }
+        //                        }
+        //                    ]
+        //                }
+        //            };
+        //            const hmm = {
+        //                env: 'sandbox',
+        //                client: {
+        //                    sandbox: 'AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R',
+        //                    production: '<insert production client id>'
+        //                },
+        //
+        //                commit: true,
+        //
+        //                payment: function( data, actions ) {
+        //
+        //                    return actions.payment.create( tr );
+        //                },
+        //
+        //                onAuthorize: function( data, actions ) {
+        //
+        //                    return actions.payment.execute().then( function() {
+        //                        //window.alert( 'Payment Complete!' );
+        //                        this.paymentOK();
+        //                        console.log( 'BOOOOO' );
+        //                    } );
+        //                }
+        //
+        //            };
+        //
+        //            paypal.Button.render( hmm, '#paypal-button-container' );
+        //
+        //            //END  
+        //        } );
     }
 
 
@@ -132,6 +139,8 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {
         this.cart = this.cartService.getCart();
+        this.model = this.cart.shippingData;
+        this.pModel = this.cart.paymentData;
 
         this.methods = METHODS_OF_PAYMENT.filter(( m ) =>
             environment.methodsOfPayment.indexOf( m.code ) >= 0
@@ -142,6 +151,8 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
             this.pModel.editPayment = false;
             this.pModel.touched = true;
         }
+
+        //TODO load shipping data
 
         this.amountMF = '2.03';
         console.log( "INIT", this.amountMF );

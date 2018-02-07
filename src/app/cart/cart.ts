@@ -1,11 +1,18 @@
 import { Item } from "./item";
+import { ShippingData } from "./checkout/shipping-data";
+import { PaymentData } from "./checkout/payment-data";
 
 export class Cart {
     id: number;
     items: Item[];
 
+    shippingData: ShippingData;
+    paymentData: PaymentData;
+
     constructor() {
         this.items = [];
+        this.shippingData = new ShippingData('', '');
+        this.paymentData = new PaymentData();
     }
 
     getItems(): Item[] {
@@ -48,5 +55,19 @@ export class Cart {
         } else {
             this.items.push( item );
         }
+    }
+    
+    removeItem(item: Item) {
+        const index = this.items.findIndex(it => it.product.id === item.product.id);
+        if (index > -1) {
+           this.items.splice(index, 1);
+        }
+    }
+    
+    clear() {
+        this.id = null;
+        this.items.splice(0, this.items.length);
+        this.shippingData.clear();
+        this.paymentData.clear();
     }
 }

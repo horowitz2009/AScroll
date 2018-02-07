@@ -11,7 +11,7 @@
 				<h1 class="page-title">Вашата количка</h1>
 				<div class="separator-2"></div>
 				<!-- page-title end -->
-
+	
 				<table class="table cart table-hover table-colored">
 					<thead>
 						<tr>
@@ -24,17 +24,39 @@
 					</thead>
 					<tbody>
 						<tr *ngFor="let item of cart.getItems()" class="remove-data">
-							<td class="product"><a [routerLink]="['/product', item.product.id]">{{item.product.name}}</a><span
+							<td class="product"><a
+								[routerLink]="['/product', item.product.id]">{{item.product.name}}</a><span
 								class="small">{{item.product.shortDesc}}</span></td>
 							<td class="price">{{item.product.price|number:'1.2-2'}}</td>
 							<td class="quantity">
-								<div class="input-group input-group-sm">
-									<button type="button" class="input-group-addon" (click)="dec(item)">-</button>
+							
+							
+							<!-- 	<div class="input-group input-group-sm">
+									<button type="button" class="input-group-addon btn btn-outline-secondary" (click)="dec(item)">-a</button>
 									<input appOnlyNumber="true" [quantityHolder]="item" [(ngModel)]="item.quantity" 
 									class="form-control form-control-sm qtyInput" type="text" 
 									data-bts-min="1" data-bts-max="999"
 									style="width:30px; text-align: center;">
-									<button type="button" class="input-group-addon" (click)="inc(item)">+</button>
+									<button type="button" class="input-group-addon btn btn-outline-secondary" (click)="inc(item)">+</button>
+								</div>
+ -->
+	 
+								<div class="input-group input-group-sm">
+									<div class="input-group-prepend">
+										<button type="button" class="btn btn-outline-secondary"
+											(click)="dec(item)">-</button>
+									</div>
+									<input appOnlyNumber="true" [quantityHolder]="item"
+										[(ngModel)]="item.quantity"
+										class="form-control form-control-sm qtyInput" type="text"
+										data-bts-min="1" data-bts-max="999"
+										style="width: 30px; text-align: center;">
+									<div class="input-group-append">
+										<button type="button" class="btn btn-outline-secondary"
+											(click)="inc(item)">+</button>
+										<button type="button" class="btn btn-outline-secondary"
+											(click)="remove(item)">x</button>
+									</div>
 								</div>
 
 							</td>
@@ -53,13 +75,17 @@
 						</tr>
             -->
 						<tr>
-							<td class="total-quantity" colspan="3">Общо {{cart.getCount()}} артикула</td>
+							<td class="total-quantity" colspan="3">Общо
+								{{cart.getCount()}} артикула</td>
 							<td class="total-amount">{{cart.getSubTotal()|number:'1.2-2'}}</td>
 						</tr>
 					</tbody>
 				</table>
 				<div class="text-right">
-					<a [routerLink]="['/checkout/shipping']" class="btn btn-group btn-default">Поръчай</a>
+				    <button type="button" class="btn btn-group btn-default"
+											(click)="checkout()">Поръчай</button>
+					<!-- <a [routerLink]="['/checkout/shipping']"
+						class="btn btn-group btn-default">Поръчай</a>-->
 				</div>
 
 

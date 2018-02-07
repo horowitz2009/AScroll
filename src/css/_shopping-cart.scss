@@ -75,14 +75,14 @@
 }
 
 .cart .quantity {
-  width: 10%;
+  width: 20%;
   font-size: 11px;
   white-space: nowrap;
   text-align: right;
 }
 
 .cart .product {
-  width: 80%;
+  width: 70%;
   font-size: 13px;
 }
 
@@ -108,14 +108,14 @@
 /* Cart and Checkout pages
 ---------------------------------- */
 .cart.table .price {
-  width: 18%;
+  width: 10%;
   font-size: 14px;
 }
 
 .cart.table .amount,
 .cart.table .remove,
 .cart.table .quantity {
-  width: 12%;
+  width: 20%;
 }
 
 .cart.table .quantity input {
@@ -158,8 +158,18 @@
   top: -5px;
 }
 
+.input-group-sm > .input-group-prepend > .btn,
+.input-group-sm > .input-group-append > .btn {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
 .cart.table .form-group {
-  margin: 7px 0;
+  //margin: 7px 0;
+}
+
+.cart.table .form-group {
+  //margin: 7px 0;
 }
 
 .table .information {
@@ -172,14 +182,18 @@
     font-size: 14px;
   }
 
+  .cart.table .product {
+    width: 29%;
+  }
+ 
   .cart.table .amount,
   .cart.table .price {
-    width: 12%;
+    width: 8%;
   }
 
   .cart.table .remove,
   .cart.table .quantity {
-    width: 8%;
+    width: 12%;
   }
 
   .cart.table > thead > tr > th,
@@ -188,7 +202,7 @@
   .cart.table > thead > tr > td,
   .cart.table > tbody > tr > td,
   .cart.table > tfoot > tr > td {
-    padding: 8px 10px;
+    padding: 8px 8px;
   }
 }
 
@@ -202,5 +216,9 @@
   .cart.table > tfoot > tr > td {
     padding: 8px 7px;
   }
+  .cart.table .product {
+    width: 29%;
+  }
+ 
 }
 
