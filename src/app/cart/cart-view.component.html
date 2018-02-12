@@ -79,6 +79,14 @@
 								{{cart.getCount()}} артикула</td>
 							<td class="total-amount">{{cart.getSubTotal()|number:'1.2-2'}}</td>
 						</tr>
+						<tr>
+							<td class="total-quantity" colspan="3">Доставка</td>
+							<td class="total-amount">{{cart.getShipping()|number:'1.2-2'}}</td>
+						</tr>
+						<tr>
+							<td class="total-quantity" colspan="3">Всичко</td>
+							<td class="total-amount">{{cart.getTotal()|number:'1.2-2'}}</td>
+						</tr>
 					</tbody>
 				</table>
 				<div class="text-right">
