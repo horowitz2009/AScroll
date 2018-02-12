@@ -9,6 +9,8 @@ import { TermsAndConditionsComponent } from "../../terms-and-conditions.componen
 import { BsModalService } from "ngx-bootstrap";
 import { Router } from "@angular/router";
 import { OrderService } from "./order.service";
+import { Subscriber } from 'rxjs/Subscriber';
+import { Subscription } from 'rxjs/Subscription';
 
 declare let paypal: any;
 
@@ -55,13 +57,13 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     onSubmit() {
         this.model.editShipping = false;
         this.model.touched = true;
-        this.cartService.saveShippingData();
+        this.cartService.saveCart();
     }
 
     onSubmit2() {
         this.pModel.editPayment = false;
         this.pModel.touched = true;
-        this.cartService.savePaymentData();
+        this.cartService.saveCart();
     }
 
     canFinalize(): boolean {
@@ -69,10 +71,18 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     }
 
     finalize(): void {
-        console.log( "FINALIZE THE FUCKING ORDER!", this.cart );
-        this.cartService.finalize();
+        //const order = this.cartService.toOrder();
+        //console.log( "FINALIZE THE FUCKING ORDER!", order );
+        this.cartService.finalize(
+            () => {
+                this.router.navigate( ['/checkout/finalize'] );
+            },
+            () => {
+                console.log( "UH OH" );
 
-        this.router.navigate( ['/checkout/finalize'] );
+            } );
+
+        console.log( "finilize request sent" );
     }
 
     openTermsAndConditions() {

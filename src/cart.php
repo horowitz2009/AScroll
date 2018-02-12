@@ -31,9 +31,7 @@ class CartService {
     try {
       $stmt = $dbh->prepare("insert into carts (token) values (?)");
       $dbh->beginTransaction();
-      $stmt->execute(array (
-          $token 
-      ));
+      $stmt->execute(array($token));
       $cartId = $dbh->lastInsertId();
       $this->updateCart($cartId, $dbh);
       $dbh->commit();
@@ -52,6 +50,19 @@ class CartService {
       return $row->id;
     else
       return null;
+  }
+
+  public function nextId($tableName) {
+    $dbh = $this->db->createPDOConnection();
+    $q = $dbh->query('select min, max, last_id from increments where table_name = "' . $tableName . '"');
+    // SELECT * FROM `increments` WHERE `table_name` LIKE 'orders'
+    $row = $q->fetch(PDO::FETCH_OBJ);
+    $nextId = $row->last_id + rand($row->min, $row->max);
+    
+    $stmt = $dbh->prepare("update increments set last_id = ? where table_name = ?");
+    $stmt->execute(array($nextId, $tableName));
+    
+    return $nextId;
   }
 
   public function readCartOnly($tokenStr) {
@@ -82,37 +93,20 @@ class CartService {
       $wantInvoice = isset($s ['wantInvoice']) ? ($s ['wantInvoice'] == 'true' ? 1 : 0) : 0;
       $invoiceInfo = isset($s ['invoiceInfo']) ? $s ['invoiceInfo'] : '';
       $method = isset($p ['paymentData']) ? $p ['paymentData'] ['methodOfPayment'] : '';
-      
-      $stmt->execute(array (
-          $s ['name'],
-          $s ['phone'],
-          $address,
-          $email,
-          $method,
-          $wantInvoice,
-          $invoiceInfo,
-          $cartId 
-      ));
+      $stmt->execute(array($s ['name'], $s ['phone'], $address, $email, $method, $wantInvoice, $invoiceInfo, $cartId));
     }
     
     // items
     
     // [[items] => [[0] => [[product] => 28, [quantity] => 2], [1] => [[product] => 29, [quantity] => 4]]]
     $stmt = $dbh->prepare("delete from cart_items where cart_id = ?");
-    $stmt->execute(array (
-        $cartId 
-    ));
+    $stmt->execute(array($cartId));
     // todo insert
     $items = $p ['items'];
     $pos = 1;
     foreach ( $items as $i => $item ) {
       $stmt = $dbh->prepare("insert into cart_items (cart_id, product_id, quantity, pos) values (?, ?, ?, ?)");
-      $stmt->execute(array (
-          $cartId,
-          $item ['product'],
-          $item ['quantity'],
-          $pos ++ 
-      ));
+      $stmt->execute(array($cartId, $item ['product'], $item ['quantity'], $pos ++));
     }
   }
 
@@ -130,10 +124,10 @@ class CartService {
     }
     return $cartIds;
   }
-  
+
   public function createOrUpdateCart() {
     $cartIds = $this->getCartIds();
-    if ($cartIds->token !== null  && $cartIds->token !== '') {
+    if ($cartIds->token !== null && $cartIds->token !== '') {
       // we have already cookie
       if ($cartIds->id != null) {
         // update all items -> delete and insert new OR analyse and update/delete/add
@@ -161,13 +155,11 @@ class CartService {
     $rest_json = file_get_contents("php://input");
     $p = json_decode($rest_json, true);
     $s = $p ['shippingData'];
-
+    
     // shipping data
     // [shippingData] => [[name] => Zhivko Hristov, [phone] => 887362619, [editShipping] => false, [touched] => true,
     // [address] => 2B 488th Str., [email] => zhristov@gmail.com],
     // [paymentData] => [[methodOfPayment] => cash, [editPayment] => true, [touched] => false]]
-    
-    
     
     $dbh = $this->db->createPDOConnection();
     try {
@@ -178,49 +170,40 @@ class CartService {
       $method = isset($p ['paymentData']) ? $p ['paymentData'] ['methodOfPayment'] : '';
       
       
-      $stmt = $dbh->prepare("insert into orders (status, name, phone, address, email, methodOfPayment, wantInvoice, invoiceInfo) ".
-                                 "values (?, ?, ?, ?, ?, ?, ?, ?)");
+      $orderId = $this->nextId("orders");
+ 
       $dbh->beginTransaction();
-      $stmt->execute(array (
-          "status1",  $s ['name'], $s ['phone'], $address, $email, $method, $wantInvoice, $invoiceInfo
-      ));
-      $orderId = $dbh->lastInsertId();
+      $stmt = $dbh->prepare("insert into orders (id, status, name, phone, address, email, methodOfPayment, wantInvoice, invoiceInfo) " . "values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+      $stmt->execute(array($orderId, $p ['status'], $s ['name'], $s ['phone'], $address, $email, $method, $wantInvoice, $invoiceInfo));
+      //$orderId = $dbh->lastInsertId();
       
       $items = $p ['items'];
       $pos = 1;
       foreach ( $items as $i => $item ) {
         $stmt = $dbh->prepare("insert into order_items (order_id, product_id, quantity, pos) values (?, ?, ?, ?)");
-        $stmt->execute(array (
-            $orderId,
-            $item ['product'],
-            $item ['quantity'],
-            $pos ++
-        ));
+        $stmt->execute(array($orderId, $item ['product'], $item ['quantity'], $pos ++));
       }
       
-      //delete the cart
+      // delete the cart
       $cartIds = $this->getCartIds();
       $stmt = $dbh->prepare("delete from carts where id = ?");
-      $stmt->execute( array ($cartIds->id) );
+      $stmt->execute(array($cartIds->id));
       
       $stmt = $dbh->prepare("delete from cart_items where cart_id = ?");
-      $stmt->execute( array ($cartIds->id) );
-      
+      $stmt->execute(array($cartIds->id));
       
       $dbh->commit();
       
-      echo '{"cn": "c_' . $this->g . '", "cv": "' . $cartIds->token . '"}';
-    
+      echo '{"cn": "c_' . $this->g . '", "orderId": "' . $orderId . '"}';
     } catch ( Exception $e ) {
       $dbh->rollBack();
       echo "Failed: " . $e->getMessage();
     }
-    
   }
 
   public function readCart() {
     $cart = new stdClass();
-    $cart->items = array ();
+    $cart->items = array();
     
     $token = null;
     foreach ( $_COOKIE as $name => $value ) {
@@ -234,11 +217,11 @@ class CartService {
       $cartObj = $this->readCartOnly($token);
       // do we have a record in db?
       if ($cartObj != null) {
-        $cartObj->items = array ();
+        $cartObj->items = array();
         $dbh = $this->db->createPDOConnection();
         $q = $dbh->query('select * from cart_items where cart_id = ' . $cartObj->id . ' order by pos');
         $row = $q->fetch(PDO::FETCH_OBJ);
-        $rows = array ();
+        $rows = array();
         while ( $row ) {
           $rows [] = $row;
           $row = $q->fetch(PDO::FETCH_OBJ);
@@ -291,9 +274,7 @@ class CartService {
     do {
       $cost ++;
       $start = microtime(true);
-      password_hash("test", PASSWORD_BCRYPT, [ 
-          "cost" => $cost 
-      ]);
+      password_hash("test", PASSWORD_BCRYPT, ["cost" => $cost]);
       $end = microtime(true);
     } while ( ($end - $start) < $timeTarget );
     echo "Appropriate Cost Found: " . $cost . '<BR>';

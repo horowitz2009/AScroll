@@ -2,16 +2,20 @@ import { Item } from "./item";
 import { ShippingData } from "./checkout/shipping-data";
 import { PaymentData } from "./checkout/payment-data";
 
-export class Cart {
+export class Order {
     id: number;
+    status: string;
     items: Item[];
 
     shippingData: ShippingData;
     paymentData: PaymentData;
 
+    totalAmount: number;
+    totalCount: number;
+
     constructor() {
         this.items = [];
-        this.shippingData = new ShippingData( '', '' );
+        this.shippingData = new ShippingData('', '');
         this.paymentData = new PaymentData();
     }
 
@@ -56,28 +60,18 @@ export class Cart {
             this.items.push( item );
         }
     }
-
-    removeItem( item: Item ) {
-        const index = this.items.findIndex( it => it.product.id === item.product.id );
-        if ( index > -1 ) {
-            this.items.splice( index, 1 );
+    
+    removeItem(item: Item) {
+        const index = this.items.findIndex(it => it.product.id === item.product.id);
+        if (index > -1) {
+           this.items.splice(index, 1);
         }
     }
-
+    
     clear() {
         this.id = null;
-        this.items.splice( 0, this.items.length );
+        this.items.splice(0, this.items.length);
         this.shippingData.clear();
         this.paymentData.clear();
-    }
-
-    clone(): Cart {
-        const copy = new Cart();
-        copy.items = this.items.slice(0, this.items.length);
-        copy.shippingData = new ShippingData('', '');
-        copy.shippingData.load(this.shippingData);
-        copy.paymentData = new PaymentData();
-        copy.paymentData.load(this.paymentData);
-        return copy;
     }
 }

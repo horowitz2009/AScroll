@@ -4,19 +4,20 @@
 		<div class="col-xl-7 col-lg-8 col-md-9 col-sm-12 ml-auto mr-auto">
 			<h3>Благодарим за направената поръчка!</h3>
 			<div class="form-group">
-				<div>Номер на поръчката: <span class="key">1900067</span></div>
-				<div>12 артикула на обща стойност 28.90лв</div>
-				<div>Адрес: ще бъде уточнен с телефонно обаждане</div>
+				<div>Номер на поръчката: <span class="key">{{order.id}}</span></div>
+				<div>{{order.totalCount}} артикула на обща стойност {{order.totalAmount|number:'1.2-2'}} лв</div>
+				<div *ngIf="order.shippingData.address !== ''">Адрес: {{order.shippingData.address}}</div>
+				<div *ngIf="order.shippingData.address == ''">Адрес: ще бъде уточнен с телефонно обаждане</div>
 				<div>Доставка с куриер "Еконт"</div>
 				<div>Срок на доставяне: 2-4 дни</div>
-				<div>Статус: очаква плащане</div>
+				<div>Статус: {{getStatus()}}</div>
 
 			</div>
 		</div>
 	</div>
-	<div class="row">
+	<div class="row" *ngIf="order.paymentData.methodOfPayment === 'bank'">
 		<div class="col-xl-7 col-lg-8 col-md-9 col-sm-12 ml-auto mr-auto">
-			<h5>Моля наредете превод до следната сметка:</h5>
+			<h5>Моля преведете съответната сума до следната сметка:</h5>
 			<div class="form-group">
 				<div>
 					<span class="key">IBAN:</span> <span>1234 5678 9010 234 5678 34</span>
@@ -25,7 +26,7 @@
 					<span class="key">Получател:</span> <span>Крафтсбокс</span>
 				</div>
 				<div>
-					<span class="key">Основание:</span> <span>за поръчка 1900067</span>
+					<span class="key">Основание:</span> <span>за поръчка {{order.id}}</span>
 				</div>
 				<div>
 					<span class="small">Поръчката ще се обработи и изпрати след като заплащането на дължимата сума постъпи по
