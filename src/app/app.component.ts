@@ -12,6 +12,9 @@ export class AppComponent implements AfterViewInit, OnInit {
     title = 'app';
 
     cookieValue = 'UNKNOWN';
+    testt = '';
+    mylang = navigator.language || 'bg'; 
+    langs: any;
 
     constructor( private cookieService: CookieService, private cartService: CartService ) { }
 
@@ -39,6 +42,8 @@ export class AppComponent implements AfterViewInit, OnInit {
         }
         
         this.cartService.loadSimple();
+        this.cartService.getLang();
+        this.langs = this.cartService.lang;
     }
 }
 

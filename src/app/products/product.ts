@@ -14,7 +14,7 @@ export class Product {
 
     price: number;
     currency: string;
-    discount: number;
+    adjustment: number;
 
     published: boolean;
     published2: boolean;
@@ -22,5 +22,9 @@ export class Product {
     additionalAttributes: any;
     createdOn: string;
     detailed: boolean;
+
+    getPriceAdjusted(): number {
+        return this.price * (1 - this.adjustment);
+    }
 
 }

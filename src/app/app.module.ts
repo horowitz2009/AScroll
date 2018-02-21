@@ -35,6 +35,9 @@ import { EmailOptionalValidatorDirective } from "./directives/email-optional-val
 import { CheckoutComponent } from "./cart/checkout/checkout.component";
 import { TermsAndConditionsComponent } from './terms-and-conditions.component';
 import { CheckoutFinalComponent } from './cart/checkout/checkout-final.component';
+import { DefaultPipe } from './directives/default.pipe';
+import { CurrencyService } from "./currency/currency.service";
+import { CurrencyConvertPipe } from "./directives/currency-convert.pipe";
 
 export class MyHammerConfig extends HammerGestureConfig {
     overrides = <any>{
@@ -66,7 +69,9 @@ export class MyHammerConfig extends HammerGestureConfig {
         OnlyNumberDirective,
         CheckoutComponent,
         TermsAndConditionsComponent,
-        CheckoutFinalComponent
+        CheckoutFinalComponent,
+        DefaultPipe,
+        CurrencyConvertPipe
 
     ],
     entryComponents: [AddToCartModalComponent, TermsAndConditionsComponent],
@@ -84,6 +89,7 @@ export class MyHammerConfig extends HammerGestureConfig {
         CartService,
         CartViewService,
         OrderService,
+        CurrencyService,
         {
             provide: APP_INITIALIZER,
             useFactory: startupServiceFactory,

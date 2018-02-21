@@ -38,6 +38,7 @@ export class CartService {
     private baseUrl = 'cart.php';  // URL to web api
     private headers = new HttpHeaders( { 'Content-Type': 'application/json' } );
 
+    public lang = { "lang": "" };
 
     constructor( private http: HttpClient, private cookieService: CookieService, private productService: ProductDatastoredService ) {
         //this.dataStore = { cart: new Cart() };
@@ -46,6 +47,19 @@ export class CartService {
         
         this._order = new Order();
         console.log( "CART SERVICE created" );
+    }
+    
+    getLang(): any {
+        console.log( "Detecting language...");
+        const req = this.http.get<any>( `lang.php` );
+
+        req.subscribe( data => {
+            console.log( 'LANG', data );
+            
+            this.lang.lang = data.lang;
+        } );
+
+
     }
 
     getCart(): Cart {

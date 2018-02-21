@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="bg" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="de40a04fd2270daf46fcfe22e487a25ca0283972" datatype="html">
+        <source>Вашата количка</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/cart/cart-view.component.ts</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="b44b2d5374ce540c842b9ea21acd8a499b7f36b7" datatype="html">
+        <source>Общо <x id="ICU" equiv-text="{cart.getCount(), plural, =1 {...} other {...}}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/cart/cart-view.component.ts</context>
+          <context context-type="linenumber">80</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="de9dd39cbef8efdae8aed722cbecc74b996b5c12" datatype="html">
+        <source>{VAR_PLURAL, plural, =1 {<x id="INTERPOLATION" equiv-text="{{cart.getCount()}}"/> артикул} other {<x id="INTERPOLATION" equiv-text="{{cart.getCount()}}"/> артикула} }</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/cart/cart-view.component.ts</context>
+          <context context-type="linenumber">80</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

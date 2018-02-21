@@ -6,7 +6,7 @@
               <i class="fa fa-search-plus"></i>
             </a> 
              
-            <span class="badge">30% OFF</span>
+            <span class="badge" *ngIf="product.adjustment">{{product.adjustment | percent}} OFF</span>
             
             <!-- 
             <div class="overlay-to-top links">
@@ -22,7 +22,7 @@
             </h3>
             <p class="small">{{product.shortDesc}}</p>
             <div class="elements-list clearfix">
-              <span class="price"><del>{{product.price * 1.3 | currency}}</del> {{product.price | currency}}</span> 
+              <span class="price"><del *ngIf="product.adjustment">{{product.price|number:'1.2-2'}}лв</del> {{product.price * (1-product.adjustment)|number:'1.2-2'}}лв</span> 
               <a (click)="openAddToCartModal()" class="pull-right margin-clear btn btn-sm btn-default-transparent btn-animated">
                 Поръчай<i class="fa fa-shopping-cart"></i>
               </a>

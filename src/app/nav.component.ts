@@ -38,6 +38,7 @@ export class NavComponent implements OnInit, AfterViewChecked {
     }
 
     ngOnInit() {
+        
         this.cart = this.cartService.getCart();
 
         this.router.events.subscribe( s => {

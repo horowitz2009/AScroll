@@ -13,6 +13,7 @@
         ".htaccess",
         "api2.php",
         "cart.php",
+        "lang.php",
         "test.html",
         "favicon.ico"
       ],

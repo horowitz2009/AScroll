@@ -45,6 +45,7 @@ export class ProductDatastoredService {
             data => {
                 console.log( data );
                 this.dataStore.products = data.products.map( p => {
+                        p.adjustment = 0.0;
                     if ( p.additionalAttributes ) {
                         p.additionalAttributes = JSON.parse( p.additionalAttributes );
                         console.log( p );

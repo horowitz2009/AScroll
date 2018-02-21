@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0" srcLang="bg">
+  <file original="ng.template" id="ngi18n">
+    <unit id="5981875377740078852">
+      <notes>
+        <note category="location">app/cart/cart-view.component.ts:11</note>
+      </notes>
+      <segment>
+        <source>Вашата количка</source>
+      </segment>
+    </unit>
+    <unit id="2175504792887157074">
+      <notes>
+        <note category="location">app/cart/cart-view.component.ts:80</note>
+      </notes>
+      <segment>
+        <source>Общо <ph id="0" equiv="ICU" disp="{cart.getCount(), plural, =1 {...} other {...}}"/></source>
+      </segment>
+    </unit>
+    <unit id="5071654369708614269">
+      <notes>
+        <note category="location">app/cart/cart-view.component.ts:80</note>
+      </notes>
+      <segment>
+        <source>{VAR_PLURAL, plural, =1 {<ph id="0" equiv="INTERPOLATION" disp="{{cart.getCount()}}"/> артикул} other {<ph id="1" equiv="INTERPOLATION" disp="{{cart.getCount()}}"/> артикула} }</source>
+      </segment>
+    </unit>
+  </file>
+</xliff>

@@ -8,7 +8,7 @@
 
 				<!-- page-title start -->
 				<!-- ================ -->
-				<h1 class="page-title">Вашата количка</h1>
+				<h1 class="page-title" i18n>Вашата количка</h1>
 				<div class="separator-2"></div>
 				<!-- page-title end -->
 	
@@ -75,13 +75,14 @@
 						</tr>
             -->
 						<tr>
-							<td class="total-quantity" colspan="3">Общо
-								{{cart.getCount()}} артикула</td>
+						<!-- Updated {minutes, plural, =0 {just now} =1 {one minute ago} other {{{minutes}} minutes ago}} -->
+							<td class="total-quantity" colspan="3" >
+							  <span i18n>Общо {cart.getCount(), plural, =1 {{{cart.getCount()}} артикул} other {{{cart.getCount()}} артикула}}</span>
 							<td class="total-amount">{{cart.getSubTotal()|number:'1.2-2'}}</td>
 						</tr>
 						<tr>
 							<td class="total-quantity" colspan="3">Доставка</td>
-							<td class="total-amount">{{cart.getShipping()|number:'1.2-2'}}</td>
+							<td class="total-amount">{{cart.getShipping() | number:'1.2-2'}}</td>
 						</tr>
 						<tr>
 							<td class="total-quantity" colspan="3">Всичко</td>

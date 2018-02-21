@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE messagebundle [
+<!ELEMENT messagebundle (msg)*>
+<!ATTLIST messagebundle class CDATA #IMPLIED>
+
+<!ELEMENT msg (#PCDATA|ph|source)*>
+<!ATTLIST msg id CDATA #IMPLIED>
+<!ATTLIST msg seq CDATA #IMPLIED>
+<!ATTLIST msg name CDATA #IMPLIED>
+<!ATTLIST msg desc CDATA #IMPLIED>
+<!ATTLIST msg meaning CDATA #IMPLIED>
+<!ATTLIST msg obsolete (obsolete) #IMPLIED>
+<!ATTLIST msg xml:space (default|preserve) "default">
+<!ATTLIST msg is_hidden CDATA #IMPLIED>
+
+<!ELEMENT source (#PCDATA)>
+
+<!ELEMENT ph (#PCDATA|ex)*>
+<!ATTLIST ph name CDATA #REQUIRED>
+
+<!ELEMENT ex (#PCDATA)>
+]>
+<messagebundle>
+  <msg id="5981875377740078852"><source>app/cart/cart-view.component.ts:11</source>Вашата количка</msg>
+  <msg id="2175504792887157074"><source>app/cart/cart-view.component.ts:80</source>Общо <ph name="ICU"><ex>{cart.getCount(), plural, =1 {...} other {...}}</ex></ph></msg>
+  <msg id="5071654369708614269"><source>app/cart/cart-view.component.ts:80</source>{VAR_PLURAL, plural, =1 {<ph name="INTERPOLATION"><ex>{{cart.getCount()}}</ex></ph> артикул} other {<ph name="INTERPOLATION"><ex>{{cart.getCount()}}</ex></ph> артикула} }</msg>
+</messagebundle>
