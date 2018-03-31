@@ -8,18 +8,18 @@
 
 				<!-- page-title start -->
 				<!-- ================ -->
-				<h1 class="page-title" i18n>Вашата количка</h1>
+				<h1 class="page-title" i18n="cart|caption before the cart table@@cartCaption">Вашата количка</h1>
 				<div class="separator-2"></div>
 				<!-- page-title end -->
 	
 				<table class="table cart table-hover table-colored">
 					<thead>
 						<tr>
-							<th>Артикул</th>
-							<th>Цена</th>
-							<th>Количество</th>
+							<th i18n="cart@@item">Артикул</th>
+							<th i18n="cart@@price">Цена</th>
+							<th i18n="cart@@quantity">Количество</th>
 							<!-- <th>Премахни</th>  -->
-							<th class="amount">Сума</th>
+							<th class="amount" i18n="cart@@amount">Сума</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -74,25 +74,30 @@
 							</td>
 						</tr>
             -->
-						<tr>
+                        <tr *ngIf="cart.getCount() === 0">
+							<td class="total-quantity" colspan="4" style="text-align: center">
+							  <span>Вашата количка е празна!</span>
+							
+						</tr>
+						<tr *ngIf="cart.getCount() !== 0">
 						<!-- Updated {minutes, plural, =0 {just now} =1 {one minute ago} other {{{minutes}} minutes ago}} -->
 							<td class="total-quantity" colspan="3" >
-							  <span i18n>Общо {cart.getCount(), plural, =1 {{{cart.getCount()}} артикул} other {{{cart.getCount()}} артикула}}</span>
+							  <span  i18n="cart@@subtotal">Общо {cart.getCount(), plural, =1 {{{cart.getCount()}} артикул} other {{{cart.getCount()}} артикула}}</span>
 							<td class="total-amount">{{cart.getSubTotal()|number:'1.2-2'}}</td>
 						</tr>
-						<tr>
-							<td class="total-quantity" colspan="3">Доставка</td>
+						<tr *ngIf="cart.getCount() !== 0">
+							<td class="total-quantity" colspan="3" i18n="cart@@shipping">Доставка</td>
 							<td class="total-amount">{{cart.getShipping() | number:'1.2-2'}}</td>
 						</tr>
-						<tr>
-							<td class="total-quantity" colspan="3">Всичко</td>
+						<tr *ngIf="cart.getCount() !== 0">
+							<td class="total-quantity" colspan="3" i18n="cart@@total">Всичко</td>
 							<td class="total-amount">{{cart.getTotal()|number:'1.2-2'}}</td>
 						</tr>
 					</tbody>
 				</table>
-				<div class="text-right">
-				    <button type="button" class="btn btn-group btn-default"
-											(click)="checkout()">Поръчай</button>
+				<div class="text-right"  *ngIf="cart.getCount() !== 0">
+				    <button type="button" class="btn btn-group btn-default" 
+											(click)="checkout()" i18n="cart|button@@order">Поръчай</button>
 					<!-- <a [routerLink]="['/checkout/shipping']"
 						class="btn btn-group btn-default">Поръчай</a>-->
 				</div>

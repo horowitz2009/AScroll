@@ -2,14 +2,14 @@
 ---------------------------------- */
 /*Buttons Color Variations*/
 .btn:focus {
-  color: inherit;
+  //color: inherit;
 }
 
 .btn:active,
 .btn:focus,
 .btn.active {
   background-image: none;
-  outline: 0;
+  outline: none;
   -webkit-box-shadow: none;
           box-shadow: none;
 }

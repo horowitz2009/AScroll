@@ -1,0 +1,74 @@
+<div class="container-fluid" style="margin-top: 70px">
+	<div class="row">
+		<div class="col"></div>
+	</div>
+</div>
+<div [ngClass]="{'ready': ready, 'loading': !ready}">
+	<div class="container-fluid wow fadeInUp">
+		<div class="row">
+			<div class="col-md-12">
+
+
+
+
+				<!-- page-title start -->
+				<!-- ================ -->
+				<h1 class="page-title" i18n>Поръчки</h1>
+				<div class="separator-2"></div>
+				<button class="btn btn-dark btn-sm" (click)="setStatus('preparing')" aria-pressed="true"><i class="fa fa-archive" aria-hidden="true"></i> {{'preparing' | orderStatus}}</button>
+				<button class="btn btn-dark btn-sm" (click)="setStatus('sent')" aria-pressed="false"><i class="fa fa-truck" aria-hidden="true"></i> {{'sent' | orderStatus}}</button>
+
+
+
+				<div class="btn-group">
+					<button class="btn btn-dark btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Статус</button>
+					<div class="dropdown-menu">
+						<a class="dropdown-item btn-sm" role="button" (click)="setStatus('waitingPayment')"><i class="fa fa-credit-card" aria-hidden="true"></i> {{'waitingPayment' | orderStatus}}</a> 
+						<a class="dropdown-item btn-sm" role="button" (click)="setStatus('pending')"><i class="fa fa-clock-o" aria-hidden="true"></i> {{'pending' | orderStatus}}</a> 
+						<a class="dropdown-item btn-sm" role="button" (click)="setStatus('preparing')"><i class="fa fa-archive" aria-hidden="true"></i> {{'preparing' | orderStatus}}</a>
+						<a class="dropdown-item btn-sm" role="button" (click)="setStatus('sent')"><i class="fa fa-truck" aria-hidden="true"></i> {{'sent' | orderStatus}}</a> 
+						<a class="dropdown-item btn-sm" role="button" (click)="setStatus('canceled')"><i class="fa fa-ban" aria-hidden="true"></i> {{'canceled' | orderStatus}}</a> 
+					</div>
+				</div>
+
+
+
+				<button class="btn btn-dark btn-sm" (click)="sendMail()"><i class="fa fa-envelope" aria-hidden="true"></i> Изпрати писмо</button>
+				<button class="btn btn-dark btn-sm pull-right" (click)="refresh()"><i class="fa fa-refresh" aria-hidden="true"></i> Обнови</button>
+				<!-- page-title end -->
+
+				<table class="table orders table-hover table-colored">
+					<thead>
+						<tr>
+							<th></th>
+							<th>Номер</th>
+							<th>Статус</th>
+							<th>Дата</th>
+							<th>Потребител</th>
+							<th>Адрес</th>
+							<th class="amount">Сума</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let order of orders" class="remove-data">
+							<td class="checkboxColumn"><input type="checkbox" class="big-checkbox" [checked]="order.selected"
+								(change)="order.selected = !order.selected" /></td>
+							<td class="id"><a [routerLink]="['/cpanel/order', order.id]">{{order.id}}</a></td>
+							<td class="status">{{order.status | orderStatus}}</td>
+							<td class="created">{{order.created|myCalendar}}</td>
+							<td class="user"><strong>{{order.shippingData.name}}</strong><br> <span style="white-space: nowrap;"><i
+									class="fa fa-envelope-o"></i> {{order.shippingData.email}}</span><br> <span style="white-space: nowrap;"><i class="fa fa-phone"></i>
+									{{order.shippingData.phone}}</span></td>
+							<td class="address">{{order.shippingData.address}}</td>
+							<td class="amount">{{order.getTotal()|number:'1.2-2'}}</td>
+						</tr>
+
+					</tbody>
+				</table>
+
+
+			</div>
+		</div>
+	</div>
+</div>

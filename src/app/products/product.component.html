@@ -51,8 +51,8 @@
         <div class="col">
             <div class="body">
                 <h1>{{product.name}}</h1>
-                <p class="small">{{product.longDesc}}</p>
-
+                <!-- <p class="small">{{product.longDesc}}</p> -->
+				<div class="e2e-inner-html-bound" [innerHTML]="product.longDesc"></div>
                 <div class="elements-list clearfix">
 
                     <div class="light-gray-bg p-20 bordered clearfix">

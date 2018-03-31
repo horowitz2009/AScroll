@@ -1,0 +1,161 @@
+
+<div class="container" style="margin-top: 70px">
+	<div class="row">
+		<div class="col"></div>
+	</div>
+</div>
+
+<div class="container" *ngIf="order">
+	<div class="row">
+		<div class="col-12 col-lg-8">
+			<h2>
+				Поръчка #{{order.id}} <small>({{order.created|date:'dd/MMM/yyyy HH:mm'}})</small>
+			</h2>
+		</div>
+		<div class="col-12 col-lg-4 no-print">
+			<h4 class="text-right-lg">Статус: {{order.status | orderStatus}}</h4>
+		</div>
+	</div>
+	<div class="row no-print my-2">
+		<div class="col">
+			<button class="btn btn-dark btn-sm" (click)="setStatus('preparing')" aria-pressed="true">
+				<i class="fa fa-archive" aria-hidden="true"></i> {{'preparing' | orderStatus}}
+			</button>
+			<button class="btn btn-dark btn-sm" (click)="setStatus('sent')" aria-pressed="false">
+				<i class="fa fa-truck" aria-hidden="true"></i> {{'sent' | orderStatus}}
+			</button>
+
+
+
+			<div class="btn-group">
+				<button class="btn btn-dark btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					Статус</button>
+				<div class="dropdown-menu">
+					<a class="dropdown-item btn-sm" role="button" (click)="setStatus('waitingPayment')"><i class="fa fa-credit-card" aria-hidden="true"></i>
+						{{'waitingPayment' | orderStatus}}</a> <a class="dropdown-item btn-sm" role="button" (click)="setStatus('pending')"><i class="fa fa-clock-o"
+						aria-hidden="true"></i> {{'pending' | orderStatus}}</a> <a class="dropdown-item btn-sm" role="button" (click)="setStatus('preparing')"><i
+						class="fa fa-archive" aria-hidden="true"></i> {{'preparing' | orderStatus}}</a> <a class="dropdown-item btn-sm" role="button"
+						(click)="setStatus('sent')"><i class="fa fa-truck" aria-hidden="true"></i> {{'sent' | orderStatus}}</a> <a class="dropdown-item btn-sm"
+						role="button" (click)="setStatus('canceled')"><i class="fa fa-ban" aria-hidden="true"></i> {{'canceled' | orderStatus}}</a>
+				</div>
+			</div>
+
+
+
+			<button class="btn btn-dark btn-sm" (click)="sendMail()">
+				<i class="fa fa-envelope" aria-hidden="true"></i> Изпрати писмо
+			</button>
+			<a class="btn btn-dark btn-sm pull-right" href="javascript:window.print()">
+				<i class="fa fa-refresh" aria-hidden="true"></i> Принтирай
+			</a>
+
+		</div>
+
+	</div>
+	<div class="row">
+		<div class="col-6 col-lg-4 order-lg-5 mb-3">
+			<!-- put margin or padding bottom -->
+			<div style="white-space: nowrap; padding-right: 15px">
+				<strong> {{order.shippingData.name}}</strong>
+			</div>
+
+			<div style="white-space: nowrap; padding-right: 15px">
+				<i class="fa fa-phone"></i> {{order.shippingData.phone}}
+			</div>
+
+			<div *ngIf="order.shippingData.address" style="white-space: prewrap; padding-right: 15px">
+				<i class="fa fa-address-card-o"></i> {{order.shippingData.address}}
+				<!--  -->
+			</div>
+
+			<div *ngIf="order.shippingData.email" style="white-space: nowrap; padding-right: 15px">
+				<i class="fa fa-envelope-o"></i> {{order.shippingData.email}}
+			</div>
+
+			<div *ngIf="order.shippingData.invoiceInfo && order.shippingData.wantInvoice" style="white-space: nowrap; padding-right: 15px">
+				<i class="fa fa-sticky-note-o"></i> За фактурата:
+				<pre style="margin-left: 30px; white-space: pre-wrap;">{{order.shippingData.invoiceInfo}}</pre>
+			</div>
+		</div>
+		<div class="col-12 col-lg-8 order-lg-1">
+
+
+
+
+			<div class="row">
+				<div class="col">
+
+					<table class="table cart table-hover table-colored">
+						<thead>
+							<tr>
+								<th i18n="cart@@item">Артикул</th>
+								<th i18n="cart@@price">Цена</th>
+								<th i18n="cart@@quantity">Количество</th>
+								<!-- <th>Премахни</th>  -->
+								<th class="amount" i18n="cart@@amount">Сума</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr *ngFor="let item of order.getItems()" class="remove-data">
+								<td class="product"><a [routerLink]="['/product', item.product.id]">{{item.product.name}}</a><span class="small">{{item.product.shortDesc}}</span></td>
+								<td class="price">{{item.product.price|number:'1.2-2'}}</td>
+								<td class="quantity">
+									<!-- 	<div class="input-group input-group-sm">
+									<button type="button" class="input-group-addon btn btn-outline-secondary" (click)="dec(item)">-a</button>
+									<input appOnlyNumber="true" [quantityHolder]="item" [(ngModel)]="item.quantity" 
+									class="form-control form-control-sm qtyInput" type="text" 
+									data-bts-min="1" data-bts-max="999"
+									style="width:30px; text-align: center;">
+									<button type="button" class="input-group-addon btn btn-outline-secondary" (click)="inc(item)">+</button>
+								</div>
+ --> {{item.quantity}}
+
+								</td>
+								<!-- <td class="remove"><a href="#" class="btn btn-remove btn-sm btn-default">Remove</a></td> -->
+								<td class="amount">{{item.getSubTotal()|number:'1.2-2'}}</td>
+
+							</tr>
+							<!-- 
+						<tr>
+							<td colspan="3">Discount Coupon</td>
+							<td colspan="2">
+								<div class="form-group">
+									<input type="text" class="form-control">
+								</div>
+							</td>
+						</tr>
+            -->
+							<tr>
+								<!-- Updated {minutes, plural, =0 {just now} =1 {one minute ago} other {{{minutes}} minutes ago}} -->
+								<td class="total-quantity" colspan="3"><span i18n="cart@@subtotal">Общо {order.getCount(), plural, =1 {{{order.getCount()}}
+										артикул} other {{{order.getCount()}} артикула}}</span>
+								<td class="total-amount">{{order.getSubTotal()|number:'1.2-2'}}</td>
+							</tr>
+							<tr>
+								<td class="total-quantity" colspan="3" i18n="cart@@shipping">Доставка</td>
+								<td class="total-amount">{{order.getShipping() | number:'1.2-2'}}</td>
+							</tr>
+							<tr>
+								<td class="total-quantity" colspan="3" i18n="cart@@total">Всичко</td>
+								<td class="total-amount">{{order.getTotal()|number:'1.2-2'}}</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="text-right">
+						<!-- <button type="button" class="btn btn-group btn-default"
+											(click)="checkout()" i18n="cart|button@@order">Поръчай</button> -->
+						<!-- <a [routerLink]="['/checkout/shipping']"
+						class="btn btn-group btn-default">Поръчай</a>-->
+					</div>
+
+
+				</div>
+			</div>
+
+
+
+
+
+		</div>
+	</div>
+</div>

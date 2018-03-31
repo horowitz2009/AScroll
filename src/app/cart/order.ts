@@ -3,9 +3,14 @@ import { ShippingData } from "./checkout/shipping-data";
 import { PaymentData } from "./checkout/payment-data";
 
 export class Order {
+    
+    selected: boolean;
+    
     id: number;
     status: string;
     items: Item[];
+
+    created: Date;
 
     shippingData: ShippingData;
     paymentData: PaymentData;
@@ -53,7 +58,7 @@ export class Order {
 
     addItem( item: Item ) {
         const found = this.items.find( it => it.product.id === item.product.id );
-        console.log( "FOUND", found );
+        //console.log( "FOUND", found );
         if ( found ) {
             found.quantity = parseInt( '' + found.quantity, 10 ) + item.quantity;
         } else {

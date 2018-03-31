@@ -38,7 +38,7 @@ export class CartViewComponent implements OnInit {
             item.quantity = v + 1;
         }
     }
-    
+
     remove( item: Item ) {
 
         this.cartService.removeItem( item );
@@ -52,15 +52,20 @@ export class CartViewComponent implements OnInit {
             item.quantity = v + 1;
         }
     }
-    
+
     checkout() {
         this.cartService.saveCart();
-        this.router.navigate( [ '/checkout/shipping' ]);
+        this.router.navigate( ['/checkout/shipping'] );
     }
 
 
     ngOnInit() {
-        this.cart = this.cartService.getCart();
+        this.cartService.cartObs.subscribe( cart => {
+            console.log( "view CART LOADED", cart );
+            this.cart = cart;
+        } );
+
+
     }
 
 }

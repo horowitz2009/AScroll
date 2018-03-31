@@ -20,7 +20,10 @@ export class CartViewService {
       const bsModalRef = this.modalService.show(AddToCartModalComponent); // for bigger modal: , { class: 'gray modal-lg' }
       bsModalRef.content.title = 'You have added ' + product.name;
       bsModalRef.content.product = product;
-      bsModalRef.content.cart = this.cartService.getCart();
+      
+      this.cartService.cartObs.subscribe( cart => {
+        bsModalRef.content.cart = cart;
+      } );
       
       /*        console.log( "open modal for " + this.product.name);
         const list = [

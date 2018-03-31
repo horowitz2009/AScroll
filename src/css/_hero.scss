@@ -6,9 +6,11 @@
   width: 100%;
   height: 100vh;
   padding: 0 0;
-  background: url(assets/layout/banner2.jpg) top center fixed;
+  background: url(assets/layout/banner3.jpg) top center fixed;
   background-size: cover;
   z-index: -99999; 
+
+
   
   .header-logo {
     
@@ -20,7 +22,7 @@
   }
 
   .header-container {
-    background: rgba(0,0,0,0.20);
+    background: rgba(0,0,0,0.45);
     display: table-cell;
     margin: 0;
     padding: 0;

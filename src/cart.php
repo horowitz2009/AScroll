@@ -75,6 +75,27 @@ class CartService {
       return null;
   }
 
+  private function updateOrderStatuses() {
+    try {
+      $rest_json = file_get_contents("php://input");
+      $body = json_decode($rest_json, true);
+      $ids = '' . implode(', ', $body ['orderIds']);
+      
+      $dbh = $this->db->createPDOConnection();
+      
+      $sql = 'update orders set status = "' . $body ['status'] . '" where id in (' . $ids . ')';
+      //$stmt = $dbh->prepare("update orders set status = ? where id in (?)");
+      $dbh->exec($sql);
+      //$stmt->execute(array($body ['status'], $ids));
+    } catch ( Exception $e ) {
+      // echo 'Message: ' .$e->getMessage();
+      echo '{"result":"error", "message": "' . $e->getMessage() . '" }';
+    }
+    
+    // echo json_encode($ids);
+    echo '{"result":"ok"}';
+  }
+
   private function updateCart($cartId, $dbh) {
     $rest_json = file_get_contents("php://input");
     $p = json_decode($rest_json, true);
@@ -169,13 +190,12 @@ class CartService {
       $invoiceInfo = isset($s ['invoiceInfo']) ? $s ['invoiceInfo'] : '';
       $method = isset($p ['paymentData']) ? $p ['paymentData'] ['methodOfPayment'] : '';
       
-      
       $orderId = $this->nextId("orders");
- 
+      
       $dbh->beginTransaction();
       $stmt = $dbh->prepare("insert into orders (id, status, name, phone, address, email, methodOfPayment, wantInvoice, invoiceInfo) " . "values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
       $stmt->execute(array($orderId, $p ['status'], $s ['name'], $s ['phone'], $address, $email, $method, $wantInvoice, $invoiceInfo));
-      //$orderId = $dbh->lastInsertId();
+      // $orderId = $dbh->lastInsertId();
       
       $items = $p ['items'];
       $pos = 1;
@@ -199,6 +219,55 @@ class CartService {
       $dbh->rollBack();
       echo "Failed: " . $e->getMessage();
     }
+  }
+
+  public function orders() {
+    $orders = new stdClass();
+    
+    $dbh = $this->db->createPDOConnection();
+    
+    // $q = $dbh->query('select o.*, p.name as "product_name", oi.quantity, p.price from orders o, order_items oi, products p where o.id = oi.order_id and p.id = oi.product_id order by o.id, oi.pos');
+    $q = $dbh->query('select o.*, oi.* from orders o, order_items oi where o.id = oi.order_id order by o.created DESC, o.id, oi.pos');
+    
+    $row = $q->fetch(PDO::FETCH_OBJ);
+    $rows = array();
+    while ( $row ) {
+      $rows [] = $row;
+      
+      if (! isset($orders->{$row->id})) {
+        $order = clone ($row);
+        $order->items = array();
+        $order->created = $order->created;
+        $order->created2 = date_format(date_create($order->created), 'c');
+        unset($order->product_id);
+        unset($order->pos);
+        unset($order->quantity);
+        unset($order->order_id);
+        unset($order->adjustment);
+        // $order = new stdClass();
+        // $order->id = $row->id;
+        // $order->status = $row->status;
+        // $order->created = $row->created;
+        // $order->name = $row->name;
+        // $order->phone = $row->phone;
+        // $order->address = $row->address;
+        
+        // push it to array
+        $orders->{$row->id} = $order;
+      }
+      
+      $item = new stdClass();
+      $item->product_id = $row->product_id;
+      $item->pos = $row->pos;
+      $item->quantity = $row->quantity;
+      // TODO adjustment
+      $orders->{$row->id}->items [] = $item;
+      
+      // fetch next
+      $row = $q->fetch(PDO::FETCH_OBJ);
+    }
+    
+    echo json_encode(array_values(( array ) $orders));
   }
 
   public function readCart() {
@@ -263,6 +332,10 @@ class CartService {
       $this->readCart();
     } else if ($action === 'finalize') {
       $this->finalize();
+    } else if ($action === 'orders') {
+      $this->orders();
+    } else if ($action === 'updateorderstatuses') {
+      $this->updateOrderStatuses();
     } else {
       echo 'TODO';
     }

@@ -82,7 +82,7 @@ export class RestComponent implements OnInit {
 
     readOne( id: number ) {
         //get single product by id
-        this.productService.load( id );
+        //this.productService.load( id );
         this.http.get<any>( 'http://localhost/api2.php/products/' + id + '?transform=true' ).subscribe(
             data => {
                 console.log( 'read one and store it in this.product' );

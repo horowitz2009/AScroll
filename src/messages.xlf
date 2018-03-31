@@ -1,29 +1,95 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<xliff version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0" srcLang="bg">
-  <file original="ng.template" id="ngi18n">
-    <unit id="5981875377740078852">
-      <notes>
-        <note category="location">app/cart/cart-view.component.ts:11</note>
-      </notes>
-      <segment>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="cartCaption" datatype="html">
         <source>Вашата количка</source>
-      </segment>
-    </unit>
-    <unit id="2175504792887157074">
-      <notes>
-        <note category="location">app/cart/cart-view.component.ts:80</note>
-      </notes>
-      <segment>
-        <source>Общо <ph id="0" equiv="ICU" disp="{cart.getCount(), plural, =1 {...} other {...}}"/></source>
-      </segment>
-    </unit>
-    <unit id="5071654369708614269">
-      <notes>
-        <note category="location">app/cart/cart-view.component.ts:80</note>
-      </notes>
-      <segment>
-        <source>{VAR_PLURAL, plural, =1 {<ph id="0" equiv="INTERPOLATION" disp="{{cart.getCount()}}"/> артикул} other {<ph id="1" equiv="INTERPOLATION" disp="{{cart.getCount()}}"/> артикула} }</source>
-      </segment>
-    </unit>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/cart/cart-view.component.ts</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <note priority="1" from="description">caption before the cart table</note>
+        <note priority="1" from="meaning">cart</note>
+      </trans-unit>
+      <trans-unit id="item" datatype="html">
+        <source>Артикул</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/cart/cart-view.component.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+        <note priority="1" from="description">cart</note>
+      </trans-unit>
+      <trans-unit id="price" datatype="html">
+        <source>Цена</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/cart/cart-view.component.ts</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+        <note priority="1" from="description">cart</note>
+      </trans-unit>
+      <trans-unit id="quantity" datatype="html">
+        <source>Количество</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/cart/cart-view.component.ts</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+        <note priority="1" from="description">cart</note>
+      </trans-unit>
+      <trans-unit id="amount" datatype="html">
+        <source>Сума</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/cart/cart-view.component.ts</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <note priority="1" from="description">cart</note>
+      </trans-unit>
+      <trans-unit id="subtotal" datatype="html">
+        <source>Общо <x id="ICU" equiv-text="{cart.getCount(), plural, =1 {...} other {...}}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/cart/cart-view.component.ts</context>
+          <context context-type="linenumber">80</context>
+        </context-group>
+        <note priority="1" from="description">cart</note>
+      </trans-unit>
+      <trans-unit id="de9dd39cbef8efdae8aed722cbecc74b996b5c12" datatype="html">
+        <source>{VAR_PLURAL, plural, =1 {<x id="INTERPOLATION" equiv-text="{{cart.getCount()}}"/> артикул} other {<x id="INTERPOLATION" equiv-text="{{cart.getCount()}}"/> артикула} }</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/cart/cart-view.component.ts</context>
+          <context context-type="linenumber">80</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shipping" datatype="html">
+        <source>Доставка</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/cart/cart-view.component.ts</context>
+          <context context-type="linenumber">84</context>
+        </context-group>
+        <note priority="1" from="description">cart</note>
+      </trans-unit>
+      <trans-unit id="total" datatype="html">
+        <source>Всичко</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/cart/cart-view.component.ts</context>
+          <context context-type="linenumber">88</context>
+        </context-group>
+        <note priority="1" from="description">cart</note>
+      </trans-unit>
+      <trans-unit id="order" datatype="html">
+        <source>Поръчай</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/cart/cart-view.component.ts</context>
+          <context context-type="linenumber">95</context>
+        </context-group>
+        <note priority="1" from="description">button</note>
+        <note priority="1" from="meaning">cart</note>
+      </trans-unit>
+      <trans-unit id="cff4a158863af007482b0c9a16facce9181f1334" datatype="html">
+        <source>Поръчки</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/cpanel/orders.component.ts</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+      </trans-unit>
+    </body>
   </file>
 </xliff>

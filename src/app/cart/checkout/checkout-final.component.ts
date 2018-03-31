@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { CartService } from "../cart.service";
 import { Order } from "../order";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-checkout-final',
@@ -23,10 +24,13 @@ export class CheckoutFinalComponent implements OnInit {
       return s;
   }
   
-  constructor( private cartService: CartService) { }
+  constructor(private router: Router, private cartService: CartService) { }
 
   ngOnInit() {
     this.order = this.cartService.getOrder();
+    if (this.order.getCount() === 0) {
+        this.router.navigate( ['/front'] );
+    }
   }
 
 }

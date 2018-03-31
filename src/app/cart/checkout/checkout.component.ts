@@ -8,7 +8,6 @@ import { PaymentData } from "./payment-data";
 import { TermsAndConditionsComponent } from "../../terms-and-conditions.component";
 import { BsModalService } from "ngx-bootstrap";
 import { Router } from "@angular/router";
-import { OrderService } from "./order.service";
 import { Subscriber } from 'rxjs/Subscriber';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -27,6 +26,8 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
 
     pModel = new PaymentData();
 
+    validationOK = true;
+
     agreeCB = false;
 
     paymentResult = '';
@@ -34,7 +35,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     cart: Cart;
 
     amountMF: string;
-    constructor( private router: Router, private cartService: CartService, private orderService: OrderService, private modalService: BsModalService ) { }
+    constructor( private router: Router, private cartService: CartService, private modalService: BsModalService ) { }
 
     private loadExternalScript( scriptUrl: string ) {
         return new Promise(( resolve, reject ) => {
@@ -67,22 +68,29 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     }
 
     canFinalize(): boolean {
-        return true; //( this.allOK() && this.pModel.touched && this.model.touched );
+        return this.agreeCB;
     }
 
     finalize(): void {
-        //const order = this.cartService.toOrder();
-        //console.log( "FINALIZE THE FUCKING ORDER!", order );
-        this.cartService.finalize(
-            () => {
-                this.router.navigate( ['/checkout/finalize'] );
-            },
-            () => {
-                console.log( "UH OH" );
+        this.validationOK = this.allOK();
+        if ( this.validationOK ) {
+            //const order = this.cartService.toOrder();
+            //console.log( "FINALIZE THE FUCKING ORDER!", order );
+            this.cartService.finalize(
+                () => {
+                    this.router.navigate( ['/checkout/finalize'] );
+                },
+                () => {
+                    console.log( "UH OH" );
 
-            } );
+                } );
 
-        console.log( "finilize request sent" );
+            console.log( "finilize request sent" );
+        } else {
+            console.log( "validation failed" );
+            this.model.editShipping = true;
+            window.scrollTo( 0, 0 );
+        }
     }
 
     openTermsAndConditions() {
@@ -148,29 +156,35 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
 
 
     ngOnInit() {
-        this.cart = this.cartService.getCart();
-        this.model = this.cart.shippingData;
-        this.pModel = this.cart.paymentData;
+        this.cartService.cartObs.subscribe( cart => {
+            this.cart = cart;
+            if (this.cart.getCount() === 0) {
+                this.router.navigate( ['/front'] );
+            }
+            this.model = this.cart.shippingData;
+            this.pModel = this.cart.paymentData;
+            this.methods = METHODS_OF_PAYMENT.filter(( m ) =>
+                environment.methodsOfPayment.indexOf( m.code ) >= 0
+            );
 
-        this.methods = METHODS_OF_PAYMENT.filter(( m ) =>
-            environment.methodsOfPayment.indexOf( m.code ) >= 0
-        );
+            if ( this.methods.length === 1 ) {
+                this.pModel.methodOfPayment = this.methods[0].code;
+                this.pModel.editPayment = false;
+                this.pModel.touched = true;
+            }
 
-        if ( this.methods.length === 1 ) {
-            this.pModel.methodOfPayment = this.methods[0].code;
-            this.pModel.editPayment = false;
-            this.pModel.touched = true;
-        }
+            //TODO load shipping data
 
-        //TODO load shipping data
+            this.amountMF = '2.03';
+            console.log( "INIT", this.amountMF );
 
-        this.amountMF = '2.03';
-        console.log( "INIT", this.amountMF );
+            /*$.getScript( 'https://www.paypalobjects.com/api/checkout.js', function() {
+    
+                
+            } );*/
 
-        /*$.getScript( 'https://www.paypalobjects.com/api/checkout.js', function() {
+        } );
 
-            
-        } );*/
 
     }
 

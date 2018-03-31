@@ -1,0 +1,48 @@
+	<div class="container-fluid wow fadeInUp">
+		<div class="row">
+			<div class="col-md-12">
+
+				<!-- page-title start -->
+				<!-- ================ -->
+				<h1 class="page-title" i18n>Продукти</h1>
+				<div class="separator-2"></div>
+				<!-- page-title end -->
+
+				<table class="table orders table-hover table-colored">
+					<thead>
+						<tr>
+							<th></th>
+							<th>Кат</th>
+							<th>Номер</th>
+							<th>Име</th>
+							<th>Да се вижда</th>
+							<th>Кратко описание</th>
+							<th>Дълго описание</th>
+							<th>Цена</th>
+							<th>Допълнителни</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let product of products" class="remove-data">
+							
+							<td class="product-image"><img [src]="product.image" alt=""></td>
+							<td class="cat">{{product.categoryId}}</td>
+							<td class="id">{{product.id}}</td>
+							<td class="name"> <a [routerLink]="['/cpanel/product', product.id]">{{product.name}}</a></td>
+							<td class="checkboxColumn"><input type="checkbox"
+								class="big-checkbox" [checked]="product.published"
+								(change)="product.published = !product.published" /></td>
+							<td class="shortDesc">{{product.shortDesc}}</td>
+							<td class="longDesc">{{product.longDesc}}</td>
+							<td class="amount">{{product.price|number:'1.2-2'}}</td>
+							<td class="additional"><pre>{{getAdditionalAsJson(product)}}</pre></td>
+						</tr>
+
+					</tbody>
+				</table>
+
+
+			</div>
+		</div>
+	</div>
+

@@ -1,0 +1,109 @@
+
+<div class="container" style="margin-top: 70px">
+	<div class="row">
+		<div class="col"></div>
+	</div>
+</div>
+
+<!-- <form #productForm="ngForm">-->
+<div class="container-fluid product-form" *ngIf="product">
+	<div class="row">
+		<div class="col">
+			<img [src]="product.image" alt="product.image" #imagespy>
+		</div>
+		<div class="col">
+			<div><small>ID: {{product.id}}</small> <button class="btn btn-sm btn-dark" (click)="saveProduct()">SAVE</button><button class="btn btn-sm btn-dark" (click)="cloneProduct()">clone</button></div>
+			<div class="form-group">
+				<label for="prname">Име</label> <input type="text" class="form-control" id="prname" [(ngModel)]="product.name">
+			</div>
+			
+			<div class="form-group">
+				<label for="prshortDesc">Кратко описание</label> <input type="text" class="form-control" id="prshortDesc" [(ngModel)]="product.shortDesc">
+			</div>
+			
+			
+			<div class="form-group">
+				<label for="prlongDesc">Подробно описание</label>
+				<textarea rows="4" cols="50" class="form-control" id="prlongDesc" [(ngModel)]="product.longDesc"></textarea>
+			</div>
+			<div class="small mb-2">Ей така ще изглежда:</div>
+			<div class="e2e-inner-html-bound mb-3" [innerHTML]="product.longDesc"></div>
+
+
+			<div class="form-row mb-3">
+				<div class="col">
+					<label for="prPrice">Цена</label> <input type="text" class="form-control" id="prPrice" [(ngModel)]="product.price">
+				</div>
+				<div class="col">
+					<label for="prAdjustment">Отстъпка</label> <input type="text" class="form-control" id="prAdjustment" [(ngModel)]="product.adjustment">
+				</div>
+			</div>
+
+			
+			<div class="form-group">
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" id="prpublished" [(ngModel)]="product.published"> 
+					<label class="form-check-label" for="prpublished"> Публикуванa </label>
+				</div>
+			</div>
+
+			
+			<div class="form-group">
+				<label for="primage">Основна снимка</label> <input type="text" class="form-control" id="primage" [(ngModel)]="product.image" #spy> <span
+					class="small">Размери: {{imagespy.naturalWidth}} x {{imagespy.naturalHeight}} ({{ (imagespy.naturalWidth / imagespy.naturalHeight) |
+					number:'1.3-3' }})</span>
+			</div>
+			
+			
+			<div class="form-group">
+				<label for="prlongDesc">Допълнителни атрибути (само за разбирачи) <button class="btn btn-sm btn-dark" (click)="applyAdditional()">приложи</button></label>
+				<textarea rows="8" cols="80" class="form-control" id="prlongDesc" [(ngModel)]="productAdditional"></textarea>
+				<p *ngIf="jsonError">{{jsonError}}</p>
+				
+			</div>
+			
+		</div>
+	</div>
+</div>
+<!-- </form> -->
+
+
+<div class="container" *ngIf="product">
+	<div class="row">
+
+		<div class="col">
+			<app-product-detail [product]="product"></app-product-detail>
+		</div>
+		<div class="col">
+			<app-product-detail [product]="oproduct"></app-product-detail>
+		</div>
+		<div class="col">
+			<app-product-detail [product]="oproduct"></app-product-detail>
+		</div>
+	</div>
+</div>
+
+<div class="container" *ngIf="product">
+	<div class="row">
+
+		<div class="col">
+			<app-product [product]="product" [state]="state"></app-product>
+		</div>
+	</div>
+</div>
+<!-- <div class="container" *ngIf="product">
+	<div class="row">
+
+		<div class="col">
+			<app-product></app-product>
+		</div>
+	</div>
+</div> -->
+
+<div class="container my-5" *ngIf="product">
+	<div class="row">
+
+		<div class="col">{{ product | json }}</div>
+	</div>
+</div>
+

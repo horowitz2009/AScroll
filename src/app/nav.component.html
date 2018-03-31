@@ -1,6 +1,8 @@
 <nav class="navbar header dark app-fixed-30 navbar-expand-lg navbar-dark fixed-top " id="mainNav"><!-- app-sticky -->
 	<div class="container">
-		<a (click)="scrollTo('home')" [routerLink]="['/front']" fragment="home" class="navbar-brand js-scroll-trigger" >CRAFTS BOX</a>
+		<a (click)="scrollTo('home')" [routerLink]="['/front']" fragment="home" class="navbar-brand js-scroll-trigger py-0" >
+		<img class="navbar-logo" src="assets/layout/logo_baumas_WHITE.svg" alt="CraftsBox">
+		</a>
           
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
 			aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -8,9 +10,14 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarResponsive">
 			<ul class="navbar-nav ml-auto">
+				<li class="nav-item" *ngIf="adminLogged()">
+				  <a (click)="scrollTo('home')" [routerLink]="['/cpanel/orders']" class="nav-link js-scroll-trigger"  [class.active]="isLinkActive('cpanel.orders')">Поръчки</a>
+				</li>
+				<li class="nav-item" *ngIf="adminLogged()">
+				  <a (click)="scrollTo('home')" [routerLink]="['/cpanel/products']" class="nav-link js-scroll-trigger"  [class.active]="isLinkActive('cpanel.products')">Продукти</a>
+				</li>
 				<li class="nav-item">
 				  <a (click)="scrollTo('products')" [routerLink]="['/front']" fragment="products" class="nav-link js-scroll-trigger"  [class.active]="isLinkActive('products')">Избери кутия</a>
-				  <!-- <a [routerLink]="['/user/bob']" [queryParams]="{debug: true}" fragment="education"> -->
 				</li>
 				
 				<li class="nav-item">
@@ -45,12 +52,12 @@
                    -->
                   
                   <div class="btn-group">
-                    <button type="button" class="btn dropdown-toggle dropdown-toggle--no-caret" id="header-drop-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button type="button" class="btn dropdown-toggle dropdown-toggle--no-caret my-dropdown" id="header-drop-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <i class="fa fa-shopping-cart"></i>
-                    <span class="cart-count default-bg">{{cart.getCount()}}</span></button>
+                    <span *ngIf="cart && cart.getCount()!==0" class="cart-count default-bg">{{cart.getCount()}}</span></button>
                     <ul class="dropdown-menu dropdown-menu-right cart dropdown-animation" aria-labelledby="header-drop-2">
                       <li>
-                        <table class="table table-hover">
+                        <table *ngIf="cart" class="table table-hover">
                           <!-- <thead>
                             <tr>
                               <th class="quantity">Количество</th>
@@ -66,15 +73,18 @@
                               <td class="amount">{{item.getSubTotal()|number:'1.2-2'}}</td>
                             </tr>
                             
-                            <tr>
+                            <tr *ngIf="cart && cart.getCount()!==0">
                               <td class="total-quantity" colspan="2">Общо {{cart.getCount()}} артикула</td>
                               <td class="total-amount">{{cart.getSubTotal()|number:'1.2-2'}}</td>
+                            </tr>
+                            <tr *ngIf="cart && cart.getCount()===0">
+                              <td class="total-quantity" colspan="3">Вашата количка е празна</td>
                             </tr>
                           </tbody>
                         </table>
                         <div class="panel-body text-right">
-                          <a (click)="scrollTo('')" [routerLink]="['/mycart']" class="btn btn-group btn-gray btn-sm">Покажи количка</a>
-                          <a (click)="scrollTo('')" [routerLink]="['/checkout/shipping']" class="btn btn-group btn-gray btn-sm">Поръчай</a>
+                          <button (click)="scrollTo('')" [routerLink]="['/mycart']" class="btn btn-group btn-gray btn-sm">Покажи количка</button>
+                          <button (click)="scrollTo('')" [routerLink]="['/checkout/shipping']" class="btn btn-group btn-gray btn-sm" [disabled]="cart && cart.getCount() === 0">Поръчай</button>
                         </div>
                       </li>
                     </ul>

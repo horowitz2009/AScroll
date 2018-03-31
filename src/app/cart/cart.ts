@@ -20,7 +20,7 @@ export class Cart {
     }
 
     getShipping(): number {
-        return 3.99;
+        return 3.90;
     }
 
     getSubTotal(): number {
@@ -49,7 +49,7 @@ export class Cart {
 
     addItem( item: Item ) {
         const found = this.items.find( it => it.product.id === item.product.id );
-        console.log( "FOUND", found );
+        //console.log( "FOUND", found );
         if ( found ) {
             found.quantity = parseInt( '' + found.quantity, 10 ) + item.quantity;
         } else {
@@ -73,6 +73,7 @@ export class Cart {
 
     clone(): Cart {
         const copy = new Cart();
+        //$.extend(true, copy, this);
         copy.items = this.items.slice(0, this.items.length);
         copy.shippingData = new ShippingData('', '');
         copy.shippingData.load(this.shippingData);

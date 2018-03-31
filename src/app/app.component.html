@@ -4,8 +4,16 @@
 
 <app-footer></app-footer>
 
-{{cookieValue}}{{mylang}}
+<!-- {{cookieValue}}{{mylang}} -->
 <p>
-{{langs.lang.bg}}
+userLanguages: {{userLanguages}}
+<p>
+<p>myLocale: 
+{{myLocale}}
 <p>
 {{testt | default:'jeff is here'}}
+
+<div (click)="registerNewUser()">register new user</div>
+
+<div (click)="login('zhristov@gmail.com')">login ok</div>
+<div (click)="login('alabala@gmail.com')">login ko</div>

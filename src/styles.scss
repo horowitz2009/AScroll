@@ -24,6 +24,14 @@
 
 @import 'css/scrolling-nav';
 
+@media print
+{    
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
+}
+
 .light-gray-bg {
   background-color: #fafafa;
   border-top: 1px solid #f3f3f3;
@@ -42,3 +50,6 @@
 /deep/  .ngx-gallery-icon {
   font-size: 49px !important;
 }
+
+
+

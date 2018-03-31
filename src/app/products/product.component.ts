@@ -1,5 +1,5 @@
 import 'rxjs/add/operator/switchMap';
-import { Component, OnInit, HostBinding, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, DoCheck, OnChanges, SimpleChanges, HostBinding, ViewEncapsulation, Input } from '@angular/core';
 import { Observable } from "rxjs/Observable";
 
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -47,10 +47,11 @@ import { CartViewService } from "../cart/cart-view.service";
     ],
     encapsulation: ViewEncapsulation.None
 } )
-export class ProductComponent implements OnInit {
+export class ProductComponent implements OnInit, DoCheck, OnChanges {
 
     //product$: Observable<Product>;
-    product: Product;
+    @Input() product: Product;
+    @Input() state: string;
 
     galleryOptions: NgxGalleryOptions[];
     galleryImages: NgxGalleryImage[];
@@ -166,44 +167,18 @@ export class ProductComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.route.paramMap.subscribe(
-            ( params: ParamMap ) => {
-                this.product = this.service.getProductById( params.get( 'id' ) );
-                
-                this.initGallery();
+        if ( this.product ) {
+            this.initGallery();
+        } else {
+            this.route.paramMap.subscribe(
+                ( params: ParamMap ) => {
+                    this.product = this.service.getProductById( params.get( 'id' ) );
 
-                /*,
-                const x = 1000;
-                const y = 750;
-                const ar = x / y;
-                const n = 5;
-                const m = 5;
-                const tw = ( x - ( n - 1 ) * m ) / n;
-                const th = tw / ar;
-                console.log( "tw = " + tw );
-                console.log( "th = " + th );
+                    this.initGallery();
+                }
+            );
 
-                    // max-width 800
-                    {
-                        breakpoint: 800,
-                        width: '100%',
-                        height: '600px',
-                        imagePercent: 75,
-                        thumbnailsPercent: 25,
-                        thumbnailsMargin: 5,
-                        thumbnailMargin: 5,
-                        imageArrowsAutoHide: true
-                    },
-                    // max-width 400
-                    {
-                        breakpoint: 400,
-                        preview: false
-                    }*/
-
-            }
-        );
-
-
+        }
     }
 
     gotoProducts( product: Product ) {
@@ -215,4 +190,18 @@ export class ProductComponent implements OnInit {
         this.router.navigate( [''] );
     }
 
+    ngDoCheck() {
+        //this.initGallery();
+    }
+
+    ngOnChanges( changes: SimpleChanges ) {
+        for ( const propName in changes ) {
+            if ( changes.hasOwnProperty( propName ) ) {
+                const chng = changes[propName];
+                if ( propName === 'state' && chng.currentValue !== "ko" ) {
+                    this.initGallery();
+                }
+            }
+        }
+    }
 }

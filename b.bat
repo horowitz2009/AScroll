@@ -1,1 +1,1 @@
-ng build -dop=false -w -e=prod
+ng build -aot -dop=false -w -e=prod --locale bg

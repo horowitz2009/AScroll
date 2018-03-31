@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { Component, NgModule, VERSION, APP_INITIALIZER } from '@angular/core';
+import { Component, NgModule, VERSION, APP_INITIALIZER, LOCALE_ID } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { ModalModule } from 'ngx-bootstrap';
@@ -27,7 +27,8 @@ import { ProductDetailComponent } from './products/product-detail.component';
 import { MagnificPopupDirective } from './directives/magnific-popup.directive';
 import { CartViewComponent } from './cart/cart-view.component';
 import { CartService } from "./cart/cart.service";
-import { OrderService } from "./cart/checkout/order.service";
+import { LanguageService } from "./language.service";
+import { UserService } from "./auth/user.service";
 import { AddToCartModalComponent } from './cart/add-to-cart-modal.component';
 import { CartViewService } from "./cart/cart-view.service";
 import { OnlyNumberDirective } from './directives/only-number.directive';
@@ -38,13 +39,39 @@ import { CheckoutFinalComponent } from './cart/checkout/checkout-final.component
 import { DefaultPipe } from './directives/default.pipe';
 import { CurrencyService } from "./currency/currency.service";
 import { CurrencyConvertPipe } from "./directives/currency-convert.pipe";
+import { LoginComponent } from './auth/login.component';
+import { ControlPanelComponent } from './cpanel/control-panel.component';
+import { AuthGuard } from "./auth/auth.guard";
+import { JwtHelper } from 'angular2-jwt';
+import { OrdersComponent } from './cpanel/orders.component';
+import { registerLocaleData } from '@angular/common';
+import localeBg from '@angular/common/locales/bg';
+import localeBgExtra from '@angular/common/locales/extra/bg';
+import localeEn from '@angular/common/locales/en';
+import localeEnExtra from '@angular/common/locales/extra/en';
+import { MyCalendarPipe } from './directives/my-calendar.pipe';
+import { SettingsService } from "./settings.service";
+import { OrderStatusPipe } from './directives/order-status.pipe';
+import { MailService } from "./cpanel/mail.service";
+import { Products2Component } from "./cpanel/products.component";
+import { ProductAdminComponent } from "./cpanel/product-admin.component";
+import { OrderAdminComponent } from "./cpanel/order-admin.component";
+import { OrderService } from "./cpanel/order.service";
 
-export class MyHammerConfig extends HammerGestureConfig {
-    overrides = <any>{
-        'pinch': { enable: false },
-        'rotate': { enable: false }
-    };
-}
+registerLocaleData(localeBg, 'bg', localeBgExtra);
+registerLocaleData(localeEn, 'en', localeEnExtra);
+
+//export class MyHammerConfig extends HammerGestureConfig {
+//    overrides = <any>{
+//        'pinch': { enable: false },
+//        'rotate': { enable: false }
+//    };
+//}
+
+export function getLanguage( settingsService: SettingsService ) {
+    console.log("DAMN LANGUAGE SHIT");
+    return settingsService.getLanguage();
+} 
 
 @NgModule( {
     declarations: [
@@ -71,7 +98,15 @@ export class MyHammerConfig extends HammerGestureConfig {
         TermsAndConditionsComponent,
         CheckoutFinalComponent,
         DefaultPipe,
-        CurrencyConvertPipe
+        CurrencyConvertPipe,
+        LoginComponent,
+        ControlPanelComponent,
+        OrdersComponent,
+        MyCalendarPipe,
+        OrderStatusPipe,
+        Products2Component,
+        ProductAdminComponent,
+        OrderAdminComponent,
 
     ],
     entryComponents: [AddToCartModalComponent, TermsAndConditionsComponent],
@@ -84,29 +119,44 @@ export class MyHammerConfig extends HammerGestureConfig {
         AppRoutingModule
     ],
     providers: [
+        SettingsService,
         ProductDatastoredService,
         CookieService,
         CartService,
+        LanguageService,
         CartViewService,
         OrderService,
         CurrencyService,
         {
+            provide: LOCALE_ID,
+            deps: [SettingsService],
+            useFactory: getLanguage
+        },
+        {
             provide: APP_INITIALIZER,
             useFactory: startupServiceFactory,
-            deps: [ProductDatastoredService],
+            deps: [ProductDatastoredService, CartService],
             multi: true
         },
-//        {
-//            provide: APP_INITIALIZER,
-//            useFactory: startupServiceFactory2,
-//            deps: [CartService],
-//            multi: true
-//        },
-        {
-            provide: HAMMER_GESTURE_CONFIG,
-            useClass: MyHammerConfig
-        }
+//                {
+//                    provide: APP_INITIALIZER,
+//                    useFactory: startupServiceFactory2,
+//                    deps: [ProductDatastoredService, CartService],
+//                    multi: true
+//                },
+        //        {
+        //            provide: HAMMER_GESTURE_CONFIG,
+        //            useClass: MyHammerConfig
+        //        },
+
+        UserService,
+        AuthGuard,
+        JwtHelper,
+        MailService
+
     ],
     bootstrap: [AppComponent]
 } )
 export class AppModule { }
+
+
