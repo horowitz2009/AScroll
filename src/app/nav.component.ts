@@ -11,18 +11,7 @@ import { UserService } from "./auth/user.service";
     templateUrl: './nav.component.html',
     styles: [`
     
-    .app-sticky .navbar-logo {
-      max-height: 40px;
-      opacity: 1;
-      filter: alpha(opacity=100); /* For IE8 and earlier */
-      transition: all 0.5s ease-in;
-    }
-    .navbar-logo {
-      max-height: 51px;
-      opacity: 0.25;
-      filter: alpha(opacity=25); /* For IE8 and earlier */
-      transition: all 0.5s ease-in;
-    }
+    
     .btn.dropdown-toggle.my-dropdown {
       background-color: #03C4EB;
       border-color: #03C4EB;
