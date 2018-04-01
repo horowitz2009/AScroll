@@ -8,7 +8,6 @@ import { Response } from '@angular/http';
 
 import { environment } from '../../environments/environment';
 
-import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
 import * as $ from 'jquery';
 
@@ -38,56 +37,34 @@ export class ProductDatastoredService {
         return this.dataStore.products;
     }
 
-    loadAll(): Promise<Product> {
+    loadAll(): Observable<Product[]> {
         //console.log( 'loadAll begin... ' + `${this.baseUrl}/products?transform=true` );
         const req = this.http.get<any>( `${this.baseUrl}/products?transform=true` );
-
-        req.subscribe(
+        return req.map(
             data => {
-                //console.log( data );
                 this.dataStore.products = data.products.map( p => {
                     const pp = new Product();
-                    $.extend(pp, p);
+                    $.extend( pp, p );
                     if ( pp.additionalAttributes ) {
                         pp.additionalAttributes = JSON.parse( pp.additionalAttributes );
                     }
                     return pp;
                 } );
                 this._products.next( Object.assign( {}, this.dataStore ).products );
-                console.log('ALL PRODUCTS LOADED', this.dataStore.products);
+                console.log( 'PRODUCTS LOADED' );
+                
+                return this.dataStore.products;
             }, error => console.log( 'Could not load products.' ) );
 
-        return req.toPromise();
+        //return req;
     }
 
-    loadAll2(): Observable<Product> {
-        //console.log( 'loadAll begin... ' + `${this.baseUrl}/products?transform=true` );
-        const req = this.http.get<any>( `${this.baseUrl}/products?transform=true` );
-
-        req.map(
-            data => {
-                //console.log( data );
-                this.dataStore.products = data.products.map( p => {
-                    const pp = new Product();
-                    $.extend(pp, p);
-                    if ( pp.additionalAttributes ) {
-                        pp.additionalAttributes = JSON.parse( pp.additionalAttributes );
-                    }
-                    return pp;
-                } );
-                this._products.next( Object.assign( {}, this.dataStore ).products );
-                console.log('ALL PRODUCTS LOADED', this.dataStore.products);
-            }, error => console.log( 'Could not load products.' ) );
-
-        return req;
-    }
-    
-//    getProduct( id: number | string ) {
-//        this.load( id );
-//        return this.products
-//            // (+) before `id` turns the string into a number
-//            .map( products => products.find( pr => pr.id === +id ) );
-//    }
+    //    getProduct( id: number | string ) {
+    //        this.load( id );
+    //        return this.products
+    //            // (+) before `id` turns the string into a number
+    //            .map( products => products.find( pr => pr.id === +id ) );
+    //    }
 
     getProductById( id: number | string ): Product {
         const p = this.dataStore.products.find( x => x.id === +id );
@@ -98,28 +75,28 @@ export class ProductDatastoredService {
     }
 
     //not used
-//    load( id: number | string ) {
-//        console.log("LOAD JUST ONE", id);
-//        this.http.get<any>( `${this.baseUrl}/products/${id}?transform=true` ).subscribe( data => {
-//            let notFound = true;
-//
-//            const pr: Product = data;
-//            pr.additionalAttributes = JSON.parse( data.additionalAttributes );
-//            this.dataStore.products.forEach(( item, index ) => {
-//                if ( item.id === pr.id ) {
-//                    this.dataStore.products[index] = pr;
-//                    notFound = false;
-//                }
-//            } );
-//
-//            if ( notFound ) {
-//                this.dataStore.products.push( pr );
-//            }
-//
-//            this._products.next( Object.assign( {}, this.dataStore ).products );
-//        }, error => console.log( 'Could not load product.' ) );
-//    }
-//
+    //    load( id: number | string ) {
+    //        console.log("LOAD JUST ONE", id);
+    //        this.http.get<any>( `${this.baseUrl}/products/${id}?transform=true` ).subscribe( data => {
+    //            let notFound = true;
+    //
+    //            const pr: Product = data;
+    //            pr.additionalAttributes = JSON.parse( data.additionalAttributes );
+    //            this.dataStore.products.forEach(( item, index ) => {
+    //                if ( item.id === pr.id ) {
+    //                    this.dataStore.products[index] = pr;
+    //                    notFound = false;
+    //                }
+    //            } );
+    //
+    //            if ( notFound ) {
+    //                this.dataStore.products.push( pr );
+    //            }
+    //
+    //            this._products.next( Object.assign( {}, this.dataStore ).products );
+    //        }, error => console.log( 'Could not load product.' ) );
+    //    }
+    //
 
     create( product: Product ) {
         product.id = null;

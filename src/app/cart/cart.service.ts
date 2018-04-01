@@ -22,8 +22,6 @@ import { ProductDatastoredService } from "../products/product-datastored.service
 import { ShippingData } from "./checkout/shipping-data";
 import { PaymentData } from "./checkout/payment-data";
 import { Order } from "./order";
-import 'rxjs/add/operator/toPromise';
-import 'rxjs/add/operator/skipWhile';
 
 @Injectable()
 export class CartService {
@@ -150,31 +148,23 @@ export class CartService {
 
     }
 
-    loadSimple(): Promise<Cart> {
-        const req = this.http.get<any>( `${this.baseUrl}/read` );
-        
-        req.subscribe( data => {
-            console.log( 'http CART LOADED', data );
+    loadCart(): Observable<Cart> {
+        return this.http.get<any>( `${this.baseUrl}/read` )
+        .map( data => {
             const c: Cart = this.deserialize( data );
-            
             this.dataStore.cart = c;
             this.next();
+            console.log( 'CART LOADED: ' + c.getCount() + " items" );
+            return c;
         } );
-        
-        return req.toPromise();
-        
     }
     
     next() {
         this._cartSubject.next( Object.assign( {}, this.dataStore ).cart );
     }
 
-    
-
     private deserialize( data: any ): Cart {
         const c = new Cart();
-        //console.log( data.items );
-        console.log( 'deserializing', data );
         data.items.forEach(( itemDTO, index ) => {
             const item = new Item( this.productService.getProductById( itemDTO.product_id ), itemDTO.quantity );
             c.addItem( item );
@@ -210,29 +200,5 @@ export class CartService {
 
         return order;
     }
-
-//    private deserializeOrder( data: any ): Order {
-//        const order = new Order();
-//        console.log( 'single order please', data );
-//        data.items.forEach(( itemDTO, index ) => {
-//            const item = new Item( this.productService.getProductById( itemDTO.product_id ), itemDTO.quantity );
-//            order.addItem( item );
-//        } );
-//
-//        order.id = data.id;
-//        order.status = data.status;
-//        order.created = data.created;
-//
-//        order.shippingData = new ShippingData( data.name, data.phone );
-//        order.shippingData.address = data.address;
-//        order.shippingData.email = data.email;
-//        order.shippingData.wantInvoice = data.wantInvoice === "1";
-//        order.shippingData.invoiceInfo = data.invoiceInfo;
-//
-//        order.paymentData = new PaymentData();
-//        order.paymentData.methodOfPayment = data.methodOfPayment;
-//
-//        return order;
-//    }
 
 }

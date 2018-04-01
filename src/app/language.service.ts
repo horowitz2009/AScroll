@@ -55,5 +55,19 @@ export class LanguageService {
 
 
     }
+    
+    loadUserLanguages(): Observable<string[]> {
+        console.log( "Detecting language..." );
+        const req = this.http.get<any>( `lang.php` );
 
+        return req.map( data => {
+            console.log( 'user languages', data );
+
+            this.dataStore.userLanguages = data.lang;
+            this._langSubject.next( Object.assign( {}, this.dataStore ).userLanguages );
+            return this.dataStore.userLanguages;
+        } );
+
+
+    }
 }

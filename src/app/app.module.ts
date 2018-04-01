@@ -5,7 +5,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { ModalModule } from 'ngx-bootstrap';
 import { CookieService } from 'ngx-cookie-service';
 
-import { AppComponent, startupServiceFactory2, startupServiceFactory } from './app.component';
+import { AppComponent, startupServiceFactory } from './app.component';
 import { NavComponent } from './nav.component';
 import { AboutComponent } from './front/about.component';
 import { ContactComponent } from './front/contact.component';
@@ -135,7 +135,7 @@ export function getLanguage( settingsService: SettingsService ) {
         {
             provide: APP_INITIALIZER,
             useFactory: startupServiceFactory,
-            deps: [ProductDatastoredService, CartService],
+            deps: [LanguageService, ProductDatastoredService, CartService],
             multi: true
         },
 //                {
