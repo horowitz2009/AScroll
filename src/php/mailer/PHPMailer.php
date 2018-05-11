@@ -4408,13 +4408,13 @@ class PHPMailer
         return $this->oauth;
     }
 
-    /**
-     * Set an OAuth instance.
-     *
-     * @param OAuth $oauth
-     */
-    public function setOAuth(OAuth $oauth)
-    {
-        $this->oauth = $oauth;
-    }
+//     /**
+//      * Set an OAuth instance.
+//      *
+//      * @param OAuth $oauth
+//      */
+//     public function setOAuth(OAuth $oauth)
+//     {
+//         $this->oauth = $oauth;
+//     }
 }

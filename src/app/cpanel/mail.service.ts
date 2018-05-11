@@ -53,4 +53,16 @@ export class MailService {
             }
             );
     }
+
+    sendMailTemplate( { email, subject = 'no subject', templateFile = 'template1.php', variables = {} } ): void {
+        const json = JSON.stringify(
+            { "email": email, "subject": subject, "templateFile": templateFile, "variables" : variables } );
+        this.http.post<any>( `${this.baseUrl}`, json )
+            .subscribe( res => {
+                console.log( "message sent successfully", res );
+            }, error => {
+                console.log( 'Message sending failed!', error );
+            }
+            );
+    }
 }

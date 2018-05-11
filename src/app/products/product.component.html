@@ -7,10 +7,12 @@
 
 <div class="container wow fadeInUp mt-10" *ngIf="product">
 	<div class="row">
-		<div class="col">
-
-			<ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
-
+		<div class="col-md-12 col-lg-6">
+            <div class="container1">
+            <div class="text1">
+			  <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+            </div>
+            </div>
 			<!-- 
                        <div class="owl-carousel owl-theme content-slider-with-large-controls">
                         <div class="overlay-container overlay-visible">
@@ -49,7 +51,7 @@
 		</div>
 
 
-		<div class="col listing-item">
+		<div class="col-md-12 col-lg-6 listing-item">
 			<div class="body">
 				<h1>{{product.name}}</h1>
 				<!-- <p class="small">{{product.longDesc}}</p> -->

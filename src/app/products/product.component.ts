@@ -15,6 +15,8 @@ import { CartViewService } from "../cart/cart-view.service";
     selector: 'app-product',
     templateUrl: './product.component.html',
     styles: [`
+    
+    
       ngx-gallery .ngx-gallery-icon {
         font-size: 50px !important;
       }
@@ -26,22 +28,55 @@ import { CartViewService } from "../cart/cart-view.service";
       ngx-gallery ngx-gallery-image ngx-gallery-arrows .ngx-gallery-arrow-wrapper { 
         background: linear-gradient(to right, rgba(0,0,0,0) 0%,rgba(0,0,0,0.16) 100%) !important;
         width: 9% !important;
+        z-index: 1049 !important;
       }
       
       ngx-gallery ngx-gallery-image ngx-gallery-arrows .ngx-gallery-arrow-wrapper.ngx-gallery-arrow-left { 
         background: linear-gradient(to left, rgba(0,0,0,0) 0%,rgba(0,0,0,0.16) 100%) !important;
         width: 9% !important;
+        z-index: 1049 !important;
       }
       
       ngx-gallery ngx-gallery-thumbnails ngx-gallery-arrows .ngx-gallery-arrow-wrapper { 
         background: linear-gradient(to right, rgba(0,0,0,0) 0%,rgba(0,0,0,0.16) 100%) !important;
         width: 6% !important;
+        z-index: 1049 !important;
       }
       
       ngx-gallery ngx-gallery-thumbnails ngx-gallery-arrows .ngx-gallery-arrow-wrapper.ngx-gallery-arrow-left { 
         background: linear-gradient(to left, rgba(0,0,0,0) 0%,rgba(0,0,0,0.16) 100%) !important;
         width: 6% !important;
+        z-index: 1049 !important;
       }
+      
+      .gallery-wrapper {
+ 
+  width: 100%;
+  padding-bottom: 75%;
+
+//      min-width: 600px;
+//      min-height: 600px;
+//      display:grid;
+    }
+      
+.container1 {
+   position: relative;
+   width: 100%;
+   padding-top: 100%; /* 1:1 Aspect Ratio */
+   margin-top: 1rem;
+   margin-bottom: 1rem;
+}
+
+.text1 {
+   position:  absolute;
+   top: 0;
+   left: 0;
+   bottom: 0;
+   right: 0;
+   text-align: center;
+   font-size: 20px;
+   color: white;
+}
              
     `
     ],
@@ -137,8 +172,8 @@ export class ProductComponent implements OnInit, DoCheck, OnChanges {
     private setupGalleryoptionsForMulti(): void {
         this.galleryOptions = [
             {
-                width: '600px',
-                height: '598px',
+                width: '100%',
+                height: '100%',
                 thumbnailsColumns: 4,
                 imageAnimation: NgxGalleryAnimation.Slide,
                 imagePercent: 80,
