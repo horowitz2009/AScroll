@@ -79,6 +79,10 @@ export class OrderAdminComponent implements OnInit {
 
     setStatus( status: string ) {
         this.order.status = status;
+        console.log("updating status...");
+        const orderIds: number[] = [this.order.id];
+        //orderIds.push( this.order.id );
+        this.orderService.updateOrderStatuses( status, orderIds );
     }
 
     sendMail() {

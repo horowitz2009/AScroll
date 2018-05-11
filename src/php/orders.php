@@ -387,7 +387,7 @@ class OrderService {
       }
     } else if ($action === 'updateShippingData') {
       $this->updateShippingData();
-    } else if ($action === 'updateorderstatuses') {
+    } else if ($action === 'updateOrderStatuses') {
       $this->updateOrderStatuses();
     } else {
       echo 'TODO';

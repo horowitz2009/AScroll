@@ -72,12 +72,22 @@ export class OrderService {
         this.http.post<any>( `${this.baseUrl}/updateShippingData`, this.serialize( order ) )
             .subscribe( res => {
                 console.log( "order shipping data saved", res );
-                //this._products.next( Object.assign( {}, this.dataStore ).products );
 
             }, error => console.log( 'Could not save order.', error ) );
 
     }
+    
+    updateOrderStatuses( status: string, orderIds: number[] ) {
+        const body = {"status": status, "orderIds": orderIds};
+        
+        this.http.post<any>( `${this.baseUrl}/updateOrderStatuses`, JSON.stringify(body) )
+            .subscribe( res => {
+                console.log( "order statuses updated", res );
 
+            }, error => console.log( 'Could not update order statuses.', error ) );
+
+    }
+    
     private serialize( order: Order ): string {
         return JSON.stringify( order, ( key, value ) => {
             if ( key === 'product' ) {

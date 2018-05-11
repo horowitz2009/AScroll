@@ -6,10 +6,11 @@
 </head>
 <body>
 <div style="width: 640px; font-family: Arial, Helvetica, sans-serif; font-size: 14px;">
-  <h1>Съобщение от: <?php echo $name; ?>, имейл: <?php echo $email; ?>
-  </h1>
+  <h3>Вашата поръчка беше обновена до следния статус: <b><?php echo $status; ?></b>
+  </h3>
   <p><?php echo $message ?></p>
-  
+  <p></p>
+  <p>Поздрави от екипа на КрафтсБокс!</p>
 </div>
 </body>
 </html>

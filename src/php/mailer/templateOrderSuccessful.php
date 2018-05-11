@@ -6,10 +6,15 @@
 </head>
 <body>
 <div style="width: 640px; font-family: Arial, Helvetica, sans-serif; font-size: 14px;">
-  <h1>Съобщение от: <?php echo $name; ?>, имейл: <?php echo $email; ?>
-  </h1>
-  <p><?php echo $message ?></p>
-  
+<p>Здравейте, <?php echo $name; ?>,</p>
+
+<p>Благодарим Ви за покупката!</p>
+
+<p>Вашата поръчка е успешно получена и следва да бъде обработена. 
+   Ще получите известие при всяко обновяване на статуса. 
+</p>
+
+
 </div>
 </body>
 </html>

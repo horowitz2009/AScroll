@@ -22,10 +22,12 @@ import { ProductDatastoredService } from "../products/product-datastored.service
 import { ShippingData } from "./checkout/shipping-data";
 import { PaymentData } from "./checkout/payment-data";
 import { Order } from "./order";
+import { OrderStatusUtils } from "../cpanel/order.status";
+import { MailService } from "../cpanel/mail.service";
 
 @Injectable()
 export class CartService {
-    
+
     private _order: Order;
 
     private _orders: Order[];
@@ -42,9 +44,9 @@ export class CartService {
     get cartObs(): Observable<Cart> {
         return this._cartSubject.asObservable();
     }
-    
 
-    constructor( private http: HttpClient, private cookieService: CookieService, private productService: ProductDatastoredService ) {
+
+    constructor( private http: HttpClient, private cookieService: CookieService, private productService: ProductDatastoredService, private mailService: MailService ) {
         this.dataStore = { cart: new Cart() };
         this._cartSubject = <BehaviorSubject<Cart>>new BehaviorSubject( this.dataStore.cart );
 
@@ -53,17 +55,17 @@ export class CartService {
     }
 
     updateOrderStatuses( status: string, orderIds: number[] ): void {
-        const body = {"status": status, "orderIds": orderIds};
-        
+        const body = { "status": status, "orderIds": orderIds };
+
         let s = '';
         orderIds.forEach( id => s = s + id + ', ' );
         console.log( "IDs", s );
-        
-        this.http.post<any>( `${this.baseUrl}/updateorderstatuses`, body )
-        .subscribe( res => {
-            console.log( "orders updated", res );
 
-        }, error => console.log( 'Could not update orders.', error ) );
+        this.http.post<any>( `${this.baseUrl}/updateorderstatuses`, body )
+            .subscribe( res => {
+                console.log( "orders updated", res );
+
+            }, error => console.log( 'Could not update orders.', error ) );
 
     }
 
@@ -137,6 +139,7 @@ export class CartService {
                 const cn = res.cn;
                 this.cookieService.delete( cn, '/' );
                 this._order.id = res.orderId;
+                this.sendMail( this._order );
                 onSuccess();
 
             },
@@ -148,17 +151,35 @@ export class CartService {
 
     }
 
-    loadCart(): Observable<Cart> {
-        return this.http.get<any>( `${this.baseUrl}/read` )
-        .map( data => {
-            const c: Cart = this.deserialize( data );
-            this.dataStore.cart = c;
-            this.next();
-            console.log( 'CART LOADED: ' + c.getCount() + " items" );
-            return c;
+    private sendMail( o: Order ) {
+        const subject = "КрафтсБокс - Поръчка " + o.id;
+        const status = OrderStatusUtils.translate( o.status, "bg" ); //TODO replace hardcoded locale with current locale, deadline: 2022 :)
+        this.mailService.sendMailTemplate( {
+            "email": o.shippingData.email,
+            "subject": subject,
+            "templateFile": "templateOrderSuccessful.php",
+            "variables": [{ "key": "name", "value": o.shippingData.name },
+            { "key": "email", "value": o.shippingData.email },
+            { "key": "subject", "value": subject },
+            { "key": "status", "value": status },
+            { "key": "order", "value": o },
+
+            ]
+
         } );
     }
-    
+
+    loadCart(): Observable<Cart> {
+        return this.http.get<any>( `${this.baseUrl}/read` )
+            .map( data => {
+                const c: Cart = this.deserialize( data );
+                this.dataStore.cart = c;
+                this.next();
+                console.log( 'CART LOADED: ' + c.getCount() + " items" );
+                return c;
+            } );
+    }
+
     next() {
         this._cartSubject.next( Object.assign( {}, this.dataStore ).cart );
     }
@@ -183,7 +204,7 @@ export class CartService {
         }
         return c;
     }
-    
+
     toOrder(): Order {
         const order = new Order();
         const cart = this.dataStore.cart.clone();

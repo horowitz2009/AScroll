@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform, Inject, LOCALE_ID } from '@angular/core';
-import { Status, ORDER_STATUSES, Translation } from "../cpanel/order.status";
+import { OrderStatusUtils } from "../cpanel/order.status";
 
 
 @Pipe( {
@@ -14,17 +14,17 @@ export class OrderStatusPipe implements PipeTransform {
     transform( value: any, args?: any ): any {
         //var x = [{ "id": 1 }, { "id": -2 }, { "id": 3 }].find(myObj => myObj.id < 0);
 
-        const st: Status = ORDER_STATUSES.find( s => s.id === value );
-        if ( st !== null ) {
-            let t: Translation = st.translations.find( tr => tr.locale === this.locale );
-            if ( t !== null ) {
-                return t.translation;
-            } else {
-                t = st.translations.find( tr => tr.locale === 'en' );
-                return t.translation;
-            }
-        }
-        return value;
+//        const st: Status = ORDER_STATUSES.find( s => s.id === value );
+//        if ( st !== null ) {
+//            let t: Translation = st.translations.find( tr => tr.locale === this.locale );
+//            if ( t !== null ) {
+//                return t.translation;
+//            } else {
+//                t = st.translations.find( tr => tr.locale === 'bg' );
+//                return t.translation;
+//            }
+//        }
+        return OrderStatusUtils.translate(value, this.locale);
     }
 
 }

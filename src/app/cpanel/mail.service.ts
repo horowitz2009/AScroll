@@ -54,6 +54,21 @@ export class MailService {
             );
     }
 
+   /*
+    *         this.mailService.sendMailTemplate( { 
+            "email": "zhristov@gmail.com", 
+            "subject": subject, 
+            "templateFile": "templateContact.php", 
+            "variables": [{"key": "name", "value": from}, 
+                          {"key": "email", "value": email},
+                          {"key": "subject", "value": subject},
+                          {"key": "message", "value": this.model.message},
+                
+            ] 
+        
+        } );
+    */
+    
     sendMailTemplate( { email, subject = 'no subject', templateFile = 'template1.php', variables = {} } ): void {
         const json = JSON.stringify(
             { "email": email, "subject": subject, "templateFile": templateFile, "variables" : variables } );
