@@ -28,15 +28,19 @@
 
 
 			<div class="btn-group">
-				<button class="btn btn-dark btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					Статус</button>
+				<button class="btn btn-dark btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="false">Статус</button>
 				<div class="dropdown-menu">
-					<a class="dropdown-item btn-sm" role="button" (click)="setStatus('waitingPayment')"><i class="fa fa-credit-card" aria-hidden="true"></i>
-						{{'waitingPayment' | orderStatus}}</a> <a class="dropdown-item btn-sm" role="button" (click)="setStatus('pending')"><i class="fa fa-clock-o"
-						aria-hidden="true"></i> {{'pending' | orderStatus}}</a> <a class="dropdown-item btn-sm" role="button" (click)="setStatus('preparing')"><i
-						class="fa fa-archive" aria-hidden="true"></i> {{'preparing' | orderStatus}}</a> <a class="dropdown-item btn-sm" role="button"
-						(click)="setStatus('sent')"><i class="fa fa-truck" aria-hidden="true"></i> {{'sent' | orderStatus}}</a> <a class="dropdown-item btn-sm"
-						role="button" (click)="setStatus('canceled')"><i class="fa fa-ban" aria-hidden="true"></i> {{'canceled' | orderStatus}}</a>
+					<a class="dropdown-item btn-sm" role="button" (click)="setStatus('waitingPayment')"><i
+						class="fa fa-credit-card" aria-hidden="true"></i> {{'waitingPayment' | orderStatus}}</a> <a
+						class="dropdown-item btn-sm" role="button" (click)="setStatus('pending')"><i
+						class="fa fa-clock-o" aria-hidden="true"></i> {{'pending' | orderStatus}}</a> <a
+						class="dropdown-item btn-sm" role="button" (click)="setStatus('preparing')"><i
+						class="fa fa-archive" aria-hidden="true"></i> {{'preparing' | orderStatus}}</a> <a
+						class="dropdown-item btn-sm" role="button" (click)="setStatus('sent')"><i
+						class="fa fa-truck" aria-hidden="true"></i> {{'sent' | orderStatus}}</a> <a
+						class="dropdown-item btn-sm" role="button" (click)="setStatus('canceled')"><i
+						class="fa fa-ban" aria-hidden="true"></i> {{'canceled' | orderStatus}}</a>
 				</div>
 			</div>
 
@@ -45,8 +49,8 @@
 			<button class="btn btn-dark btn-sm" (click)="sendMail()">
 				<i class="fa fa-envelope" aria-hidden="true"></i> Изпрати писмо
 			</button>
-			<a class="btn btn-dark btn-sm pull-right" href="javascript:window.print()">
-				<i class="fa fa-refresh" aria-hidden="true"></i> Принтирай
+			<a class="btn btn-dark btn-sm pull-right" href="javascript:window.print()"> <i
+				class="fa fa-refresh" aria-hidden="true"></i> Принтирай
 			</a>
 
 		</div>
@@ -54,28 +58,104 @@
 	</div>
 	<div class="row">
 		<div class="col-6 col-lg-4 order-lg-5 mb-3">
-			<!-- put margin or padding bottom -->
-			<div style="white-space: nowrap; padding-right: 15px">
-				<strong> {{order.shippingData.name}}</strong>
-			</div>
+			<div *ngIf="!editMode">
+				<div style="white-space: nowrap; padding-right: 15px">
+					<strong> {{order.shippingData.name}}</strong>
+				</div>
 
-			<div style="white-space: nowrap; padding-right: 15px">
-				<i class="fa fa-phone"></i> {{order.shippingData.phone}}
-			</div>
+				<div style="white-space: nowrap; padding-right: 15px">
+					<i class="fa fa-phone"></i> {{order.shippingData.phone}}
+				</div>
 
-			<div *ngIf="order.shippingData.address" style="white-space: prewrap; padding-right: 15px">
-				<i class="fa fa-address-card-o"></i> {{order.shippingData.address}}
-				<!--  -->
-			</div>
+				<div *ngIf="order.shippingData.address" style="white-space: prewrap; padding-right: 15px">
+					<i class="fa fa-address-card-o"></i> {{order.shippingData.address}}
+					<!--  -->
+				</div>
 
-			<div *ngIf="order.shippingData.email" style="white-space: nowrap; padding-right: 15px">
-				<i class="fa fa-envelope-o"></i> {{order.shippingData.email}}
-			</div>
+				<div *ngIf="order.shippingData.email" style="white-space: nowrap; padding-right: 15px">
+					<i class="fa fa-envelope-o"></i> {{order.shippingData.email}}
+				</div>
 
-			<div *ngIf="order.shippingData.invoiceInfo && order.shippingData.wantInvoice" style="white-space: nowrap; padding-right: 15px">
-				<i class="fa fa-sticky-note-o"></i> За фактурата:
-				<pre style="margin-left: 30px; white-space: pre-wrap;">{{order.shippingData.invoiceInfo}}</pre>
+				<div *ngIf="order.shippingData.invoiceInfo && order.shippingData.wantInvoice"
+					style="white-space: nowrap; padding-right: 15px">
+					<i class="fa fa-sticky-note-o"></i> За фактурата:
+					<pre style="margin-left: 30px; white-space: pre-wrap;">{{order.shippingData.invoiceInfo}}</pre>
+				</div>
+				<div>
+					<button class="btn btn-sm no-print" (click)="editMode=true">промени</button>
+				</div>
 			</div>
+			<form *ngIf="editMode" #orderForm="ngForm" (ngSubmit)="save()">
+
+
+				<div class="form-group row">
+					<label for="name" class="col-2 col-form-label form-control-sm ">Име</label>
+					<div class="col-10">
+						<input type="text" class="form-control form-control-sm required" id="name" required
+							[(ngModel)]="order.shippingData.name" name="name" #name="ngModel">
+					</div>
+				</div>
+
+				<!-- PHONE -->
+				<div class="form-group row">
+					<label for="phone" class="col-2 col-form-label form-control-sm ">Телефон</label>
+					<div class="col-10">
+						<input type="text" class="form-control form-control-sm required" id="phone" required
+							[(ngModel)]="order.shippingData.phone" name="phone" #phone="ngModel">
+					</div>
+				</div>
+
+				<!-- ADDRESS -->
+				<div class="form-group row">
+					<label for="address" class="col-2 col-form-label form-control-sm ">Адрес</label>
+					<div class="col-10">
+						<input type="text" class="form-control form-control-sm" id="address"
+							[(ngModel)]="order.shippingData.address" name="address" #address="ngModel">
+					</div>
+				</div>
+
+				<!-- EMAIL -->
+				<div class="form-group row">
+					<label for="email" class="col-2 col-form-label form-control-sm ">Имейл</label>
+					<div class="col-10">
+						<input type="text" class="form-control form-control-sm" id="email"
+							[(ngModel)]="order.shippingData.email" name="email" #email="ngModel"
+							[ngClass]="{ 'has-danger': email.value != '' && email.invalid && (email.dirty || email.touched),
+                                         'has-success': email.valid && (email.dirty || email.touched) }">
+					</div>
+				</div>
+
+				<!-- INVOICE CHECKBOX -->
+				<div class="form-group row mb-0">
+
+					<div class="col-12">
+						<input type="checkbox" id="wantInvoice" name="wantInvoice"
+							[(ngModel)]="order.shippingData.wantInvoice" class="checkbox"> <label
+							for="wantInvoice" class="checkbox-click-target"> <span class="checkbox-box form-control-sm"></span>Искам
+							фактура
+						</label>
+
+					</div>
+
+				</div>
+
+
+				<!-- INVOICE TEXT -->
+				<div class="form-group row" *ngIf="order.shippingData.wantInvoice">
+					<label for="invoiceInfo" class="col-3 col-form-label form-control-sm ">Данни за
+						фактурата</label>
+					<div class="col-9">
+						<textarea rows="3" cols="50" class="form-control form-control-sm" id="invoiceInfo" name="invoiceInfo"
+							[(ngModel)]="order.shippingData.invoiceInfo"></textarea>
+					</div>
+				</div>
+
+
+				<button type="submit" class="btn btn-info" [disabled]="!orderForm.form.valid">Запиши</button>
+
+
+			</form>
+
 		</div>
 		<div class="col-12 col-lg-8 order-lg-1">
 
@@ -97,7 +177,8 @@
 						</thead>
 						<tbody>
 							<tr *ngFor="let item of order.getItems()" class="remove-data">
-								<td class="product"><a [routerLink]="['/product', item.product.id]">{{item.product.name}}</a><span class="small">{{item.product.shortDesc}}</span></td>
+								<td class="product"><a [routerLink]="['/product', item.product.id]">{{item.product.name}}</a><span
+									class="small">{{item.product.shortDesc}}</span></td>
 								<td class="price">{{item.product.price|number:'1.2-2'}}</td>
 								<td class="quantity">
 									<!-- 	<div class="input-group input-group-sm">
@@ -127,8 +208,9 @@
             -->
 							<tr>
 								<!-- Updated {minutes, plural, =0 {just now} =1 {one minute ago} other {{{minutes}} minutes ago}} -->
-								<td class="total-quantity" colspan="3"><span i18n="cart@@subtotal">Общо {order.getCount(), plural, =1 {{{order.getCount()}}
-										артикул} other {{{order.getCount()}} артикула}}</span>
+								<td class="total-quantity" colspan="3"><span i18n="cart@@subtotal">Общо
+										{order.getCount(), plural, =1 {{{order.getCount()}} артикул} other {{{order.getCount()}}
+										артикула}}</span>
 								<td class="total-amount">{{order.getSubTotal()|number:'1.2-2'}}</td>
 							</tr>
 							<tr>

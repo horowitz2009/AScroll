@@ -171,15 +171,16 @@ class OrderService {
     }
   }
 
-  public function finalize() {
+  public function updateShippingData() {
     $rest_json = file_get_contents("php://input");
     $p = json_decode($rest_json, true);
     $s = $p ['shippingData'];
     
-    // shipping data
-    // [shippingData] => [[name] => Zhivko Hristov, [phone] => 887362619, [editShipping] => false, [touched] => true,
-    // [address] => 2B 488th Str., [email] => zhristov@gmail.com],
-    // [paymentData] => [[methodOfPayment] => cash, [editPayment] => true, [touched] => false]]
+    // [[items] => [[0] => [[product] => 28, [quantity] => 3], [1] => [[product] => 37, [quantity] => 1], [2] => [[product] => 32, [quantity] => 1]],
+    // [shippingData] => [[name] => minka sotirova, [phone] => 998877665544, [editShipping] => true, [touched] => false, 
+    //    [address] => 2222222, [email] => , [wantInvoice] => false, [invoiceInfo] => ], 
+    // [paymentData] => [[methodOfPayment] => cash, [editPayment] => true, [touched] => false], 
+    // [id] => 21398, [status] => pending, [created] => 2018-04-01 14:56:57]
     
     $dbh = $this->db->createPDOConnection();
     try {
@@ -189,29 +190,15 @@ class OrderService {
       $invoiceInfo = isset($s ['invoiceInfo']) ? $s ['invoiceInfo'] : '';
       $method = isset($p ['paymentData']) ? $p ['paymentData'] ['methodOfPayment'] : '';
       
-      $orderId = $this->nextId("orders");
+      $orderId = $p ['id'];
       
-      $dbh->beginTransaction();
-      $stmt = $dbh->prepare("insert into orders (id, status, name, phone, address, email, methodOfPayment, wantInvoice, invoiceInfo) " . "values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-      $stmt->execute(array($orderId, $p ['status'], $s ['name'], $s ['phone'], $address, $email, $method, $wantInvoice, $invoiceInfo));
-      // $orderId = $dbh->lastInsertId();
+//       $dbh->beginTransaction();
+       $stmt = $dbh->prepare("update orders set name = ?, phone = ?, address = ?, email = ?, methodOfPayment = ?, wantInvoice = ?, invoiceInfo = ? where id = ?");
+//(id, status, name, phone, address, email, methodOfPayment, wantInvoice, invoiceInfo) " . "values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+       $stmt->execute(array($s ['name'], $s ['phone'], $address, $email, $method, $wantInvoice, $invoiceInfo, $orderId));
       
-      $items = $p ['items'];
-      $pos = 1;
-      foreach ( $items as $i => $item ) {
-        $stmt = $dbh->prepare("insert into order_items (order_id, product_id, quantity, pos) values (?, ?, ?, ?)");
-        $stmt->execute(array($orderId, $item ['product'], $item ['quantity'], $pos ++));
-      }
       
-      // delete the cart
-      $cartIds = $this->getCartIds();
-      $stmt = $dbh->prepare("delete from carts where id = ?");
-      $stmt->execute(array($cartIds->id));
-      
-      $stmt = $dbh->prepare("delete from cart_items where cart_id = ?");
-      $stmt->execute(array($cartIds->id));
-      
-      $dbh->commit();
+//       $dbh->commit();
       
       echo '{"cn": "c_' . $this->g . '", "orderId": "' . $orderId . '"}';
     } catch ( Exception $e ) {
@@ -398,8 +385,8 @@ class OrderService {
       } else {
         $this->readAll();
       }
-    } else if ($action === 'finalize') {
-      $this->finalize();
+    } else if ($action === 'updateShippingData') {
+      $this->updateShippingData();
     } else if ($action === 'updateorderstatuses') {
       $this->updateOrderStatuses();
     } else {

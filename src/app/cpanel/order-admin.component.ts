@@ -67,30 +67,41 @@ import { filter } from "rxjs/operator/filter";
 export class OrderAdminComponent implements OnInit {
 
     order: Order;
+    editMode: boolean;
 
     constructor(
         private route: ActivatedRoute,
         private router: Router,
         private service: ProductDatastoredService,
-        private modalService: BsModalService, private orderService: OrderService, 
-        private mailService: MailService 
+        private modalService: BsModalService, private orderService: OrderService,
+        private mailService: MailService
     ) { }
 
     setStatus( status: string ) {
-    this.order.status = status;
+        this.order.status = status;
     }
-    
+
     sendMail() {
-        this.mailService.sendMail( { "email": "zhristov@gmail.com", "message": "Благодарим за направената поръчка!" } );
+        this.mailService.sendMail3( { "email": "zhristov@gmail.com", "message": "Благодарим за направената поръчка!" } );
     }
     
+    
+    
+    save() {
+        // todo save order
+        // this.cartService.saveCart();
+        this.editMode = false;
+        this.orderService.updateShippingData(this.order);
+    }
+
     ngOnInit() {
         console.log( "init single order" );
         this.route.paramMap.subscribe(
             ( params: ParamMap ) => {
                 this.orderService.orders.subscribe( orders => {
-                    console.log("damn");
+                    console.log( "damn" );
                     this.order = orders.find( o => +o.id === +params.get( 'id' ) );
+                    this.editMode = false;
                 } );
                 this.orderService.load( params.get( 'id' ) );
                 //this.order = this.cartService.getOrderById( params.get( 'id' ) );

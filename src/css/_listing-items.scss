@@ -27,15 +27,52 @@
 }
 
 .listing-item .price {
-  font-size: 18px;
-  margin-top: 1px;
+  //font-family: $price-font;
+  font-size: 3em;
+  //margin-top: 1px;
   display: inline-block;
-  font-weight: 400;
+  font-weight: 600;
+  color: #ef2809;
+  line-height: 1;
 }
 
-.listing-item .price del {
-  font-size: 12px;
+.listing-item .price.smaller {
+  font-size: 2em;
+}
+
+.listing-item .old-price {
+  font-size: 1.2em;
   color: #999999;
+}
+
+.invisible {
+  visibility: hidden;
+} 
+
+.mystrike {
+    position: relative;
+    display: inline-block;
+}
+
+.mystrike::before {
+    content: '';
+    border-bottom: 1px solid #666666;
+    width: 100%;
+    position: absolute;
+    right: 0;
+    top: 50%;
+}  
+
+sup {
+    top: -.4em;
+}
+
+sub, sup {
+    font-size: 65%;
+    line-height: 0;
+    position: relative;
+    margin-left: .1em;
+    vertical-align: baseline;
 }
 
 .listing-item .overlay-to-top {

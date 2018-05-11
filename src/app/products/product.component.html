@@ -1,16 +1,17 @@
-        <div class="container" style="margin-top: 70px"> 
-          <div class="row">
-            <div class="col"></div>
-          </div>  
-        </div>
+
+<div class="container" style="margin-top: 70px">
+	<div class="row">
+		<div class="col"></div>
+	</div>
+</div>
 
 <div class="container wow fadeInUp mt-10" *ngIf="product">
-    <div class="row">
-        <div class="col">
+	<div class="row">
+		<div class="col">
 
-            <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+			<ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
 
-            <!-- 
+			<!-- 
                        <div class="owl-carousel owl-theme content-slider-with-large-controls">
                         <div class="overlay-container overlay-visible">
                           <img src="assets/products/product-1.jpg" alt="">
@@ -45,57 +46,50 @@
 
  -->
 
-        </div>
+		</div>
 
 
-        <div class="col">
-            <div class="body">
-                <h1>{{product.name}}</h1>
-                <!-- <p class="small">{{product.longDesc}}</p> -->
+		<div class="col listing-item">
+			<div class="body">
+				<h1>{{product.name}}</h1>
+				<!-- <p class="small">{{product.longDesc}}</p> -->
 				<div class="e2e-inner-html-bound" [innerHTML]="product.longDesc"></div>
-                <div class="elements-list clearfix">
 
-                    <div class="light-gray-bg p-20 bordered clearfix">
-                        <span class="price"> <!-- <i class="icon-tag pr-10"></i> --> <i class="fa fa-tag" aria-hidden="true"></i> 
-                        <!-- <del>{{product.price * 1.3 |number:'1.2-2'}}</del> --> {{product.price|number:'1.2-2'}}лв
+				<div class="elements-list clearfix">
+
+					<!-- GRAY BOX -->
+					<div class="light-gray-bg p-20 bordered clearfix">
+						<!--                         <span class="price">  
+                          <i class="fa fa-tag" aria-hidden="true"></i> 
+                          <del *ngIf="product.adjustment">{{product.price|number:'1.2-2'}}</del>
+                          {{product.price * (1-product.adjustment)|number:'1.2-2'}}<span class="currency">лв</span>
+                        
+                        
                         </span>
+ -->
+						<div class="elements-list clearfix">
+							
+							<span *ngIf="product.adjustment" class="old-price margin-clear mystrike">
+							  <app-product-price [price]="product.price"></app-product-price>лв
+							</span>
+							
+							<span class="price smaller"> <app-product-price
+									[price]="product.price * (1-product.adjustment)"></app-product-price>лв
+							</span> 
+							
+							<a (click)="addToCart()"
+								class="pull-right margin-clear btn btn-sm btn-default-transparent btn-animated">Поръчай<i
+								class="fa fa-shopping-cart"></i></a>
+						</div>
 
-                        <!-- <span class="price"><del>{{product.price * 1.3  | currency }}</del> {{product.price | currency}}</span> -->
-
-                        <a (click)="addToCart()" class="pull-right margin-clear btn btn-sm btn-default-transparent btn-animated">Поръчай<i
-                            class="fa fa-shopping-cart"></i></a>
-                    </div>
 
 
 
+					</div>
+				</div>
+			</div>
 
-                </div>
-            </div>
-        </div>
+		</div>
+	</div>
 
-    </div>
-</div>
-
-        <!--==========================
-  Subscrbe Section
-  ============================-->
-<section id="subscribe">
-    <div class="container wow fadeInUp">
-        <div class="row">
-            <div class="col-md-8">
-                <h3 class="subscribe-title">Subscribe For Updates</h3>
-                <p class="subscribe-text">Join our 1000+ subscribers and get access to the latest tools, freebies, product
-                    announcements and much more!</p>
-            </div>
-            <div class="col-md-4 subscribe-btn-container">
-                <a class="subscribe-btn" href="#">Subscribe Now</a>
-            </div>
-        </div>
-    </div>
-</section>
-        
-        
-        
-        <!--<app-front-about></app-front-about>-->
-        
-        
+	<app-social-panel></app-social-panel>

@@ -94,7 +94,7 @@ export class OrdersComponent implements OnInit {
     }
 
     sendMail() {
-        this.mailService.sendMail( { "email": "zhristov@gmail.com", "message": "Благодарим за направената поръчка!" } );
+        this.mailService.sendMail( { "email": "zhristov@gmail.com", "subject": "subject goes here", "message": "Благодарим за направената поръчка!" } );
     }
 
     setStatus( status: string ) {

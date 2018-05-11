@@ -1,10 +1,11 @@
         <div class="listing-item white-bg bordered mb-20">
           <div class="overlay-container">
           
-            <img [src]="product.image" alt=""> 
-            <a class="overlay-link popup-img-single" href="{{product.image}}">
+             
+           <!--  <a class="overlay-link popup-img-single" href="{{product.image}}">
               <i class="fa fa-search-plus"></i>
-            </a> 
+            </a>  -->
+            <a [routerLink]="['/product', product.id]"><img [src]="product.image" alt="product image"></a>
              
             <span class="badge" *ngIf="product.adjustment">{{product.adjustment | percent}} OFF</span>
             
@@ -21,9 +22,17 @@
             <h3><a [routerLink]="['/product', product.id]">{{product.name}}</a>
             </h3>
             <p class="small">{{product.shortDesc}}</p>
+            <p class="old-price margin-clear mystrike" [ngClass]="{'invisible' : !product.adjustment}">
+              <span><app-product-price [price]="product.price"></app-product-price>лв</span>
+            </p>
             <div class="elements-list clearfix">
-              <span class="price"><del *ngIf="product.adjustment">{{product.price|number:'1.2-2'}}лв</del> {{product.price * (1-product.adjustment)|number:'1.2-2'}}лв</span> 
-              <a (click)="openAddToCartModal()" class="pull-right margin-clear btn btn-sm btn-default-transparent btn-animated">
+              <!-- <span class="price"><del *ngIf="product.adjustment">{{product.price|myPrice}}лв</del> {{product.price * (1-product.adjustment)|number:'1.2-2'}}лв</span> 
+              -->
+              
+              <span class="price">
+                <app-product-price [price]="product.price * (1-product.adjustment)"></app-product-price>лв</span> 
+              <a (click)="openAddToCartModal()" class="pull-right btn btn-sm btn-default-transparent btn-animated"
+                 style="margin-bottom: 0">
                 Поръчай<i class="fa fa-shopping-cart"></i>
               </a>
             </div>

@@ -57,6 +57,10 @@ import { Products2Component } from "./cpanel/products.component";
 import { ProductAdminComponent } from "./cpanel/product-admin.component";
 import { OrderAdminComponent } from "./cpanel/order-admin.component";
 import { OrderService } from "./cpanel/order.service";
+import { SocialPanelComponent } from './front/social-panel.component';
+import { MyPricePipe } from './directives/my-price.pipe';
+import { PriceDirective } from './directives/price.directive';
+import { ProductPriceComponent } from './products/product-price.component';
 
 registerLocaleData(localeBg, 'bg', localeBgExtra);
 registerLocaleData(localeEn, 'en', localeEnExtra);
@@ -107,6 +111,10 @@ export function getLanguage( settingsService: SettingsService ) {
         Products2Component,
         ProductAdminComponent,
         OrderAdminComponent,
+        SocialPanelComponent,
+        MyPricePipe,
+        PriceDirective,
+        ProductPriceComponent,
 
     ],
     entryComponents: [AddToCartModalComponent, TermsAndConditionsComponent],

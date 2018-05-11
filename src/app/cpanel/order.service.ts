@@ -30,7 +30,7 @@ export class OrderService {
     get orders(): Observable<Order[]> {
         return this._orders.asObservable();
     }
-    
+
     loadAll() {
         this.http.get<Order[]>( `${this.baseUrl}/read` ).subscribe( data => {
             console.log( 'ORDERS', data );
@@ -47,7 +47,7 @@ export class OrderService {
         }, error => console.log( 'Could not load orders' ) );
 
     }
-    
+
     load( id: number | string ) {
         this.http.get( `${this.baseUrl}/read/${id}` ).subscribe( data => {
             let notFound = true;
@@ -67,7 +67,27 @@ export class OrderService {
             this._orders.next( Object.assign( {}, this.dataStore ).orders );
         }, error => console.log( 'Could not load order.' ) );
     }
-    
+
+    updateShippingData( order: Order ) {
+        this.http.post<any>( `${this.baseUrl}/updateShippingData`, this.serialize( order ) )
+            .subscribe( res => {
+                console.log( "order shipping data saved", res );
+                //this._products.next( Object.assign( {}, this.dataStore ).products );
+
+            }, error => console.log( 'Could not save order.', error ) );
+
+    }
+
+    private serialize( order: Order ): string {
+        return JSON.stringify( order, ( key, value ) => {
+            if ( key === 'product' ) {
+                return value.id;
+            } else {
+                return value;
+            }
+        } );
+    }
+
     private deserializeOrder( data: any ): Order {
         const order = new Order();
         //console.log( 'single order please', data );

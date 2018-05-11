@@ -13,11 +13,24 @@ export class MailService {
 
     constructor( private http: HttpClient ) { }
 
-    private baseUrl = 'php/mailer/sendsmtp.php';
+    //private baseUrl = 'php/mailer/sendsmtp.php';
+    private baseUrl = 'php/mailer/sendmail.php';
     private baseUrl2 = 'php/mailservice.php';
 
 
-    sendMail( { email, subject = 'Поръчка 20190', message } ): void {
+    sendMail( args: { email: string, subject?: string, message: string } = { email: "boo", subject: "damn", message: "hmm" } ): void {
+        const json = JSON.stringify(
+            { "email": args.email, "subject": args.subject, "message": args.message } );
+        this.http.post<any>( `${this.baseUrl}`, json )
+            .subscribe( res => {
+                console.log( "message sent successfully", res );
+            }, error => {
+                console.log( 'Message sending failed!', error );
+            }
+            );
+    }
+
+    sendMail2( { email = 'zhristov@gmail.com', subject = 'Поръчка 20190', message = 'test' } ): void {
         const json = JSON.stringify(
             { "email": email, "subject": subject, "message": message } );
         this.http.post<any>( `${this.baseUrl}`, json )
@@ -28,14 +41,16 @@ export class MailService {
             }
             );
     }
-    sendMail2( { email, subject = 'Поръчка 20190', message } ): void {
+    
+    sendMail3( { email, subject = 'no subject', message } ): void {
         const json = JSON.stringify(
             { "email": email, "subject": subject, "message": message } );
-        this.http.post<any>( `${this.baseUrl2}`, json )
+        this.http.post<any>( `${this.baseUrl}`, json )
             .subscribe( res => {
                 console.log( "message sent successfully", res );
             }, error => {
                 console.log( 'Message sending failed!', error );
             }
             );
-    }}
+    }
+}

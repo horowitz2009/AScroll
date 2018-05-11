@@ -383,14 +383,14 @@
     }
     
     button[type="submit"] {
-      background: $accent-color;
+      //background: $accent-color;
       border: 0;
       padding: 10px 24px;
-      color: #fff;
+      //color: #fff;
       transition: 0.4s;
-      &:hover {
+      /*&:hover {
         background: lighten($accent-color, 10%);
-      }
+      }*/
 
     }
 

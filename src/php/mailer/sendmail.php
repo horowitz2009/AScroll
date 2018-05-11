@@ -43,16 +43,24 @@ $mail->setFrom('info@craftsbox.eu', 'Крафтсбокс');
 //Set an alternative reply-to address
 $mail->addReplyTo('info@craftsbox.eu', 'Крафтсбокс');
 
+$rest_json = file_get_contents("php://input");
+$body = json_decode($rest_json, true);
+
+$email = $body ['email'];
+$subject = $body ['subject'];
+$message = $body ['message'];
+
 //Set who the message is to be sent to
-$mail->addAddress('zhristov@gmail.com', 'Zhivko Hristov');
+$mail->addAddress($email);
+
 //Set the subject line
 
-$mail->Subject = 'PHPMailer SMTP test';
+$mail->Subject = $subject;
 //Read an HTML message body from an external file, convert referenced images to embedded,
 //convert HTML into a basic plain-text alternative body
-$mail->msgHTML(file_get_contents('contents.html'), __DIR__);
+//$mail->msgHTML(file_get_contents('contents.html'), __DIR__);
 //Replace the plain text body with one created manually
-$mail->AltBody = 'This is a plain-text message body';
+$mail->Body = $message;
 //Attach an image file
 //$mail->addAttachment('images/phpmailer_mini.png');
 

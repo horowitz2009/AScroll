@@ -1,66 +1,91 @@
- <!--==========================
+
+<!--==========================
   Contact Section
   ============================-->
-  <section id="contact">
-    <div class="container wow fadeInUp">
-      <div class="row">
-        <div class="col-md-12">
-          <h3 class="section-title">Contact Us</h3>
-          <div class="section-title-divider"></div>
-          <p class="section-description">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque</p>
-        </div>
-      </div>
+<section id="contact">
+	<div class="container wow fadeInUp">
+		<div class="row">
+			<div class="col-md-12">
+				<h3 class="section-title">Контакт</h3>
+				<div class="section-title-divider"></div>
+				<p class="section-description mb-1">Имате въпроси, предложения, мнение, отзиви? Можете да ни
+					пишете на указания имейл или да ползвате формата по-долу, или да ни се обадите по телефона.</p>
+			</div>
+		</div>
+		<div class="row justify-content-center">
+			<div class="col-md-6 my-1">
+				<div [ngClass]="{'invisible' : !msgResponse}" class="text-success mb-1">Вашето съобщение е изпратено успешно.
+					Благодарим Ви!</div>
+			</div>
+		</div>
 
-      <div class="row">
-        <div class="col-md-3 col-md-push-2">
-          <div class="info">
-            <div>
-              <i class="fa fa-map-marker"></i>
-              <p>A108 Adam Street<br>New York, NY 535022</p>
-            </div>
+		<div class="row">
+			<div class="col-md-3 col-md-push-2">
+				<div class="info">
+					<div>
+						<i class="fa fa-map-marker"></i>
+						<p>
+							София 1421<br>ул. "488-ма" 2Б
+						</p>
+					</div>
 
-            <div>
-              <i class="fa fa-envelope"></i>
-              <p>info@example.com</p>
-            </div>
+					<div>
+						<i class="fa fa-envelope"></i>
+						<p>
+							<a href="mailto:contact@craftsbox.eu">contact@craftsbox.eu</a>
+						</p>
+					</div>
 
-            <div>
-              <i class="fa fa-phone"></i>
-              <p>+1 5589 55488 55s</p>
-            </div>
+					<div>
+						<i class="fa fa-phone"></i>
+						<p>
+							<a href="callto:+359899198669">+359 89 919 86 69</a>
+						</p>
+					</div>
 
-          </div>
-        </div>
+				</div>
+			</div>
 
-        <div class="col-md-5 col-md-push-2">
-          <div class="form">
-            <div id="sendmessage">Your message has been sent. Thank you!</div>
-            <div id="errormessage"></div>
-            <form action="" method="post" role="form" class="contactForm">
-              <div class="form-group">
-                <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
-                <div class="validation"></div>
-              </div>
-              <div class="form-group">
-                <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
-                <div class="validation"></div>
-              </div>
-              <div class="form-group">
-                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
-                <div class="validation"></div>
-              </div>
-              <div class="form-group">
-                <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
-                <div class="validation"></div>
-              </div>
-              <div class="text-center"><button type="submit">Send Message</button></div>
-            </form>
-          </div>
-        </div>
+			<div class="col-md-5 col-md-push-2">
+				
+				<div class="form">
+					<!-- Your message has been sent. Thank you! -->
+					<div id="errormessage"></div>
+					<form #contactForm="ngForm" (ngSubmit)="sendMessage()" class="contactForm" method="post"
+						role="form">
+						<div class="form-group">
+							<!-- data-rule="minlen:4" data-msg="Please enter at least 4 chars" -->
+							<input type="text" class="form-control" id="name" [(ngModel)]="model.name" name="name"
+								#name="ngModel" placeholder="Вашето име">
+						</div>
+						<div class="form-group">
+							<input type="email" class="form-control" id="email" placeholder="Вашият имейл"
+								[(ngModel)]="model.email" name="email" #email="ngModel" />
+							<!-- data-rule="email" data-msg="Please enter a valid email" -->
+							<div class="validation"></div>
+						</div>
+						<div class="form-group">
+							<input type="text" class="form-control" name="subject" id="subject" placeholder="Заглавие"
+								[(ngModel)]="model.subject" #subject="ngModel" />
+							<!-- data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" -->
+							<div class="validation"></div>
+						</div>
+						<div class="form-group">
+							<textarea class="form-control" id="message" name="message" rows="5" placeholder="Текст"
+								required [(ngModel)]="model.message" #message="ngModel"></textarea>
+							<!-- data-rule="required" data-msg="Please write something for us" -->
+							<div class="validation"></div>
+						</div>
+						<div class="text-center">
+							<button type="submit" class="btn btn-default" [disabled]="!contactForm.form.valid">Изпрати</button>
+						</div>
+					</form>
+				</div>
+			</div>
 
-      </div>
-    </div>
-  </section>
+		</div>
+	</div>
+</section>
 
 
 <!-- 

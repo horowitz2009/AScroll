@@ -27,7 +27,7 @@
 							<td class="product"><a
 								[routerLink]="['/product', item.product.id]">{{item.product.name}}</a><span
 								class="small">{{item.product.shortDesc}}</span></td>
-							<td class="price">{{item.product.price|number:'1.2-2'}}</td>
+							<td class="price">{{item.product.price|number:'1.2-2'}}<span class="currency">лв</span></td>
 							<td class="quantity">
 							
 							
@@ -61,7 +61,7 @@
 
 							</td>
 							<!-- <td class="remove"><a href="#" class="btn btn-remove btn-sm btn-default">Remove</a></td> -->
-							<td class="amount">{{item.getSubTotal()|number:'1.2-2'}}</td>
+							<td class="amount">{{item.getSubTotal()|number:'1.2-2'}}<span class="currency">лв</span></td>
 
 						</tr>
 						<!-- 
@@ -83,15 +83,15 @@
 						<!-- Updated {minutes, plural, =0 {just now} =1 {one minute ago} other {{{minutes}} minutes ago}} -->
 							<td class="total-quantity" colspan="3" >
 							  <span  i18n="cart@@subtotal">Общо {cart.getCount(), plural, =1 {{{cart.getCount()}} артикул} other {{{cart.getCount()}} артикула}}</span>
-							<td class="total-amount">{{cart.getSubTotal()|number:'1.2-2'}}</td>
+							<td class="total-amount">{{cart.getSubTotal()|number:'1.2-2'}}<span class="currency">лв</span></td>
 						</tr>
 						<tr *ngIf="cart.getCount() !== 0">
 							<td class="total-quantity" colspan="3" i18n="cart@@shipping">Доставка</td>
-							<td class="total-amount">{{cart.getShipping() | number:'1.2-2'}}</td>
+							<td class="total-amount">{{cart.getShipping() | number:'1.2-2'}}<span class="currency">лв</span></td>
 						</tr>
 						<tr *ngIf="cart.getCount() !== 0">
 							<td class="total-quantity" colspan="3" i18n="cart@@total">Всичко</td>
-							<td class="total-amount">{{cart.getTotal()|number:'1.2-2'}}</td>
+							<td class="total-amount">{{cart.getTotal()|number:'1.2-2'}}<span class="currency">лв</span></td>
 						</tr>
 					</tbody>
 				</table>
