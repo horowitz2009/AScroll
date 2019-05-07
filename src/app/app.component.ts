@@ -14,6 +14,9 @@ import 'rxjs/add/operator/concat';
     styles: []
 } )
 export class AppComponent implements AfterViewInit, OnInit {
+    
+    debugMode = false;
+    
     title = 'app';
 
     cookieValue = 'UNKNOWN';

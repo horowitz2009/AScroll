@@ -4,6 +4,7 @@
 
 <app-footer></app-footer>
 
+<div *ngIf="debugMode">
 <!-- {{cookieValue}}{{mylang}} -->
 <p>
 userLanguages: {{userLanguages}}
@@ -17,3 +18,4 @@ userLanguages: {{userLanguages}}
 
 <div (click)="login('zhristov@gmail.com')">login ok</div>
 <div (click)="login('alabala@gmail.com')">login ko</div>
+</div>
